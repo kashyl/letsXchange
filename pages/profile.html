@@ -1,8 +1,90 @@
+<!DOCTYPE html>
 <html>
-    <header>
-<title> Test </title>
-
-</header>
-
-
+    <head>
+        <style>
+            html, body {
+                height: 100%;
+            }
+            img.auto {
+                height: auto;
+                width: auto;
+            }
+            img.logo {
+                height: 100px;
+                width: 200px;
+            }
+        </style>
+        <title>LetsXchange Profile</title>
+    </head>
+    <body>
+        <a href="/" id="nav-top"><img class="logo" src="Logo.png" alt="letsXchange" style="width:200; height:100"></a> <br>
+        <input type="search" name="search" placeholder="What are you looking for?" style="width:200px"/>
+        <input type="submit" name="searchsubmit" value="Search" /> 
+        <nav id="main-navigation">
+                <a href="/">Home</a>
+                <a href="profile">My Account</a>
+                <a href="contact">Contact Us</a>
+        </nav>
+        <hr>
+        <main role="main">
+        <fieldset style="border-radius: 8px; display: inline-block">
+            <legend>Your Details</legend>
+            <label>Username: <input type="text" name="username" required="required" /></label><br>
+            <label>Password: <input type="password" name="password" required="required" /></label><br>
+        </fieldset>
+        <nav id="main-navigation">
+                <a href="/">Home</a>
+                <a href="profile">My Account</a>
+        </nav>
+        <hr>
+        <p><a href="http://www.youtube.com" target="_blank">Random link to YouTube</a><i> (new window)</i></p>
+        <textarea name="comments">What are you thinking about?</textarea>
+    
+    <br>
+    
+    <br>
+    <label>How do you feel:<select name="feeling">
+        <option value="happy">Happy</option>
+        <option value="neutral">Neutral</option>
+        <option value="sad">Sad</option>
+    </select></label>
+    <br />
+    <p>Upload nice pictures</p>
+    <input type="file" name="user-file" />
+    <input type="submit" value="Upload" />
+    <br>
+    <p>Input your name and press the button, something <del>might</del> <i>probably won't</i> happen:</p>
+    <input type="text" name="name" />
+    <input type="image" src="button.png" width="100" height="25" />
+    <br>
+    <label for="depart">Date:<br></label>
+    <input type="date" name="depart" />
+    <br>
+    <fieldset style="border-radius: 8px; display: inline-block">
+        <legend>Register account</legend>
+        <label>Username*: <br>
+            <input type="text" name="regusername" required="required" /></label><br>
+        <label>Email*: <br>
+            <input type="text" name="email" required="required"/></label><br>
+        <label>Password*: <br>
+            <input type="text" name="regpass" required="required" /></label><br>
+        <label>Repeat password*: <br>
+            <input type="text" name="regpass2" required="required" /></label><br>
+        <label>Mobile: <br>
+            <input type="text" name="mobile" /></label><br> 
+        <label for="gender">Gender: <br></label>
+            <input id="male" type="radio" name="gender" value="m" />
+        <label for="male">Male</label>
+            <input id="female" type="radio" name="gender" value="f" />
+        <label for="female">Female</label>
+            <input id="special" type="radio" name="gender" value="n" />
+        <label for="special">Not specified</label><br>
+            <input type="submit" value="Submit" />
+    </fieldset>
+        </main>
+        <hr>
+        <footer>
+             <a href="#nav-top">Go to the top</a>
+        </footer>
+    </body>
 </html>

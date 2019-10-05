@@ -1,12 +1,49 @@
+<!DOCTYPE html>
 <html>
     <header>
         <head>
-            <title> Test </title>
+            <style>
+                html, body {
+                    height: 100%;
+                }
+                img.auto {
+                    height: auto;
+                    width: auto;
+                }
+                img.logo {
+                    height: 100px;
+                    width: 200px;
+                }
+            </style>
+            <title> LetsXchange Homepage </title>
+            <meta name="description" content="Search and Post anything for trade!" />
+            <meta name="keywords" content="exchange, trade, search, find, post" />
             <link rel="icon" href="/pages/icon.svg">
         </head>
     </header>
 <body>
-    <a href="/"> <img src="Logo.png" style="width:200; height:100"> </a>
+  
+    <a href="/" id="nav-top"> <img class="logo" src="Logo.png" alt="letsXchange" style="width:200; height:100"> </a>
+    <br>
+    <input type="search" name="search" placeholder="What are you looking for?" style="width:200px"/>
+    <input type="submit" value="Search" />
+    <nav id="main-navigation">
+        <a href="/">Home</a>
+        <a href="profile">My Account</a>
+        <a href="contact">Contact Us</a>
+    </nav>
+    <hr>
+  <main role="main">
+    <fieldset name="home-sign-in" style="border-radius: 8px; display: inline-block">
+        <legend>Sign In</legend>
+        <label>Username: <input type="text" name="username" required="required" /></label><br>
+        <label>Password: <input type="password" name="password" required="required" /></label><br>
+        <input type="submit" value="Log in" />
+        <input type="checkbox" name="rememberuser" value="rememberuser" />
+        <laber for="rememberuser">Remember me</laber>
+    </fieldset>
+    
+    
     <hr>   
     <style>
             table, th, td {
@@ -40,7 +77,10 @@
               <th class="listing">Listing 15</th>
             </tr>
           </table>
-</body>
-
-
+   </main>
+   <hr>
+   <footer>
+     <a href="#nav-top">Go to the top</a>
+   </footer>
+  </body>  
 </html>
