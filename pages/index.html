@@ -1,86 +1,116 @@
 <!DOCTYPE html>
 <html>
-    <header>
-        <head>
-            <style>
-                html, body {
-                    height: 100%;
-                }
-                img.auto {
-                    height: auto;
-                    width: auto;
-                }
-                img.logo {
-                    height: 100px;
-                    width: 200px;
-                }
-            </style>
-            <title> LetsXchange Homepage </title>
-            <meta name="description" content="Search and Post anything for trade!" />
-            <meta name="keywords" content="exchange, trade, search, find, post" />
-            <link rel="icon" href="/pages/icon.svg">
-        </head>
-    </header>
-<body>
-  
-    <a href="/" id="nav-top"> <img class="logo" src="Logo.png" alt="letsXchange" style="width:200; height:100"> </a>
-    <br>
-    <input type="search" name="search" placeholder="What are you looking for?" style="width:200px"/>
-    <input type="submit" value="Search" />
-    <nav id="main-navigation">
-        <a href="/">Home</a>
-        <a href="profile">My Account</a>
-        <a href="contact">Contact Us</a>
-    </nav>
-    <hr>
-  <main role="main">
-    <fieldset name="home-sign-in" style="border-radius: 8px; display: inline-block">
-        <legend>Sign In</legend>
-        <label>Username: <input type="text" name="username" required="required" /></label><br>
-        <label>Password: <input type="password" name="password" required="required" /></label><br>
-        <input type="submit" value="Log in" />
-        <input type="checkbox" name="rememberuser" value="rememberuser" />
-        <laber for="rememberuser">Remember me</laber>
-    </fieldset>
-    
-    
-    <hr>   
-    <style>
-            table, th, td {
-              border: 1px solid black;
-            }
-            th.listing {
-                width:5%; 
-                height: 200px;
-            }
-            </style>
-    <table style="width:100%">
+    <head>
+        <title>LetsXchange - Home Page</title>
+    </head>
+    <body>
+        <h1>
+            <table>
+                <tr>
+                    <td><img src="vec_logo.svg" alt="Logo" width="150" height="75"/></td>
+                    <td><a href="/">Home</a></td>
+                    <td><a href="about_us">About Us</a></td>
+                    <td><a href="contacts">Contacts</a></td>
+                    <td><form action="">
+                        <input type="search" name="search" placeholder="What are you looking for?" />
+                        <input type="submit" value="Search" />
+                        </form>
+                    </td>
+                    <td><a href="/"> <img src="person-icon-svg-1.jpg" alt="Users Page" width="50" height="50"/></a></td>
+                </tr>
+                <hr />
+            </table>
+        </h1>
+        <h2>Trending...</h2>
+        <table>
             <tr>
-              <th class="listing">Listing 1</th>
-              <th class="listing">Listing 2</th> 
-              <th class="listing">Listing 3</th>
-              <th class="listing">Listing 4</th>
-              <th class="listing">Listing 5</th>
+                <td>
+                    <label>
+                    <img src="placeholder.png" alt="placeholder" width="250" height="250"/>
+                    <br />
+                    <a href="/">Item nr 1</a>
+                    <p>Description</p>
+                    </label>
+                </td>
+                <td>
+                    <label>
+                    <img src="placeholder.png" alt="placeholder" width="250" height="250"/>
+                    <br />
+                    <a href="/">Item nr 2</a>
+                    <p>Description</p>
+                    </label>
+                </td>
+                <td>
+                    <label>
+                    <img src="placeholder.png" alt="placeholder" width="250" height="250"/>
+                    <br />
+                    <a href="/">Item nr 3</a>
+                    <p>Description</p>
+                    </label>
+                </td>
+                <td>
+                    <label>
+                    <img src="placeholder.png" alt="placeholder" width="250" height="250"/>
+                    <br />
+                    <a href="/">Item nr 4</a>
+                    <p>Description</p>
+                    </label>
+                </td>
+                <td>
+                    <label>
+                    <img src="placeholder.png" alt="placeholder" width="250" height="250"/>
+                    <br />
+                    <a href="/">Item nr 5</a>
+                    <p>Description</p>
+                    </label>
+                </td>
             </tr>
             <tr>
-              <th class="listing">Listing 6</th>
-              <th class="listing">Listing 7</th> 
-              <th class="listing">Listing 8</th>
-              <th class="listing">Listing 9</th>
-              <th class="listing">Listing 10</th>
+                <td>
+                    <label>
+                    <img src="placeholder.png" alt="placeholder" width="250" height="250"/>
+                    <br />
+                    <a href="/">Item nr 6</a>
+                    <p>Description</p>
+                    </label>
+                </td>
+                <td>
+                    <label>
+                    <img src="placeholder.png" alt="placeholder" width="250" height="250"/>
+                    <br />
+                    <a href="/">Item nr 7</a>
+                    <p>Description</p>
+                    </label>
+                </td>
+                <td>
+                    <label>
+                    <img src="placeholder.png" alt="placeholder" width="250" height="250"/>
+                    <br />
+                    <a href="/">Item nr 8</a>
+                    <p>Description</p>
+                    </label>
+                </td>
+                <td>
+                    <label>
+                    <img src="placeholder.png" alt="placeholder" width="250" height="250"/>
+                    <br />
+                    <a href="/">Item nr 9</a>
+                    <p>Description</p>
+                    </label>
+                </td>
+                <td>
+                    <label>
+                    <img src="placeholder.png" alt="placeholder" width="250" height="250"/>
+                    <br />
+                    <a href="/">Item nr 10</a>
+                    <p>Description</p>
+                    </label>
+                </td>
             </tr>
-            <tr>
-              <th class="listing">Listing 11</th>
-              <th class="listing">Listing 12</th> 
-              <th class="listing">Listing 13</th>
-              <th class="listing">Listing 14</th>
-              <th class="listing">Listing 15</th>
-            </tr>
-          </table>
-   </main>
-   <hr>
-   <footer>
-     <a href="#nav-top">Go to the top</a>
-   </footer>
-  </body>  
+        </table>
+    </body>
+    <footer>
+        <hr />
+        <p> @Awsome Website. Powred by the awsome GROUP NUMBER 4!!!!!</p>
+    </footer>
 </html>
