@@ -1,0 +1,12 @@
+/* default page style */
+html, body {
+    height: 100%;
+}
+img.auto {
+    height: auto;
+    width: auto;
+}
+img.logo {
+    height: 100px;
+    width: 200px;
+}

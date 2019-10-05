@@ -1,24 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <style>
-            html, body {
-                height: 100%;
-            }
-            img.auto {
-                height: auto;
-                width: auto;
-            }
-            img.logo {
-                height: 100px;
-                width: 200px;
-            }
-        </style>
+        <link href="../assets/css/styles.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
         <title>LetsXchange Contact Us</title>
     </head>
     <body>
-        <a href="/" id="nav-top"><img class="logo" src="image/Logo.png" alt="letsXchange" style="width:200; height:100"></a> <br>
+        <a href="/" id="nav-top"><img class="logo" src="../assets/image/Logo.png" alt="letsXchange" style="width:200; height:100"></a> <br>
         <input type="search" name="search" placeholder="What are you looking for?" style="width:200px"/>
         <input type="submit" name="searchsubmit" value="Search" /> 
          <nav id="main-navigation">
@@ -28,7 +16,7 @@
          </nav>
          <hr>
         <main role="main">
-            <h1>Contact</h1>
+            <h1 class="test">Contact</h1>
             <table style="text-align:left">
                 <tr>
                     <th scope="row">Telephone number:</th>
@@ -91,7 +79,7 @@
             <br>        
             <!--audio player start-->
             <audio controls>
-                <source src="audio/test-audio.mp3" />
+                <source src="../assets/audio/test-audio.mp3" />
                 <p>Audio format not supported by browser.</p>
             </audio>
             <!--audio player end-->
@@ -103,15 +91,14 @@
             preload="none"
             controls    
             loop>
-            <source src="video/puppy.mp4" type='video/mp4;codecs="avc1.42E01E, mp4a.40.2"' />
-            <source src="video/puppy.webm" type='video/webm;codecs="vp8, vorbis"' />
+            <source src="../assets/video/puppy.mp4" type='video/mp4;codecs="avc1.42E01E, mp4a.40.2"' />
             <p>A video of something</p>
             </video>
             <!--video player end-->
 
             <!-- flash player start-->
             <script type="text/javascript">
-            swfobject.embedSWF("flash/bird.swf", "bird", "400", "300", "8.0.0");
+            swfobject.embedSWF("../assets/flash/bird.swf", "bird", "400", "300", "8.0.0");
             </script>
             <section id="bird"><p>An animation of a bird taking a shower</p></section>
             <!-- flash player end-->
