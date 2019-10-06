@@ -120,3 +120,34 @@ section#contact-message fieldset input[type=submit]:hover {
     
 }
 /* ==== END MESSAGE FORM ==== */
+
+/* ==== START LOGIN FORM ==== */
+fieldset.login-form {
+    border-radius: 8px;
+    width: 250px;
+    padding-bottom: 10px;
+    margin: 10px;
+}
+fieldset.login-form section{
+    width: 250px;
+    margin: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #000000;
+}
+fieldset.login-form label {
+    width: 100px;
+
+}
+fieldset.login-form legend {
+    font-weight: bold;
+    padding: 1px 2px;
+    text-align: center;
+    text-transform: uppercase;
+}
+fieldset.login-form input[type=checkbox] {
+    float:right;
+}
+fieldset.login-form label[for="rememberuser"] {
+    float:right;
+}
+/* ==== END LOGIN FORM ==== */

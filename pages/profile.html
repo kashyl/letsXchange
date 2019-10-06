@@ -7,6 +7,8 @@
     <body>
         <a href="/" id="nav-top"><img class="logo" src="../assets/image/Logo.png" alt="letsXchange"></a> <br>
         <input type="search" class="search-bar" name="search" placeholder="What are you looking for?" />
+
+        <!--navigation bar-->
         <input type="submit" name="searchsubmit" value="Search" /> 
         <nav id="main-navigation">
                 <a href="/">Home</a>
@@ -15,11 +17,22 @@
         </nav>
         <hr>
         <main role="main">
-        <fieldset style="border-radius: 8px; display: inline-block">
-            <legend>Your Details</legend>
-            <label>Username: <input type="text" name="username" required="required" /></label><br>
-            <label>Password: <input type="password" name="password" required="required" /></label><br>
-        </fieldset>
+
+            <fieldset name="profile-sign-in" class="login-form">
+                <legend>Sign In</legend>
+                <section name="username">
+                    <label>Username: <input type="text" name="username" required="required" /></label><br>
+                </section>
+                <section name="password">
+                    <label>Password: <input type="password" name="password" required="required" /></label><br>
+                </section>
+                <section name="submit">
+                    <input type="submit" value="Log in" />
+                    <label for="rememberuser">Remember me</label>
+                    <input type="checkbox" name="rememberuser" value="rememberuser" />    
+                </section>
+            </fieldset>
+
         <nav id="main-navigation">
                 <a href="/">Home</a>
                 <a href="profile">My Account</a>
