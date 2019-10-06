@@ -67,25 +67,25 @@ section#contact-info table th, td {
 /* ==== START MESSAGE FORM ==== */
 section#contact-message fieldset {
     width: 450px;
-    border: 1px solid #dcdcdc;
+    border: 1px solid #b1d6d6;
     border-radius: 10px; 
     display: inline-block;
     padding:15px;
     text-align: center;
 }
 section#contact-message fieldset legend {
-    background-color: #b9e4e3;
+    background-color: #b1d6d6;
     font-weight: bold;
     border: inherit;
     border-radius: inherit;
-    padding: 10px 20px;
+    padding: 5px 10px;
     text-align: center;
     text-transform: uppercase;
 }
 section#contact-message fieldset input {
     border-style: none none solid none;
     border-width: 1px;
-    border-color: #dcdcdc;
+    border-color: #b1d6d6;
     margin-bottom: 10px;
     margin-right: 10px;
     
@@ -101,10 +101,10 @@ section#contact-message fieldset textarea{
 }
 section#contact-message fieldset input[type=submit] {
     display: block;
+    color: #1c1f1f;
     margin: 10px auto 0px auto;
-    padding: 3px;
     text-shadow: 0px 1px 1px;
-    border-bottom: 2px solid #b2b2b2;
+    border-bottom: 2px solid #b1d6d6;
     background-color: #b9e4e3;
     background: -webkit-gradient(linear, left top, left bottom, from(#beeae9), to(#a8cfce));
     background: -moz-linear-gradient(top, #beeae9, #a8cfce);
@@ -113,7 +113,8 @@ section#contact-message fieldset input[type=submit] {
 }
 section#contact-message fieldset input[type=submit]:hover {
     border: 1px solid #a4a4a4;
-    background-color: #19beca;
+    color: #1c1f1f;
+    background-color: #363b3b;
     background: -webkit-gradient(linear, left top, left bottom, from(#a8cfce), to(#beeae9));
     background: -moz-linear-gradient(top, #a8cfce, #beeae9);
     background: -o-linear-gradient(top, #a8cfce, #beeae9);
@@ -125,14 +126,18 @@ section#contact-message fieldset input[type=submit]:hover {
 fieldset.login-form {
     border-radius: 8px;
     width: 250px;
-    padding-bottom: 10px;
+    padding: 0px 5px 0px 5px;
     margin: 10px;
 }
-fieldset.login-form section{
+fieldset.login-form div{
     width: 250px;
     margin: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #000000;
+    padding-bottom: 0px;
+    /*border: 1px solid #000000;*/
+}
+fieldset.login-form div.forgot-password {
+    padding: 0px 0px 0px 10px;
+    margin: 5px;
 }
 fieldset.login-form label {
     width: 100px;
@@ -144,11 +149,16 @@ fieldset.login-form legend {
     text-align: center;
     text-transform: uppercase;
 }
-fieldset.login-form input[type=checkbox] {
+fieldset.login-form input {
     float:right;
 }
-fieldset.login-form label[for="rememberuser"] {
-    float:right;
+fieldset.login-form input[type=submit] {
+    float:none;
+    color: #1c1f1f;
+    margin: 0px;
+}
+fieldset.login-form input[type=checkbox], label[for="rememberuser"] {
+    float: right;
 }
 /* ==== END LOGIN FORM ==== */
 

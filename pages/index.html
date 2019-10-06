@@ -27,14 +27,21 @@
     <hr>
   <main role="main">
     
-    <fieldset name="home-sign-in" class="login-form">
-        <legend>Sign In</legend>
-        <label>Username: <input type="text" name="username" required="required" /></label><br>
-        <label>Password: <input type="password" name="password" required="required" /></label><br>
-        <input type="submit" value="Log in" />
-        <input type="checkbox" name="rememberuser" value="rememberuser" />
-        <label for="rememberuser">Remember me</label>
-    </fieldset>
+      <fieldset class="login-form">
+          <legend>Sign In</legend>
+          <div>
+              <label>Username: <input type="text" name="username" required="required" /></label><br>
+          </div>
+          <div>
+              <label>Password: <input type="password" name="password" required="required" /></label><br>
+          </div>
+          <div>
+              <input type="submit" value="Log in" />
+              <label for="rememberuser">Remember me</label>
+              <input type="checkbox" name="rememberuser" value="rememberuser" />  
+                
+          </div>
+      </fieldset>
     
     <hr>   
     <style>
