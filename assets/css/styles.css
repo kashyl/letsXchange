@@ -152,4 +152,20 @@ ul {
   .active {
     background-color: red;
   }
+
+  input[type=search] {
+    width: 200px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: none;
+    padding: 12px 20px 12px 20px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+  }
+  
+  input[type=search]:focus {
+    width: 100%;
+  }
 /* ==== END MESSAGE FORM ==== */
