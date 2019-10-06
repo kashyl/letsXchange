@@ -10,3 +10,113 @@ img.logo {
     height: 100px;
     width: 200px;
 }
+
+
+/* ==== START NAVIGATION BAR ==== */
+ul.nav {
+    padding: 10px;
+    margin: 0px auto 20px auto;
+    border-top: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    text-align:center;
+}
+li.nav {
+    display: inline;
+    margin: 0px 3px;
+}
+a.nav {
+    color: #000000;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 6px 18px 5px 18px;
+}
+a.nav:hover, a.nav.on {
+    color: #cc3333;
+    background-color: #ffffff;
+}
+/* ==== END NAVIGATION BAR ==== */
+
+
+input[type=search].search-bar {
+    width:200px;
+}
+
+/* ==== START CONTACT INFO TABLE ==== */
+section#contact-info table {
+    width: 600px;
+    font-family: sans-serif;
+    border-collapse: collapse;
+}
+section#contact-info table th.table-title {
+    text-align: center;
+    font-size: 125%;
+    padding: 5px;
+}
+section#contact-info table th{
+    text-transform: uppercase;
+}
+section#contact-info table th, td {
+    letter-spacing: 0.04em;
+    font-size: 90%;
+    border: 1px solid #999999;
+    text-align: left;
+    padding: 7px 10px 10px 10px;
+}
+/* ==== END CONTACT INFO TABLE ==== */
+
+/* ==== START MESSAGE FORM ==== */
+section#contact-message fieldset {
+    width: 450px;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px; 
+    display: inline-block;
+    padding:15px;
+    text-align: center;
+}
+section#contact-message fieldset legend {
+    background-color: #b9e4e3;
+    font-weight: bold;
+    border: inherit;
+    border-radius: inherit;
+    padding: 10px 20px;
+    text-align: center;
+    text-transform: uppercase;
+}
+section#contact-message fieldset input {
+    border-style: none none solid none;
+    border-width: 1px;
+    border-color: #dcdcdc;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    
+}
+section#contact-message fieldset textarea{
+    width:440px;
+    height:150px;
+    resize: none;
+    overflow: scroll auto auto;
+    border: inherit;
+    border-radius: inherit;
+    margin-top: 5px;
+}
+section#contact-message fieldset input[type=submit] {
+    display: block;
+    margin: 10px auto 0px auto;
+    padding: 3px;
+    text-shadow: 0px 1px 1px;
+    border-bottom: 2px solid #b2b2b2;
+    background-color: #b9e4e3;
+    background: -webkit-gradient(linear, left top, left bottom, from(#beeae9), to(#a8cfce));
+    background: -moz-linear-gradient(top, #beeae9, #a8cfce);
+    background: -o-linear-gradient(top, #beeae9, #a8cfce);
+    padding: 5px 20px;
+}
+section#contact-message fieldset input[type=submit]:hover {
+    border: 1px solid #a4a4a4;
+    background-color: #19beca;
+    background: -webkit-gradient(linear, left top, left bottom, from(#a8cfce), to(#beeae9));
+    background: -moz-linear-gradient(top, #a8cfce, #beeae9);
+    background: -o-linear-gradient(top, #a8cfce, #beeae9);
+    
+}
+/* ==== END MESSAGE FORM ==== */
