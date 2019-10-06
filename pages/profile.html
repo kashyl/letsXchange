@@ -1,24 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <style>
-            html, body {
-                height: 100%;
-            }
-            img.auto {
-                height: auto;
-                width: auto;
-            }
-            img.logo {
-                height: 100px;
-                width: 200px;
-            }
-        </style>
+        <link href="../assets/css/styles.css" rel="stylesheet" type="text/css" />
         <title>LetsXchange Profile</title>
     </head>
     <body>
-        <a href="/" id="nav-top"><img class="logo" src="Logo.png" alt="letsXchange" style="width:200; height:100"></a> <br>
-        <input type="search" name="search" placeholder="What are you looking for?" style="width:200px"/>
+        <a href="/" id="nav-top"><img class="logo" src="../assets/image/Logo.png" alt="letsXchange"></a> <br>
+        <input type="search" class="search-bar" name="search" placeholder="What are you looking for?" />
         <input type="submit" name="searchsubmit" value="Search" /> 
         <nav id="main-navigation">
                 <a href="/">Home</a>
@@ -55,7 +43,7 @@
     <br>
     <p>Input your name and press the button, something <del>might</del> <i>probably won't</i> happen:</p>
     <input type="text" name="name" />
-    <input type="image" src="button.png" width="100" height="25" />
+    <input type="image" src="../assets/image/button.png" width="100" height="25" />
     <br>
     <label for="depart">Date:<br></label>
     <input type="date" name="depart" />

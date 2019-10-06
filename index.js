@@ -9,7 +9,7 @@ const router = new Router()
 const views = require('koa-views')
 const port = 8080
 
-app.use(require('koa-static')('assets'))
+app.use(require('koa-static')('.'))
 
 app.use(views(`${__dirname}`, { extension: 'html' }, {map: { handlebars: 'handlebars' }}))
 

@@ -1,65 +1,63 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <style>
-            html, body {
-                height: 100%;
-            }
-            img.auto {
-                height: auto;
-                width: auto;
-            }
-            img.logo {
-                height: 100px;
-                width: 200px;
-            }
-        </style>
+        <link href="../assets/css/styles.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
         <title>LetsXchange Contact Us</title>
     </head>
     <body>
-        <a href="/" id="nav-top"><img class="logo" src="Logo.png" alt="letsXchange" style="width:200; height:100"></a> <br>
-        <input type="search" name="search" placeholder="What are you looking for?" style="width:200px"/>
+        <a href="/" id="nav-top"><img class="logo" src="../assets/image/Logo.png" alt="letsXchange"></a> <br>
+        <input type="search" class="search-bar" name="search" placeholder="What are you looking for?"/>
         <input type="submit" name="searchsubmit" value="Search" /> 
          <nav id="main-navigation">
-                <a href="/">Home</a>
-                <a href="profile">My Account</a>
-                <a href="contact">Contact Us</a>
+             <ul class="nav">
+                <li class="nav"><a class="nav" href="/">Home</a></li>   
+                <li class="nav"><a class="nav" href="profile">My Account</a></li> 
+                <li class="nav"><a class="nav" href="contact">Contact Us</a></li>
+             </ul>   
          </nav>
-         <hr>
         <main role="main">
-            <h1>Contact</h1>
-            <table style="text-align:left">
-                <tr>
-                    <th scope="row">Telephone number:</th>
-                    <td>+44713378844</td>
-                </tr> 
-                <tr>
-                    <th scope="row">Email address:</th>
-                    <td><a href="mailto:contact@letsxchange.co.uk">contact@letsxchange.co.uk</a></td>
-                </tr>
-            </table>
-            <br>
-            <table style="text-align: left">
-                <tr>
-                    <th scope="row" rowspan="2">Customer support:</th>
-                    <td>Monday - Friday</td>
-                    <td>09:00 - 20:00</td>
-                </tr>
-                <tr>
-                    <td>Saturday</td>
-                    <td>09:00 - 13:00</td>
-                </tr>
-                <tr>
-                    <th scope="row">Call and live chat support: </th>
-                    <td> Monday - Friday</td>
-                    <td>09:00 - 18:00</td>
-                </tr>
-                <tr>
-                    <th scope="row">Office access hours:</th>
-                    <td>Monday - Thursday</td>
-                    <td>09:00 - 17:00</td>
-                </tr>
-            </table>
+            <section id="contact-info">
+                <table>
+                    <tr>
+                        <th scope="col" colspan="2" class="table-title">Contact</th>
+                    </tr>
+                    <tr>
+                        <th scope="row">Telephone number:</th>
+                        <td>+44713378844</td>
+                     </tr> 
+                     <tr>
+                           <th scope="row">Email address:</th>
+                         <td><a href="mailto:contact@letsxchange.co.uk">contact@letsxchange.co.uk</a></td>
+                        </tr>
+                 </table>
+                <br>
+                <table>
+                    <tr>
+                        <th scope="col" colspan="3" class="table-title">Time Schedule</th>
+                    </tr>
+                    <tr>
+                        <th scope="row" rowspan="2">Customer support:</th>
+                        <td>Monday - Friday</td>
+                        <td>09:00 - 20:00</td>
+                    </tr>
+                    <tr>
+                        <td>Saturday</td>
+                        <td>09:00 - 13:00</td>
+                     </tr>
+                    <tr>
+                        <th scope="row">Call and live chat support: </th>
+                        <td> Monday - Friday</td>
+                        <td>09:00 - 18:00</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Office access hours:</th>
+                        <td>Monday - Thursday</td>
+                        <td>09:00 - 17:00</td>
+                    </tr>
+                </table>
+            </section>
+            
             <br>
             <!--Google Maps frame start-->
             <section id="contact-map"> 
@@ -73,20 +71,47 @@
             <!--Google Maps frame end-->
             <br>
             <h2>Send us a message</h2>
-            <section id="quick-message">
-                <fieldset style="border-radius: 8px; display: inline-block">
-                    <legend style="text-align:center">Ask us anything</legend>
-                    <label for="contact-user-email">Email* </label>
+            <section id="contact-message">
+                <fieldset>
+                    <legend>Contact Us</legend>
+                    <label for="contact-user-email">Email </label>
                     <input type="email" name="contact-user-email" required />
                     <label for="contact-user-nick">Nickname </label>
                     <input type="text" name="contact-user-nick" />
                     <br>
-                    <label for="contact-user-question">What can we help you with?*</label> <br>
-                    <textarea name="contact-user-question" style="width:435px; height:150px">Write your question here...</textarea>
+                    <label for="contact-user-message">What can we help you with?</label> <br>
+                    <textarea name="contact-user-message">Write your message here...</textarea>
                     <br>
                     <input type="submit" value="Send message" />
                 </fieldset>
             </section>
+            <br>        
+            <!--audio player start-->
+            <audio controls>
+                <source src="../assets/audio/test-audio.mp3" />
+                <p>Audio format not supported by browser.</p>
+            </audio>
+            <!--audio player end-->
+            <br>
+            <!--video player start-->
+            <video
+            width="400" height="300"
+            poster="image/Logo.png"
+            preload="none"
+            controls    
+            loop>
+            <source src="../assets/video/puppy.mp4" type='video/mp4;codecs="avc1.42E01E, mp4a.40.2"' />
+            <p>A video of something</p>
+            </video>
+            <!--video player end-->
+
+            <!-- flash player start-->
+            <script type="text/javascript">
+            swfobject.embedSWF("../assets/flash/bird.swf", "bird", "400", "300", "8.0.0");
+            </script>
+            <section id="bird"><p>An animation of a bird taking a shower</p></section>
+            <!-- flash player end-->
+
         </main>
         <hr>
         <footer>
