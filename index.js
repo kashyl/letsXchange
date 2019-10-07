@@ -9,7 +9,7 @@ const router = new Router()
 const views = require('koa-views')
 const port = 8080
 
-app.use(require('koa-static')('assets'))
+app.use(require('koa-static')('.'))
 
 app.use(views(`${__dirname}`, { extension: 'html' }, {map: { handlebars: 'handlebars' }}))
 
@@ -18,6 +18,7 @@ router.get('/login', async ctx => await ctx.render('pages/login'))
 router.get('/profile', async ctx => await ctx.render('pages/profile'))
 router.get('/contacts', async ctx => await ctx.render('pages/contacts'))
 router.get('/about_us', async ctx => await ctx.render('pages/about_us'))
+
 
 
 app.use(router.routes())
