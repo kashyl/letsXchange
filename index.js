@@ -17,6 +17,7 @@ router.get('/', async ctx => await ctx.render('pages/index'))
 router.get('/login', async ctx => await ctx.render('pages/login'))
 router.get('/profile', async ctx => await ctx.render('pages/profile'))
 router.get('/contact', async ctx => await ctx.render('pages/contact'))
+router.get('/about', async ctx => await ctx.render('pages/about'))
 
 
 app.use(router.routes())
