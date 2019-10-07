@@ -1,16 +1,21 @@
 /* default page style */
 html, body {
     height: 100%;
+    /*cursor:pointer;
+    pointer-events: auto;*/
+    font-family: Arial, Helvetica, sans-serif;
+}
+header {
+    margin-bottom: 20px;
 }
 img.auto {
     height: auto;
     width: auto;
 }
 img.logo {
-    height: 100px;
-    width: 200px;
+    height: 120px;
+    width: 250px;
 }
-
 
 /* ==== START NAVIGATION BAR ==== */
 ul.nav {
@@ -41,93 +46,14 @@ input[type=search].search-bar {
     width:200px;
 }
 
-/* ==== START CONTACT INFO TABLE ==== */
-section#contact-info table {
-    width: 600px;
-    font-family: sans-serif;
-    border-collapse: collapse;
-}
-section#contact-info table th.table-title {
-    text-align: center;
-    font-size: 125%;
-    padding: 5px;
-}
-section#contact-info table th{
-    text-transform: uppercase;
-}
-section#contact-info table th, td {
-    letter-spacing: 0.04em;
-    font-size: 90%;
-    border: 1px solid #999999;
-    text-align: left;
-    padding: 7px 10px 10px 10px;
-}
-/* ==== END CONTACT INFO TABLE ==== */
-
-/* ==== START MESSAGE FORM ==== */
-section#contact-message fieldset {
-    width: 450px;
-    border: 1px solid #b1d6d6;
-    border-radius: 10px; 
-    display: inline-block;
-    padding:15px;
-    text-align: center;
-}
-section#contact-message fieldset legend {
-    background-color: #b1d6d6;
-    font-weight: bold;
-    border: inherit;
-    border-radius: inherit;
-    padding: 5px 10px;
-    text-align: center;
-    text-transform: uppercase;
-}
-section#contact-message fieldset input {
-    border-style: none none solid none;
-    border-width: 1px;
-    border-color: #b1d6d6;
-    margin-bottom: 10px;
-    margin-right: 10px;
-    
-}
-section#contact-message fieldset textarea{
-    width:440px;
-    height:150px;
-    resize: none;
-    overflow: scroll auto auto;
-    border: inherit;
-    border-radius: inherit;
-    margin-top: 5px;
-}
-section#contact-message fieldset input[type=submit] {
-    display: block;
-    color: #1c1f1f;
-    margin: 10px auto 0px auto;
-    text-shadow: 0px 1px 1px;
-    border-bottom: 2px solid #b1d6d6;
-    background-color: #b9e4e3;
-    background: -webkit-gradient(linear, left top, left bottom, from(#beeae9), to(#a8cfce));
-    background: -moz-linear-gradient(top, #beeae9, #a8cfce);
-    background: -o-linear-gradient(top, #beeae9, #a8cfce);
-    padding: 5px 20px;
-}
-section#contact-message fieldset input[type=submit]:hover {
-    border: 1px solid #a4a4a4;
-    color: #1c1f1f;
-    background-color: #363b3b;
-    background: -webkit-gradient(linear, left top, left bottom, from(#a8cfce), to(#beeae9));
-    background: -moz-linear-gradient(top, #a8cfce, #beeae9);
-    background: -o-linear-gradient(top, #a8cfce, #beeae9);
-    
-}
-/* ==== END MESSAGE FORM ==== */
-
 /* ==== START LOGIN FORM ==== */
 fieldset.login-form {
     border-radius: 8px;
     width: 250px;
     padding: 0px 5px 0px 5px;
-    margin: 10px;
+    float: right;
+    position: relative;
+    bottom: 5px;
 }
 fieldset.login-form div{
     width: 250px;
@@ -144,10 +70,10 @@ fieldset.login-form label {
 
 }
 fieldset.login-form legend {
-    font-weight: bold;
+    font-weight: normal;
     padding: 1px 2px;
     text-align: center;
-    text-transform: uppercase;
+    font-family: 'Times New Roman', Times, serif;
 }
 fieldset.login-form input {
     float:right;
@@ -157,16 +83,24 @@ fieldset.login-form input[type=submit] {
     color: #1c1f1f;
     margin: 0px;
 }
-fieldset.login-form input[type=checkbox], label[for="rememberuser"] {
+fieldset.login-form input[type=checkbox] {
     float: right;
+
+}
+fieldset.login-form label[for="rememberuser"] {
+    float:right;
+    font-size: 85%;
+    vertical-align:middle;
+    position: relative;
+    top: 1.5px;
 }
 /* ==== END LOGIN FORM ==== */
 
 /* ==== START HOME NAV BAR ==== */
 ul.home-nav {
     list-style-type: none;
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
     overflow: hidden;
     background-color: #333;
   }
@@ -189,7 +123,7 @@ ul.home-nav {
     font-family: Arial, Helvetica, sans-serif;
   }
   
-  li.home-nav a:hover:not(.active) {
+  li.home-nav a:hover:not(.home-nav-active) {
     background-color: #111;
   }
   
