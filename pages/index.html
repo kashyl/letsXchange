@@ -10,40 +10,35 @@
         </head>
     </header>
 <body>
-  
+
+  <header>
     <a href="/" id="nav-top"> <img class="logo" src="../assets/image/Logo.png" alt="letsXchange"> </a>
-    <br>
-    <!--<input type="search" name="search" placeholder="What are you looking for?" style="width:200px"/>
-    <input type="submit" value="Search" /> -->
+    <fieldset class="login-form">
+        <legend>Sign In</legend>
+        <div>
+            <label>Username: <input type="text" name="username" required="required" /></label><br>
+        </div>
+        <div>
+            <label>Password: <input type="password" name="password" required="required" /></label><br>
+        </div>
+        <div>
+            <input type="submit" value="Log in" />
+            <label for="rememberuser">Remember me</label>
+            <input type="checkbox" name="rememberuser" value="rememberuser" />            
+        </div>
+    </fieldset>
     <ul class="home-nav">
       <li class="home-nav"> </li>
-      <li class="home-nav"><a href="#home" class="home-nav-active">Home</a></li>
+      <li class="home-nav"><a href="/" class="home-nav-active">Home</a></li>
       <li class="home-nav"><a href="profile" class="home-nav">My Account</a></li>
       <li class="home-nav"><a href="contact" class="home-nav">Contact</a></li>
-      <li class="home-nav"> <input type="search" class="home-nav" name="search" placeholder="Search" style="width:200px"/>
-        <!-- <input type="submit" value="Search" /> --> </li>
+      <li class="home-nav"> <input type="search" class="home-nav" name="search"
+        placeholder="Search" style="width:200px"/> </li>
       <li class="home-nav" style="float:right"><a href="about" class="home-nav">About</a></li>
     </ul>
-    <hr>
+  </header>
+
   <main role="main">
-    
-      <fieldset class="login-form">
-          <legend>Sign In</legend>
-          <div>
-              <label>Username: <input type="text" name="username" required="required" /></label><br>
-          </div>
-          <div>
-              <label>Password: <input type="password" name="password" required="required" /></label><br>
-          </div>
-          <div>
-              <input type="submit" value="Log in" />
-              <label for="rememberuser">Remember me</label>
-              <input type="checkbox" name="rememberuser" value="rememberuser" />  
-                
-          </div>
-      </fieldset>
-    
-    <hr>   
     <style>
             table, th, td {
               border: 1px solid black;
@@ -77,9 +72,10 @@
             </tr>
           </table>
    </main>
-   <hr>
+
    <footer>
      <a href="#nav-top">Go to the top</a>
    </footer>
+
   </body>  
 </html>

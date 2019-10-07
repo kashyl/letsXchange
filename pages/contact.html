@@ -2,119 +2,112 @@
 <html>
     <head>
         <link href="../assets/css/styles.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/css/contact.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
         <title>LetsXchange Contact Us</title>
     </head>
     <body>
-        <a href="/" id="nav-top"><img class="logo" src="../assets/image/Logo.png" alt="letsXchange"></a> <br>
-        <input type="search" class="search-bar" name="search" placeholder="What are you looking for?"/>
-        <input type="submit" name="searchsubmit" value="Search" /> 
-         <nav id="main-navigation">
-             <ul class="nav">
-                <li class="nav"><a class="nav" href="/">Home</a></li>   
-                <li class="nav"><a class="nav" href="profile">My Account</a></li> 
-                <li class="nav"><a class="nav" href="contact">Contact Us</a></li>
-             </ul>   
-         </nav>
-        <main role="main">
-            <section id="contact-info">
-                <table>
-                    <tr>
-                        <th scope="col" colspan="2" class="table-title">Contact</th>
-                    </tr>
-                    <tr>
-                        <th scope="row">Telephone number:</th>
-                        <td>+44713378844</td>
-                     </tr> 
-                     <tr>
-                           <th scope="row">Email address:</th>
-                         <td><a href="mailto:contact@letsxchange.co.uk">contact@letsxchange.co.uk</a></td>
-                        </tr>
-                 </table>
-                <br>
-                <table>
-                    <tr>
-                        <th scope="col" colspan="3" class="table-title">Time Schedule</th>
-                    </tr>
-                    <tr>
-                        <th scope="row" rowspan="2">Customer support:</th>
-                        <td>Monday - Friday</td>
-                        <td>09:00 - 20:00</td>
-                    </tr>
-                    <tr>
-                        <td>Saturday</td>
-                        <td>09:00 - 13:00</td>
-                     </tr>
-                    <tr>
-                        <th scope="row">Call and live chat support: </th>
-                        <td> Monday - Friday</td>
-                        <td>09:00 - 18:00</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Office access hours:</th>
-                        <td>Monday - Thursday</td>
-                        <td>09:00 - 17:00</td>
-                    </tr>
-                </table>
-            </section>
-            
-            <br>
-            <!--Google Maps frame start-->
-            <section id="contact-map"> 
-                <h3>You can find us at: </h3>
-                <p>Priory St, Coventry CV1 5FB</p>
-                <iframe src="https://maps.google.com/maps?q=coventry%20university&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                width="650px" height="350px" frameborder="0" seamless>
-                </iframe> 
-                <br>
-            </section>
-            <!--Google Maps frame end-->
-            <br>
-            <section id="contact-message">
-                <h2>Send us a message</h2>
-                <fieldset>
-                    <legend>Contact Us</legend>
-                    <label for="contact-user-email">Email </label>
-                    <input type="email" name="contact-user-email" required />
-                    <label for="contact-user-nick">Nickname </label>
-                    <input type="text" name="contact-user-nick" />
-                    <br>
-                    <label for="contact-user-message">What can we help you with?</label> <br>
-                    <textarea name="contact-user-message">Write your message here...</textarea>
-                    <br>
-                    <input type="submit" value="Send message" />
+        <header>
+                <a href="/" id="nav-top"> <img class="logo" src="../assets/image/Logo.png" alt="letsXchange"> </a>
+                <fieldset class="login-form">
+                    <legend>Sign In</legend>
+                    <div>
+                        <label>Username: <input type="text" name="username" required="required" /></label><br>
+                    </div>
+                    <div>
+                        <label>Password: <input type="password" name="password" required="required" /></label><br>
+                    </div>
+                    <div>
+                        <input type="submit" value="Log in" />
+                        <label for="rememberuser">Remember me</label>
+                        <input type="checkbox" name="rememberuser" value="rememberuser" />            
+                    </div>
                 </fieldset>
-            </section>
-            <br>        
-            <!--audio player start-->
-            <audio controls>
-                <source src="../assets/audio/test-audio.mp3" />
-                <p>Audio format not supported by browser.</p>
-            </audio>
-            <!--audio player end-->
-            <br>
-            <!--video player start-->
-            <video
-            width="400" height="300"
-            poster="image/Logo.png"
-            preload="none"
-            controls    
-            loop>
-            <source src="../assets/video/puppy.mp4" type='video/mp4;codecs="avc1.42E01E, mp4a.40.2"' />
-            <p>A video of something</p>
-            </video>
-            <!--video player end-->
+                <ul class="home-nav">
+                    <li class="home-nav"> </li>
+                    <li class="home-nav"><a href="/" class="home-nav">Home</a></li>
+                    <li class="home-nav"><a href="profile" class="home-nav">My Account</a></li>
+                    <li class="home-nav"><a href="contact" class="home-nav-active">Contact</a></li>
+                    <li class="home-nav"> <input type="search" class="home-nav" name="search"
+                    placeholder="Search" style="width:200px"/> </li>
+                    <li class="home-nav" style="float:right"><a href="about" class="home-nav">About</a></li>
+                </ul>
+                </header>
+        <main role="main">
+            <!-- COLUMN 01 START -->
+            <div class="column01">
+                <section id="contact-info">
+                    <table>
+                        <tr>
+                            <th scope="col" colspan="2" class="table-title">Contact</th>
+                        </tr>
+                        <tr>
+                            <th scope="row">Telephone number:</th>
+                            <td>+44713378844</td>
+                            </tr> 
+                            <tr>
+                                <th scope="row">Email address:</th>
+                                <td><a href="mailto:contact@letsxchange.co.uk">contact@letsxchange.co.uk</a></td>
+                            </tr>
+                        </table>
+                    <br>
+                    <table>
+                        <tr>
+                            <th scope="col" colspan="3" class="table-title">Time Schedule</th>
+                        </tr>
+                        <tr>
+                            <th scope="row" rowspan="2">Customer support:</th>
+                            <td>Monday - Friday</td>
+                            <td>09:00 - 20:00</td>
+                        </tr>
+                        <tr>
+                            <td>Saturday</td>
+                            <td>09:00 - 13:00</td>
+                            </tr>
+                        <tr>
+                            <th scope="row">Call and live chat support: </th>
+                            <td> Monday - Friday</td>
+                            <td>09:00 - 18:00</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Office access hours:</th>
+                            <td>Monday - Thursday</td>
+                            <td>09:00 - 17:00</td>
+                        </tr>
+                    </table>
+                </section>
+                <!--Google Maps frame start-->
+                <section id="contact-map"> 
+                    <h3>You can find us at: </h3>
+                    <p>Priory St, Coventry CV1 5FB</p>
+                    <iframe src="https://maps.google.com/maps?q=coventry%20university&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                    frameborder="0" seamless>
+                    </iframe> 
+                </section>
+                <!--Google Maps frame end-->   
+            </div>     
+            <!-- COLUMN 01 END -->
 
-            <!-- flash player start-->
-            <script type="text/javascript">
-            swfobject.embedSWF("../assets/flash/bird.swf", "bird", "400", "300", "8.0.0");
-            </script>
-            <section id="bird"><p>An animation of a bird taking a shower</p></section>
-            <!-- flash player end-->
-
+            <!-- COLUMN 02 START -->
+            <div class="column02">
+                <section id="contact-message">
+                        <fieldset>
+                            <legend>Contact Us</legend>
+                            <label for="contact-user-email">Email </label>
+                            <input type="email" name="contact-user-email" required />
+                            <label for="contact-user-nick">Nick </label>
+                            <input type="text" name="contact-user-nick" />
+                            <br>
+                            <label for="contact-user-message">What can we help you with?</label> <br>
+                            <textarea name="contact-user-message">Write your message here...</textarea>
+                            <br>
+                            <input type="submit" value="Send message" />
+                        </fieldset>
+                    </section>
+            </div>   
+            <!-- COLUMN 02 END -->  
         </main>
-        <hr>
-        <footer>
+        <footer style="display: block;">
             <a href="#nav-top">Go to the top</a>
         </footer>
     </body>
