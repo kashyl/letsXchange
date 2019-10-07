@@ -1,0 +1,11 @@
+
+.listing:not(table) {
+    border: 1px solid black;
+}
+table.listing {
+  width:100%
+}
+th.listing {
+    width:5%; 
+    height: 200px;
+}
