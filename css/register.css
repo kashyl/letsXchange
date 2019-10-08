@@ -1,4 +1,4 @@
-
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:800italic);
 #nav, #feature, .article, #footer {
     background-color: #efefef;
     margin-top: 20px;
@@ -9,5 +9,23 @@
 }
 li {
     display: inline;
+    
+}
+h3.time-greet {
+    float: left;
+    clear: left;
+    width: 320px;
+    background-color: #fff;
+    color: #5a514c;
+    text-align: center;
+    margin: 0 0 0 50px;
+    padding: 25px 0 0 0;
+    font-family: 'Open Sans', arial, sans-serif;
+    font-size: 1.8em;
+    font-style: italic;
+    font-weight: 800;
+    line-height: 0.80em;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
     
 }

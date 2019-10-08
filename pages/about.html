@@ -8,6 +8,7 @@
         <meta name="description" content="Search and Post anything for trade!" />
         <meta name="keywords" content="exchange, trade, search, find, post" />
         <link rel="icon" href="/assets/ico/favicon.ico">
+        <script src="../js/jquery-3.4.1.js"></script>
     </head>
     <body>
 
@@ -32,63 +33,16 @@
                     <li><a href="about" class="current">About</a></li>
                     <li><a href="register" >Register</a></li> 
                 </ul>
-            </nav>      
-
+            </nav>                 
         </header>
 
         <main role="main">
             <p> This is an undergraduate project; if you find this then someone has stolen our web design</p>
         </main>
 
-        <footer>
-            
-            <div class="footer-upper">
-                <a href="#nav-top">
-                    <div><span>Back to top</span></div>
-                </a>
-            </div>   
-
-            <div class="footer-left">
-                <h3>lets<span>X</span>change</h3>
-
-                <p class="footer-links">
-                    <a href="/">Home</a>
-                    ·
-                    <a href="profile">My Account</a>
-                    ·
-                    <a href="contact">Contact</a>
-                    ·
-                    <a href="listing">Listing</a>
-                    ·
-                    <a href="login">Login</a>
-                    <!--·
-                    <a href="#">Contact</a>-->
-                </p>
-
-                <p class="footer-company-name">letsXchange © 2019</p>
-
-                <div class="footer-icons">
-                    <a id="fb" href="https://lmgtfy.com/?q=letsXchange+facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a id="tw" href="https://lmgtfy.com/?q=letsXchange+twitter"><i class="fab fa-twitter"></i></a>
-                    <a id="lk" href="https://lmgtfy.com/?q=letsXchange+linkedin"><i class="fab fa-linkedin-in"></i></a>
-                    <a id="gh" href="https://lmgtfy.com/?q=letsXchange+github"><i class="fab fa-github"></i></a>
-                </div>
-
-            </div>
-
-            <div class="footer-right">
-
-                <p>Contact Us</p>
-
-                <form action="#" method="post">
-
-                        <input type="text" name="email" placeholder="Email" required>
-                        <textarea name="message" placeholder="Message" required></textarea>
-                    <button>Send</button>
-
-                </form>
-    
-            </div>        
-        </footer>
+        <footer></footer>
+        <script>
+            $("footer:last-of-type").load("./pages/common/footer.html");
+        </script>
     </body>  
 </html>
