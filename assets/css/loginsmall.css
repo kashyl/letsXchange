@@ -1,0 +1,98 @@
+/* ==== START LOGIN FORM ==== */
+form.login {
+    border-radius: 8px;
+    width: 250px;
+    height:120px;
+    padding: 0px 5px;
+    float: right;
+    position: relative;
+    bottom: 5px;
+    background-color: #232f3e;
+    text-align: left;
+    color: #ffffff;
+}
+form.login .icon {
+    display: inline-block;
+	width: 35px;
+	height: 35px;
+	/*background-color:  #33383b;*/
+	border-radius: 2px;
+
+	font-size: 60px;
+    color: #ffffff;
+	text-align: center;
+    line-height: 35px;
+    margin-left: 10px;
+    margin-top: 10px;
+    position: absolute;
+}
+form.login input {
+    float: right;
+    display: block;
+    border-radius: 3px;
+    box-sizing: border-box;
+    background-color: #ffffffee;
+    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.1);
+    border:none;
+    resize:none;
+
+    margin: 2px 10px;
+
+    font: inherit;
+    font-size: 14px;
+    font-weight: normal;
+    color: #d1d2d2;
+
+    width: 150px;
+    padding: 10px;
+}
+form.login input:first-of-type {
+    margin-top: 6px;
+}
+form.login input:nth-of-type(2) {
+    margin-bottom: 5px;
+}
+form.login button {
+    border-radius: 3px;
+    background-color: #485769;
+    color: #ffffff;
+    border: 0;
+    padding: 5px 22px;
+    font-weight: bold;
+    float: right;
+    clear: both;
+    margin-right: 10px;
+}
+form.login button:hover {
+    background-color: #2ca02c;
+    cursor: pointer;
+}
+
+form.login input[type="checkbox"] {
+    float: left;
+    width: auto;
+    height: auto;
+    cursor: pointer;
+    margin-right: 4px;
+    margin-top: 10px;
+}
+form.login label[for="rememberuser"] {
+    float:left;
+    font-size: 85%;
+    vertical-align:middle;
+    font-family: Roboto;
+    margin-top: 8px;
+    /*position: relative;
+    top: 2.5px;*/
+}
+
+form.login ::-webkit-input-placeholder {
+    color: #5c666b;
+}
+form.login ::-moz-placeholder {
+    color: #5c666b;
+}
+form.login ::-ms-input-placeholder {
+    color: #5c666b;
+}
+/* ==== END LOGIN FORM ==== */
