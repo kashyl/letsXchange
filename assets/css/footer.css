@@ -12,26 +12,33 @@ footer {
     font-family: sans-serif;*/
 
 	text-align: left;
-	padding: 10px 60px 20px;
+	padding: 0px 0px 20px 0px;
     overflow: hidden;
 }
 
 footer .footer-upper {
-    position: absolute;
-    margin-left: 42%;
+    text-align: center;
     width: 100%;
+    height: 100%;
+    background-color: #37475A;
+    padding: 15px 0px;
+    cursor: pointer;
 }
-
-footer .footer-upper a {
+footer .footer-upper:hover {
+    background-color: #485769;
+}
+footer .footer-upper a div span {
     display:inline-block;
     vertical-align: top;
     color: #ffffff;
     text-decoration: none;
     font: normal 14px Roboto;
+    
 }
 footer .footer-left {
     float: left;
-    margin-top: 45px;
+    margin-left: 60px;
+    margin-top: 30px;
 }
 footer h3 {
     color: #ffffff;
@@ -67,7 +74,7 @@ footer .footer-icons a{
 	width: 35px;
 	height: 35px;
 	cursor: pointer;
-	background-color:  #33383b;
+	background-color:  #37475A;
 	border-radius: 2px;
 
 	font-size: 20px;
@@ -92,7 +99,8 @@ footer .footer-icons a#gh:hover{
 }
 footer .footer-right {
     float: right;
-    margin-top: 45px;
+    margin-top: 30px;
+    margin-right: 60px;
 }
 footer .footer-right p {
     display:inline-block;

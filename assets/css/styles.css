@@ -5,10 +5,12 @@
 /* default page style */
 html, body {
     min-width: 600px;
+    width: 100%;
     height: 100%;
     /*cursor:pointer;
     pointer-events: auto;*/
     font-family: Arial, Helvetica, sans-serif;
+    margin: 0 auto;
 }
 
 /* put footer on bottom of page */
@@ -17,6 +19,10 @@ main {
     min-height: 100vh;
     flex-direction: column;
     justify-content: space-between;
+
+    /* keep some space on the sides in the main part of the page */
+    width: 90%;
+    margin: 0 5%;
 }
 
 header {
