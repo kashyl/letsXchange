@@ -15,6 +15,7 @@ app.use(views(`${__dirname}`, { extension: 'html' }, {map: { handlebars: 'handle
 
 router.get('/', async ctx => await ctx.render('pages/index'))
 router.get('/login', async ctx => await ctx.render('pages/login'))
+router.get('/register', async ctx => await ctx.render('pages/register'))
 router.get('/profile', async ctx => await ctx.render('pages/profile'))
 router.get('/contact', async ctx => await ctx.render('pages/contact'))
 router.get('/listing', async ctx => await ctx.render('pages/listing'))

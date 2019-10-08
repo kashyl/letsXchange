@@ -8,6 +8,8 @@ form.login {
     background-color: #232f3e;
     text-align: left;
     color: #ffffff;
+    margin-top: 2px;
+    margin-right: 2px;
 }
 form.login .icon {
     display: inline-block;
