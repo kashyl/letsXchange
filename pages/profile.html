@@ -18,16 +18,19 @@
                 <input type="checkbox" name="rememberuser" value="rememberuser" />
                 <label for="rememberuser">Remember me</label>    
             </form>             
-            <ul class="nav">
-                <li class="nav"> </li>
-                <li class="nav"><a href="/" class="nav">Home</a></li>
-                <li class="nav"><a href="profile" class="nav-active">My Account</a></li>
-                <li class="nav"><a href="contact" class="nav">Contact</a></li>
-                <li class="nav"> <input type="search" class="nav" name="search"
-                    placeholder="Search" style="width:200px"/> </li> 
-                <li class="nav"><a href="about" class="nav">About</a></li>
-                <li class="nav"><a href="register" class="nav">Register</a></li> 
-            </ul>
+            <nav>
+                <ul>
+                    <li> </li>
+                    <li><a href="/" >Home</a></li>
+                    <li><a href="profile" class="current">My Account</a></li>
+                    <li><a href="contact" >Contact</a></li>
+                    <li> <input type="search"  name="search"
+                        placeholder="Search" style="width:200px"/> </li> 
+                    <li><a href="about" >About</a></li>
+                    <li><a href="register" >Register</a></li> 
+                </ul>
+            </nav>
+
         </header>
 
         <main role="main">
@@ -96,7 +99,7 @@
                 <script type="text/javascript">
                 swfobject.embedSWF("../assets/flash/bird.swf", "bird", "400", "300", "8.0.0");
                 </script>
-                <section id="bird"><p>An animation of a bird taking a shower</p></section>
+                <figure id="bird"><figcaption>An animation of a bird taking a shower</figcaption></figure>
                 <!-- flash player end-->
             </section>
         </main>

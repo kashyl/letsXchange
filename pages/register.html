@@ -2,7 +2,9 @@
 <html>
     <head>
         <link href="../assets/css/styles.css" rel="stylesheet" type="text/css" />
-        <link href="../assets/css/index.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/css/register.css" rel="stylesheet" type="text/css" />
+        <!--960 gs load-->
+        <link href="../assets/css/framework/960gs/css/960_12_col.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" type="text/css" href="../assets/svg/fontawesome-free-5.11.2-web/css/all.css" />
         <title> LetsXchange Homepage </title>
         <meta name="description" content="Search and Post anything for trade!" />
@@ -21,20 +23,33 @@
                 <input type="checkbox" name="rememberuser" value="rememberuser" />
                 <label for="rememberuser">Remember me</label>    
             </form>          
-            <ul class="nav">
-                <li class="nav"> </li>
-                <li class="nav"><a href="/" class="nav">Home</a></li>
-                <li class="nav"><a href="profile" class="nav">My Account</a></li>
-                <li class="nav"><a href="contact" class="nav">Contact</a></li>
-                <li class="nav"> <input type="search" class="nav" name="search"
-                    placeholder="Search" style="width:200px"/> </li> 
-                <li class="nav"><a href="about" class="nav">About</a></li>
-                <li class="nav"><a href="register" class="nav-active">Register</a></li> 
-            </ul>
+            <nav>
+                <ul>
+                    <li> </li>
+                    <li><a href="/" >Home</a></li>
+                    <li><a href="profile" >My Account</a></li>
+                    <li><a href="contact" >Contact</a></li>
+                    <li> <input type="search"  name="search"
+                        placeholder="Search" style="width:200px"/> </li> 
+                    <li><a href="about" >About</a></li>
+                    <li><a href="register" class="current">Register</a></li> 
+                </ul>
+            </nav>
+            
         </header>
 
         <main role="main">
-            
+            <div class="container_12 clearfix">
+                <div id="header" class="grid_12">
+                    <h1>Logo</h1>
+                </div>
+            </div>
+            <div class="article grid_4"><p>column 1</p></div>
+            <div class="article grid_4"><p>column 1</p></div>
+            <div class="article grid_4"><p>column 1</p></div>
+            <div id="footer" class="grid_12">
+                <p>&copy: Copyright 2019</p>
+            </div>
         </main>
 
         <footer>

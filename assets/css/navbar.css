@@ -1,65 +1,62 @@
 /* ==== START NAVIGATION BAR ==== */
-ul.nav {
+nav ul{
     list-style-type: none;
     margin: 0px;
     padding: 0px;
     overflow: hidden;
     background-color: #232f3e;   
-    border-radius: 3px;
 }
 
-li.nav {
+nav li {
     display: inline-block;
     border-right:1px solid #bbb;
     padding-right: 4px;
     
 }
 
-li.nav:first-child {
+nav li:first-child {
     border-left: none;
 }
 
-li.nav:nth-last-child(2) {
+nav li:nth-last-child(2) {
     float: right;
     z-index: 1;
 }
-li.nav:last-child {
+nav li:last-child {
     border-right: none;
     float: right;
     z-index: 2;
 }
 
-li.nav a {
+nav li a {
     display: block;
     color: white;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
     font-family: Arial, Helvetica, sans-serif;
-    border-radius: 3px;
 }
 
-li.nav a:hover:not(.nav-active) {
+nav li a:hover:not(.current) {
     background-color: #485769; 
 }
 
-a.nav-active {
+nav a.current {
     background-color: red;
 }
 
-input.nav[type=search] {
+nav input[type=search] {
     width: 200px;
     box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
+    border: 2px solid #37475A;
     font-size: 16px;
     background-color: none;
-    padding: 12px 20px 12px 20px;
+    padding: 10px 20px 10px 20px;
     -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;
 }
 
-input.nav[type=search]:focus {
+nav input[type=search]:focus {
     width: 100%;
 }
 /* ==== END NAVIGATION BAR ==== */

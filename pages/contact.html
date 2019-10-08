@@ -10,30 +10,33 @@
     </head>
     <body>
         <header>
-                <a href="/" id="nav-top"> <img class="logo" src="../assets/image/Logo.png" alt="letsXchange"> </a>
-                <form class="login" action="#" method="post">
-                    <div class="icon"><i class="fas fa-sign-in-alt"></i></div>
-                    <input type="text" name="username" placeholder="Username or Email" required="required" />
-                    <input type="password" name="password" placeholder="Password" required="required" />
-                    <button>Log In</button>   
-                    <input type="checkbox" name="rememberuser" value="rememberuser" />
-                    <label for="rememberuser">Remember me</label>    
-                </form>   
-            <ul class="nav">
-                <li class="nav"> </li>
-                <li class="nav"><a href="/" class="nav">Home</a></li>
-                <li class="nav"><a href="profile" class="nav">My Account</a></li>
-                <li class="nav"><a href="contact" class="nav-active">Contact</a></li>
-                <li class="nav"> <input type="search" class="nav" name="search"
-                    placeholder="Search" style="width:200px"/> </li> 
-                <li class="nav"><a href="about" class="nav">About</a></li>
-                <li class="nav"><a href="register" class="nav">Register</a></li> 
-            </ul>
+            <a href="/" id="nav-top"> <img class="logo" src="../assets/image/Logo.png" alt="letsXchange"> </a>
+            <form class="login" action="#" method="post">
+                <div class="icon"><i class="fas fa-sign-in-alt"></i></div>
+                <input type="text" name="username" placeholder="Username or Email" required="required" />
+                <input type="password" name="password" placeholder="Password" required="required" />
+                <button>Log In</button>   
+                <input type="checkbox" name="rememberuser" value="rememberuser" />
+                <label for="rememberuser">Remember me</label>    
+            </form>   
+            <nav>
+                <ul>
+                    <li> </li>
+                    <li><a href="/" >Home</a></li>
+                    <li><a href="profile" >My Account</a></li>
+                    <li><a href="contact" class="current">Contact</a></li>
+                    <li> <input type="search"  name="search"
+                        placeholder="Search" style="width:200px"/> </li> 
+                    <li><a href="about" >About</a></li>
+                    <li><a href="register" >Register</a></li> 
+                </ul>
+            </nav>
+
                 </header>
         <main role="main">
             <!-- COLUMN 01 START -->
-            <div class="column01">
-                <section id="contact-info">
+            <section class="column01">
+                <article id="contact-info">
                     <table>
                         <tr>
                             <th scope="col" colspan="2" class="table-title">Contact</th>
@@ -72,36 +75,36 @@
                             <td>09:00 - 17:00</td>
                         </tr>
                     </table>
-                </section>
+                </article>
                 <!--Google Maps frame start-->
-                <section id="contact-map"> 
+                <div id="contact-map"> 
                     <h3>You can find us at: </h3>
                     <p>Priory St, Coventry CV1 5FB</p>
                     <iframe src="https://maps.google.com/maps?q=coventry%20university&t=&z=13&ie=UTF8&iwloc=&output=embed"
                     frameborder="0" seamless>
                     </iframe> 
-                </section>
+                </div>
                 <!--Google Maps frame end-->   
-            </div>     
+            </section>     
             <!-- COLUMN 01 END -->
 
             <!-- COLUMN 02 START -->
-            <div class="column02">
-                <section id="contact-message">
-                        <fieldset>
-                            <legend>Contact Us</legend>
-                            <label for="contact-user-email">Email </label>
-                            <input type="email" name="contact-user-email" required />
-                            <label for="contact-user-nick">Nick </label>
-                            <input type="text" name="contact-user-nick" />
-                            <br>
-                            <label for="contact-user-message">What can we help you with?</label> <br>
-                            <textarea name="contact-user-message">Write your message here...</textarea>
-                            <br>
-                            <input type="submit" value="Send message" />
-                        </fieldset>
-                    </section>
-            </div>   
+            <section class="column02">
+                <div id="contact-message">
+                    <fieldset>
+                        <legend>Contact Us</legend>
+                        <label for="contact-user-email">Email </label>
+                        <input type="email" name="contact-user-email" required />
+                        <label for="contact-user-nick">Nick </label>
+                        <input type="text" name="contact-user-nick" />
+                        <br>
+                        <label for="contact-user-message">What can we help you with?</label> <br>
+                        <textarea name="contact-user-message">Write your message here...</textarea>
+                        <br>
+                        <input type="submit" value="Send message" />
+                    </fieldset>
+                </div>
+            </section>   
             <!-- COLUMN 02 END -->  
         </main>
         <footer>
