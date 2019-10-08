@@ -21,7 +21,6 @@ footer .footer-upper {
     width: 100%;
     height: 100%;
     background-color: #37475A;
-    padding: 15px 0px;
     cursor: pointer;
 }
 footer .footer-upper:hover {
@@ -34,6 +33,9 @@ footer .footer-upper a div span {
     text-decoration: none;
     font: normal 14px Roboto;
     
+}
+footer .footer-upper a div {
+    padding: 15px 0px;
 }
 footer .footer-left {
     float: left;
