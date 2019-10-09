@@ -37,11 +37,11 @@ nav li a {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-nav li a:hover:not(.current) {
+nav li a:hover:not(.active) {
     background-color: #485769; 
 }
 
-nav a.current {
+nav a.active {
     background-color: red;
 }
 

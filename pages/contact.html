@@ -8,32 +8,17 @@
         <title>LetsXchange Contact Us</title>
         <link rel="icon" href="/assets/ico/favicon.ico">
         <script src="../js/jquery-3.4.1.js"></script>
+
+        <!-- sets nav active element by checkling page url -->
+        <script src="../js/nav-active-page.js"></script>
+      
     </head>
     <body>
         <header>
-            <a href="/" id="nav-top"> <img class="logo" src="../assets/image/Logo.png" alt="letsXchange"> </a>
-            <form class="login" action="#" method="post">
-                <div class="icon"><i class="fas fa-sign-in-alt"></i></div>
-                <input type="text" name="username" placeholder="Username or Email" required="required" />
-                <input type="password" name="password" placeholder="Password" required="required" />
-                <button>Log In</button>   
-                <input type="checkbox" name="rememberuser" value="rememberuser" />
-                <label for="rememberuser">Remember me</label>    
-            </form>   
-            <nav>
-                <ul>
-                    <li> </li>
-                    <li><a href="/" >Home</a></li>
-                    <li><a href="profile" >My Account</a></li>
-                    <li><a href="contact" class="current">Contact</a></li>
-                    <li> <input type="search"  name="search"
-                        placeholder="Search" style="width:200px"/> </li> 
-                    <li><a href="about" >About</a></li>
-                    <li><a href="register" >Register</a></li> 
-                </ul>
-            </nav>
-
-                </header>
+            <script>
+                $("header:first-of-type").load("./pages/common/header.html");
+            </script>       
+        </header>
         <main role="main">
             <!-- COLUMN 01 START -->
             <section class="column01">
@@ -108,9 +93,11 @@
             </section>   
             <!-- COLUMN 02 END -->  
         </main>
-        <footer></footer>     
-        <script>
-            $("footer:last-of-type").load("./pages/common/footer.html");
-        </script>
+        <footer>
+            <script>
+                $("footer:last-of-type").load("./pages/common/footer.html");
+            </script>
+        </footer>     
+
     </body>
 </html>
