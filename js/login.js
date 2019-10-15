@@ -4,4 +4,7 @@ function validate(){
     if (username == "username" && password == "password"){
         alert("Success")
     }
+    else{
+        alert("Invalid Login")
+    }
 }
