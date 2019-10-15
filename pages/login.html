@@ -24,12 +24,12 @@
         </header>
 
         <main role="main">
-            
-                <form class="login" action="#" method="post">
+            <script src="js/login.js"></script>
+                <form class="login" method="post">
                         <div class="icon"><i class="fas fa-sign-in-alt"></i></div>
-                        <input type="text" name="username" placeholder="Username or Email" required="required" />
-                        <input type="password" name="password" placeholder="Password" required="required" />
-                        <button>Log In</button>   
+                        <input type="text" name="username" placeholder="Username or Email" required="required" id="username"/>
+                        <input type="password" name="password" placeholder="Password" required="required" id="password"/>
+                        <button onclick="validate()">Log In</button>   
                         <input type="checkbox" name="rememberuser" value="rememberuser" />
                         <label for="rememberuser">Remember me</label>    
                     </form> 
