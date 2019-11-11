@@ -48,3 +48,5 @@
 >4. Each item the person wants to swap should have a 'suggested swaps' link that takes them to a page that suggests who might be willing to swap and for what, including pictures.
 >5. This should include the 'make an offer' button.
 >
+# Unit testing FIRST principles:
+https://github.com/ghsukumar/SFDC_Best_Practices/wiki/F.I.R.S.T-Principles-of-Unit-Testing
