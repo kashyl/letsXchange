@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="../css/styles.css" rel="stylesheet" type="text/css" />
+        <link href="../css/register.css" rel="stylesheet" type="text/css" />
+        <!--960 gs load-->
+        <link href="../css/framework/960gs/css/960_12_col.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="../assets/svg/fontawesome-free-5.11.2-web/css/all.css" />
+        
+        <title> LetsXchange Homepage </title>
+        <meta name="description" content="Search and Post anything for trade!" />
+        <meta name="keywords" content="exchange, trade, search, find, post" />
+        <link rel="icon" href="/assets/ico/favicon.ico">
+
+        <script src="../js/jquery-3.4.1.js"></script>
+        <!-- sets nav active element by checkling page url -->
+        <script src="../js/nav-active-page.js"></script>
+      
+    </head>
+    <body>
+
+        <header>
+            <script>
+                $("header:first-of-type").load("./pages/common/header.html");
+            </script>       
+        </header>
+
+        <main role="main">
+            <fieldset style="border-radius: 8px; display: inline-block">
+                <legend>Register account</legend>
+                <label>Username*: <br>
+                    <input type="text" name="regusername" required="required" /></label><br>
+                <label>Email*: <br>
+                    <input type="text" name="email" required="required"/></label><br>
+                <label>Password*: <br>
+                    <input type="text" name="regpass" required="required" /></label><br>
+                <label>Repeat password*: <br>
+                    <input type="text" name="regpass2" required="required" /></label><br>
+                <label>Mobile: <br>
+                    <input type="text" name="mobile" /></label><br> 
+                <label for="gender">Gender: <br></label>
+                    <input id="male" type="radio" name="gender" value="m" />
+                <label for="male">Male</label>
+                    <input id="female" type="radio" name="gender" value="f" />
+                <label for="female">Female</label>
+                    <input id="special" type="radio" name="gender" value="n" />
+                <label for="special">Not specified</label><br>
+                    <input type="submit" value="Submit" />
+            </fieldset>
+        </main>
+
+        <footer>
+            <script>
+                $("footer:last-of-type").load("./pages/common/footer.html");
+            </script>
+        </footer>
+
+    </body>  
+</html>

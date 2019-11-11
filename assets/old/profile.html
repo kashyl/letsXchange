@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="../css/styles.css" rel="stylesheet" type="text/css" />
+        <link href="../css/framework/960gs/css/960_12_col.css" rel="stylesheet" type="text/css" />
+        
+        <link rel="stylesheet" type="text/css" href="../assets/svg/fontawesome-free-5.11.2-web/css/all.css" />
+        <title>LetsXchange Profile</title>
+        <link rel="icon" href="/assets/ico/favicon.ico">
+        
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+        <script src="../js/jquery-3.4.1.js"></script>
+        <!-- sets nav active element by checkling page url -->
+        <script src="../js/nav-active-page.js"></script>
+      
+    </head>
+    <body>
+
+        <header>
+            <script>
+                $("header:first-of-type").load("./pages/common/header.html");
+            </script>       
+        </header>
+
+        <main role="main">
+
+            <div class="container_12 clearfix">
+                <div id="header" class="grid_12">
+                    <h1>Logo</h1>
+                </div>
+            </div>
+            <div class="container_8 clearfix">
+            <script src="../js/time-greeting.js"></script>
+            </div>
+            <div class="article grid_4"><p>column 1</p></div>
+            <div class="article grid_4"><p>column 1</p></div>
+            <div class="article grid_4"><p>column 1</p></div>
+            <div id="footer" class="grid_12">
+                <p>&copy: Copyright 2019</p>
+            </div>
+                    
+            <section id="media">
+                <h1>Media</h1>
+                <!--audio player start-->
+                <audio controls>
+                    <!-- <source src="../assets/audio/test-audio.mp3" />
+                    <p>Audio format not supported by browser.</p>
+                </audio> -->
+                <!--audio player end-->
+                <br>
+                <!--video player start-->
+                <video
+                width="400" height="300"
+                poster="image/Logo.png"
+                preload="none"
+                controls    
+                loop>
+                <source src="../assets/video/puppy.mp4" type='video/mp4;codecs="avc1.42E01E, mp4a.40.2"' />
+                <p>A video of something</p>
+                </video>
+                <!--video player end-->
+                <br>
+                <!-- flash player start-->
+                <script type="text/javascript">
+                swfobject.embedSWF("../assets/flash/bird.swf", "bird", "400", "300", "8.0.0");
+                </script>
+                <figure id="bird"><figcaption>An animation of a bird taking a shower</figcaption></figure>
+                <!-- flash player end-->
+            </section>
+        </main>
+
+        <footer>
+            <script>
+                $("footer:last-of-type").load("./pages/common/footer.html");
+            </script>
+        </footer>
+
+    </body>
+</html>
