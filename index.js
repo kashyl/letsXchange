@@ -4,14 +4,20 @@
 
 const Koa = require('koa')
 const Router = require('koa-router')
+const stat = require('koa-static')
+const views = require('koa-views')
+const Database = require('sqlite-async')
+// const handlebars = require('koa-hbs-renderer')
+// const bodyParser = require('koa-bodyparser')
+
 const app = new Koa()
 const router = new Router()
-const views = require('koa-views')
-const port = 8080
 
-app.use(require('koa-static')('.'))
-
+app.use(stat('.'))
 app.use(views(`${__dirname}`, { extension: 'html' }, { map: { handlebars: 'handlebars' } }))
+
+const port = 8080
+const dbName = 'listings.db'
 
 router.get('/', async ctx => ctx.render('pages/index'))
 router.get('/login', async ctx => ctx.render('pages/login'))
