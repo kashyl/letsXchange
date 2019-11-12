@@ -5,7 +5,7 @@
         <link href="../css/index.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" type="text/css" href="../assets/svg/fontawesome-free-5.11.2-web/css/all.css" />
 
-        <title> LetsXchange Homepage </title>
+        <title> LetsXchange Log In </title>
         <meta name="description" content="Search and Post anything for trade!" />
         <meta name="keywords" content="exchange, trade, search, find, post" />
         <link rel="icon" href="/assets/ico/favicon.ico">
@@ -16,7 +16,6 @@
       
     </head>
     <body>
-
         <header>
             <script>
                 $("header:first-of-type").load("./pages/common/header.html");
@@ -24,15 +23,21 @@
         </header>
 
         <main role="main">
-            
-                <form class="login" action="#" method="post">
-                        <div class="icon"><i class="fas fa-sign-in-alt"></i></div>
-                        <input type="text" name="username" placeholder="Username or Email" required="required" />
-                        <input type="password" name="password" placeholder="Password" required="required" />
-                        <button>Log In</button>   
-                        <input type="checkbox" name="rememberuser" value="rememberuser" />
-                        <label for="rememberuser">Remember me</label>    
-                    </form> 
+            {{#if msg}}
+                <p class="msg">{{msg}}</p>
+            {{else}}
+            <h1>Log In</h1>
+
+            {{/if}}
+
+            <form action="/login" method="post" id="loginform" class="login">
+                <div class="icon"><i class="fas fa-sign-in-alt"></i></div>
+                <input type="text" name="user" placeholder="Username or Email" value="{{user}}" required="required" autofocus>
+                <input type="password" name="pass" placeholder="Password" required="required" value="">
+                <button type="submit" form="loginform">Log In</button>   
+                <input type="checkbox" name="rememberuser" value="rememberuser" />
+                <label for="rememberuser">Remember me</label>    
+            </form> 
     
         </main>
 

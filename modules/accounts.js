@@ -21,7 +21,7 @@
   async function runSQL(query) {
       try {
           console.log(query)
-          let DBName = "./database/accounts.db";
+          let DBName = "./database/database.db";
           const db = await sqlite.open(DBName);
           const data = await db.all(query);
           await db.close();

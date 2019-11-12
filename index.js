@@ -14,7 +14,6 @@ const sqlite = require('sqlite-async')
 const bcrypt = require('bcrypt-promise')
 const fs = require('fs-extra')
 const mime = require('mime-types')
-const Database = require('sqlite-async')
 // const handlebars = require('koa-hbs-renderer')
 // const jimp = require('jimp)
 
@@ -24,6 +23,8 @@ const accounts = require('./modules/accounts')
 const app = new Koa()
 const router = new Router()
 
+/* MIDDLEWARE CONFIGURATION */
+app.keys = ['darkSecret']
 app.use(staticDir('.'))
 app.use(bodyParser())
 app.use(session(app))
@@ -35,10 +36,9 @@ const port = 8080
  * The higher the "salt rounds" number, the stronger the encryption
  */
 const saltRounds = 10 
-const dbName = 'listings.db'
 
 router.get('/', async ctx => ctx.render('pages/index'))
-router.get('/login', async ctx => ctx.render('pages/login'))
+//router.get('/login', async ctx => ctx.render('pages/login'))
 //router.get('/register', async ctx => ctx.render('pages/register'))
 //router.get('/profile', async ctx => ctx.render('pages/profile'))
 router.get('/contact', async ctx => ctx.render('pages/contact'))
@@ -47,12 +47,12 @@ router.get('/about', async ctx => ctx.render('pages/about'))
 
 router.get('/profile', async ctx => {
     try {
-        if (ctx.session.authorised !== true) return ctx.redirect('pages/login')
+        if (ctx.session.authorised !== true) return ctx.redirect('/login?msg=you need to log in')   
         const data = {}
         if (ctx.query.msg) data.msg = ctx.query.msg
-        await ctx.render('index')
+        await ctx.render('./pages/profile')
     } catch(err) {
-        await ctx.render('./pages/error.handlebars', {message: err.message})
+        await ctx.render('./pages/error', {message: err.message})
     }
 })
 
@@ -95,17 +95,21 @@ router.post('/register', koaBody, async ctx => {
         await db.run(sql)
         await db.close()
         // Redirect user to home page
-        ctx.redirect(`/?msg=new user "${body.name}" added`)
+        ctx.redirect(`/?msg=new user "${body.user}" added`)
     } catch(err) {
         await ctx.render('./pages/error', {message: err.message})
     }
 })
 
 router.get('/login', async ctx => {
-    const data = {}
-    if (ctx.query.msg) data.msg = ctx.query.msg
-    if (ctx.query.user) data.user = ctx.query.user
-    await ctx.render('./pages/login', data)
+    try {
+        const data = {}
+        if (ctx.query.msg) data.msg = ctx.query.msg
+        if (ctx.query.user) data.user = ctx.query.user
+        await ctx.render('./pages/login', data)
+    } catch(err) {
+        await ctx.render('./pages/error', {message: err.message})
+}
 })
 
 router.post('/login', async ctx => {
@@ -122,27 +126,27 @@ router.post('/login', async ctx => {
         if (valid == false) return ctx.redirect(`/login?user=${body.user}&msg=invalid%20password`)
         // If the username and password are VALID
         ctx.session.authorised = true // AUTHORISES SESSION
-        return ctx.redidrect('/msg=you are now logged in')
+        return ctx.redirect('/?msg=you are now logged in...')
     } catch(err) {
         await ctx.render('./pages/error', {message: err.message})
     }
 })
-
-// router.post('/login', async ctx => { // 19 lines reduced to 10!
-// 	const body = ctx.request.body
-// 	try {
-// 		await accounts.checkCredentials(body.user, body.pass)
-// 		ctx.session.authorised = true
-// 		return ctx.redirect('/?msg=you are now logged in...')
-// 	} catch(err) {
-// 		return ctx.redirect(`/login?user=${body.user}&msg=${err.message}`)
-// 	}
-// })
+/*
+ router.post('/login', async ctx => { 
+ 	const body = ctx.request.body
+ 	try {
+ 		await accounts.checkCredentials(body.user, body.pass)
+ 		ctx.session.authorised = true
+ 		return ctx.redirect('/?msg=you are now logged in...')
+ 	} catch(err) {
+ 		return ctx.redirect(`/login?user=${body.user}&msg=${err.message}`)
+ 	}
+ })*/
 
 router.get('/logout', async ctx => {
     ctx.session.authorised = null;
     ctx.redirect('/')
-})
+}) 
 
 app.use(router.routes())
 module.exports = app.listen(port, async() => {
