@@ -26,37 +26,24 @@
         </header>
 
         <main role="main">
-            <h1>Create an Account</h1>
-            <form action="/register" enctype="multipart/form-data" method="post">
-                <fieldset style="border-radius: 8px; display: inline-block">
-                    <legend>Register account</legend>
-                    <label>Username*: <br>
-                        <input type="text" name="user" required="required" /></label><br>
-                    <label>Email*: <br>
-                        <input type="text" name="email" required="required"/></label><br>
-                    <label>Password*: <br>
-                        <input type="password" name="pass" required="required" /></label><br>
-                    <label>Repeat password*: <br>
-                        <input type="password" name="repass" required="required" /></label><br>
-                    <label>Mobile: <br>
-                        <input type="text" name="mobile" /></label><br> 
+            
+            <form action="/register" enctype="multipart/form-data" method="post" id="registerform" class="register">    
+                <img class="logo" src="../assets/image/LogoWhite.png" alt="letsXchange">
+                <span>Create an Account</span>          
+                <input type="text" name="user" required="required" placeholder="Nickname"/>
+                <input type="email" name="email" required="required" placeholder="Email address"/>
+                <input type="password" name="pass" required="required" placeholder="Password"/>
+                <input type="password" name="repass" required="required" placeholder="Re-type password"/>
+                <input type="text" name="mobile" placeholder="Contact number (optional)"/>
+                </br>
 
-                    <label for="gender">Gender: <br></label>
-                        <input id="male" type="radio" name="gender" value="m" />
-                    <label for="male">Male</label>
-                        <input id="female" type="radio" name="gender" value="f" />
-                    <label for="female">Female</label>
-                        <input id="special" type="radio" name="gender" value="n" />
-                    <label for="special">Not specified</label><br>
-
-                    <p>Nationality: <br /><select name="country">
-                        {{#each countries}}
-                        <option value="{{this}}">{{this}}</option>
-                        {{/each}}
-                    </select></p>
-                    <p>Profile Picture:<br /><input type="file" name="avatar"></p>
-			        <p><input type="submit" value="Create"></p>
-                </fieldset>
+                <!--<p>Nationality: <br /><select name="country">
+                    {{#each countries}}
+                    <option value="{{this}}">{{this}}</option>
+                    {{/each}}
+                </select></p>
+                <p>Profile Picture:<br /><input type="file" name="avatar"></p>-->
+                <button type="submit" form="registerform">Register</button>
             </form>
 
         </main>
