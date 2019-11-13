@@ -6,8 +6,13 @@ if (hourNow > 18) {
   greeting = 'Good evening!'
 } else if (hourNow > 12) {
   greeting = 'Good afternoon!'
-} else if (hourNow > 0) {
+} else if (hourNow > 5) {
   greeting = 'Good morning!'
+} else if (hourNow >= 0) {
+  greeting = 'Hello there, night owl!'
+} else {
+  greeting = 'Hello, what time was it again?'
 }
 
-document.write('<h3 class="time-greet">' + greeting + '</h3>')
+document.getElementById('time-greet').innerHTML = greeting
+// document.write('<h3 class="time-greet">' + greeting + '</h3>')

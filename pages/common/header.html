@@ -17,8 +17,14 @@
             </div>
         
             <div class="navbar-right-wrapper">
-                <li><a href="login">Sign In</a></li>
-                <li><a href="register" >Register</a></li> 
+                <li><a href="login" id="nav-sign-in">Sign In</a></li>
+                <li><a href="register" id="nav-register">Register</a></li> 
+                <li><a href="logout" id="nav-logout" onclick="logoutConfirm()">Logout</a></li>
+                <script>
+                    function logoutConfirm() {
+                        confirm('Are you sure you want to log out?');
+                    }
+                </script>
                 <li><a href="about">About</a></li>
             </div>
         </div>

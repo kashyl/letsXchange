@@ -112,7 +112,7 @@ router.get('/login', async ctx => {
 }
 })
 
-router.post('/login', async ctx => {
+/*router.post('/login', async ctx => {
     try {
         const body = ctx.request.body
         const db = await sqlite.open('./database/database.db')
@@ -131,7 +131,7 @@ router.post('/login', async ctx => {
         await ctx.render('./pages/error', {message: err.message})
     }
 })
-/*
+*/
  router.post('/login', async ctx => { 
  	const body = ctx.request.body
  	try {
@@ -141,7 +141,7 @@ router.post('/login', async ctx => {
  	} catch(err) {
  		return ctx.redirect(`/login?user=${body.user}&msg=${err.message}`)
  	}
- })*/
+ })
 
 router.get('/logout', async ctx => {
     ctx.session.authorised = null;
