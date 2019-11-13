@@ -1,0 +1,35 @@
+div#profile-details {
+    display: flex;
+    justify-content: center;
+    border: none;
+}
+
+div#profile-details fieldset, form{
+    max-width: 300px;
+    display: inline-block;
+    margin: 0 25px;
+}
+
+div#profile-details fieldset:first-child {
+    margin-left: 0;
+}
+
+div#profile-details fieldset:last-child {
+    margin-right: 0;
+}
+div#profile-details fieldset:last-child {
+    margin-right: 0;
+}
+
+div#profile-details img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+div#current {
+    border: 2px solid grey;
+    min-width: 250px;
+    min-height: 400px;
+    /*padding: 5.6px 12px 10px;*/
+}
