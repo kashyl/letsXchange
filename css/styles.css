@@ -41,12 +41,16 @@ main {
     max-width: 1460px;
     min-width: 1100px;
 }
+
+div#upper-header {
+    height: 70px;
+}
 img.auto {
     height: auto;
     width: auto;
 }
 img.logo {
-    height: 120px;
+    height: 60px;
     width: 250px;
 }
 

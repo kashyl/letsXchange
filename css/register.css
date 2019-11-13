@@ -24,10 +24,6 @@ form.register {
     text-align: center;
 }
 
-form.register img.logo {
-    margin: -20px 0px -30px 0px;
-}
-
 form.register span {
     width: 250px;
     height: 40px;
