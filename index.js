@@ -4,6 +4,7 @@
 'use strict'
 
 const Koa = require('koa')
+const hbs = require('koa-hbs')
 const Router = require('koa-router')
 const views = require('koa-views')
 const staticDir = require('koa-static')
@@ -24,7 +25,7 @@ const app = new Koa()
 const router = new Router()
 
 /* MIDDLEWARE CONFIGURATION */
-app.keys = ['darkSecret']
+app.keys = ['verySecretKey']
 app.use(staticDir('.'))
 app.use(bodyParser())
 app.use(session(app))
@@ -42,7 +43,6 @@ router.get('/', async ctx => {
         const data = {}
         data.auth = false
         if (ctx.session.authorised === true) { data.auth = true }
-        console.log(data.auth)
         await ctx.render('./pages/index', data)
     } catch(err) {
         await ctx.render('./pages/error', {message: err.message})
@@ -60,7 +60,10 @@ router.get('/profile', async ctx => {
         if (ctx.session.authorised !== true) return ctx.redirect('/login?msg=you need to log in')   
         const data = {}
         if (ctx.query.msg) data.msg = ctx.query.msg
-        await ctx.render('./pages/profile')
+        if (ctx.query.user) data.user = ctx.query.user
+        data.countries = ['UK', 'Europe', 'Other']
+        //if (!ctx.session.isNew) console.log('User logged in'); means user is logged in
+        await ctx.render('./pages/profile', data)
     } catch(err) {
         await ctx.render('./pages/error', {message: err.message})
     }
@@ -90,20 +93,21 @@ router.post('/register', koaBody, async ctx => {
         const body = ctx.request.body
         console.log(body)
         // Processing file
-        const {path, type} = ctx.request.files.avatar
+        /*const {path, type} = ctx.request.files.avatar
         const fileExtension = mime.extension(type)
         console.log(`path: ${path}`)
         console.log(`type: ${type}`)
         console.log(`fileExtension: ${fileExtension}`)
-        await fs.copy(path, 'assets/public/avatars/avatar.png')
+        await fs.copy(path, `assets/public/avatars/${body.user}.png`)*/
         // ENCRYPT PASSWORD, BUILD SQL
         body.pass = await bcrypt.hash(body.pass, saltRounds)
-        const sql = `INSERT INTO users(user, pass) VALUES("${body.user}", "${body.pass}")`
+        const sql = `INSERT INTO users(user, pass, email) VALUES("${body.user}", "${body.pass}", "${body.email}")`
         console.log(sql)
         // DATABASE COMMANDS
         const db = await sqlite.open('./database/database.db')
         await db.run(sql)
         await db.close()
+
         // Redirect user to home page
         ctx.redirect(`/?msg=new user "${body.user}" added`)
     } catch(err) {
@@ -127,7 +131,7 @@ router.get('/login', async ctx => {
  	try {
  		await accounts.checkCredentials(body.user, body.pass)
  		ctx.session.authorised = true
- 		return ctx.redirect('/?msg=you are now logged in...')
+ 		return ctx.redirect(`/profile?user=${body.user}`)
  	} catch(err) {
  		return ctx.redirect(`/login?user=${body.user}&msg=${err.message}`)
  	}
