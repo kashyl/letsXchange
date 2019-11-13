@@ -37,7 +37,17 @@ const port = 8080
  */
 const saltRounds = 10 
 
-router.get('/', async ctx => ctx.render('pages/index'))
+router.get('/', async ctx => {
+    try {
+        const data = {}
+        data.auth = false
+        if (ctx.session.authorised === true) { data.auth = true }
+        console.log(data.auth)
+        await ctx.render('./pages/index', data)
+    } catch(err) {
+        await ctx.render('./pages/error', {message: err.message})
+    }
+})
 //router.get('/login', async ctx => ctx.render('pages/login'))
 //router.get('/register', async ctx => ctx.render('pages/register'))
 //router.get('/profile', async ctx => ctx.render('pages/profile'))
@@ -112,26 +122,6 @@ router.get('/login', async ctx => {
 }
 })
 
-/*router.post('/login', async ctx => {
-    try {
-        const body = ctx.request.body
-        const db = await sqlite.open('./database/database.db')
-        // Check if the username exists
-        const records = await db.get(`SELECT count(id) AS count FROM users WHERE user="${body.user}";`)
-        if (!records.count) return ctx.redirect('/login?msg=invalid%20username')
-        const record = await db.get(`SELECT pass FROM users WHERE user = "${body.user}";`)
-        await db.close()
-        // Check if the password matches
-        const valid = await bcrypt.compare(body.pass, record.pass)
-        if (valid == false) return ctx.redirect(`/login?user=${body.user}&msg=invalid%20password`)
-        // If the username and password are VALID
-        ctx.session.authorised = true // AUTHORISES SESSION
-        return ctx.redirect('/?msg=you are now logged in...')
-    } catch(err) {
-        await ctx.render('./pages/error', {message: err.message})
-    }
-})
-*/
  router.post('/login', async ctx => { 
  	const body = ctx.request.body
  	try {

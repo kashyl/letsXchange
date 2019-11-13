@@ -19,6 +19,14 @@
             <div class="navbar-right-wrapper">
                 <li><a href="login" id="nav-sign-in">Sign In</a></li>
                 <li><a href="register" id="nav-register">Register</a></li> 
+                <script>
+                    const register = document.getElementById('nav-register');
+                    console.log('sad')
+                    if (session.authorised === true) {
+                        register.style.visibility = 'hidden';
+                        register.style.position = 'absolute';
+                    }
+                </script>
                 <li><a href="logout" id="nav-logout" onclick="logoutConfirm()">Logout</a></li>
                 <script>
                     function logoutConfirm() {
