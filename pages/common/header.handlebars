@@ -18,8 +18,15 @@
         
             <div class="navbar-right-wrapper">
                 <li><a href="login" id="nav-sign-in">Sign In</a></li>
-                <li><a href="register" id="nav-register">Register</a></li> 
-
+                <li><a href="register" id="nav-register">Register</a></li>
+                <!--{{#if auth}}
+                <script>
+                    console.log(this)
+                    var register = document.getElementById('nav-register');
+                    register.style.visibility = 'hidden';
+                    register.style.position = 'absolute';
+                </script>
+                {{/if}} -->
                 <li><a href="logout" id="nav-logout" onclick="logoutConfirm()">Logout</a></li>
                 <script>
                     function logoutConfirm() {

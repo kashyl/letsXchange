@@ -59,6 +59,10 @@ nav li a:hover:not(.active) {
     background-color: #485769; 
 }
 
+nav li a#nav-logout:hover:not(.active) {
+    background-color: rgb(221, 34, 34);
+}
+
 nav a.active {
     background-color: rgb(63, 189, 211);
 }
