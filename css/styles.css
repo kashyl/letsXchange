@@ -83,3 +83,15 @@ div.time-greet {
     letter-spacing: -0.2%;
     text-transform: uppercase;
 }
+
+.bigtext {
+    width: 250px;
+    height: 40px;
+    text-align: center;
+    font-family: 'Open Sans', arial, sans-serif;
+    font-size: 140%;
+    font-style: italic;
+    text-transform: uppercase;
+
+    display: block;
+}

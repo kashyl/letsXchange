@@ -136,6 +136,25 @@ footer form textarea {
     width: 400px;
     padding: 18px;
 }
+footer form input {
+    height:40px;
+    margin-bottom:5px;
+    display: inline-block;
+}
+footer form input[type=text] {
+    width: 150px;
+}
+footer form input[type=email] {
+    width: 250px;
+}
+footer form textarea {
+    height: 120px;
+    margin-bottom: 15px;
+    width: 405px;
+}
+footer form textarea:focus {
+    outline: none;
+}
 footer button:hover {
     background-color: #485769;
     cursor: pointer;
@@ -149,13 +168,8 @@ footer ::-moz-placeholder {
 footer ::-ms-input-placeholder {
     color: #5c666b;
 }
-footer form input {
-    height:55px;
-    margin-bottom:15px;
-}
-footer form textarea {
-    height: 100px;
-    margin-bottom: 20px;
+footer form input:focus {
+    outline: none;
 }
 footer form button {
     border-radius: 3px;

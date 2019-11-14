@@ -1,3 +1,11 @@
+div#column1 {
+    width: 50%;
+    float: left;
+}
+div#column2 {
+    width: 50%;
+    float: right;
+}
 
 /* ==== START GOOGLE MAPS ==== */
 div#contact-map {
@@ -18,90 +26,93 @@ div#contact-map iframe {
 /* ==== END GOOGLE MAPS ==== */
 
 /* ==== START CONTACT INFO TABLE ==== */
-article#contact-info {
-    width: 550px;
-    height: 330px;
+section#contact-info {
+    min-width: 550px;
+    float: left;
+    margin-bottom: 25px;
 }
-article#contact-info table {
-    width: inherit;
+section#contact-info table {
+    min-width: inherit;
     font-family: sans-serif;
     border-collapse: collapse;
 }
-article#contact-info table th.table-title {
+section#contact-info table th.table-title {
     text-align: center;
     font-size: 125%;
     padding: 5px;
+    background-color: #f2f2f2;
 }
-article#contact-info table th{
+section#contact-info table th{
     text-transform: uppercase;
 }
-article#contact-info table th, td {
+section#contact-info table th, section#contact-info table td {
     letter-spacing: 0.04em;
     font-size: 90%;
     border: 1px solid #999999;
     text-align: left;
     padding: 7px 10px 10px 10px;
 }
+
+section#contact-info table a[href^="mailto"]:hover {
+    cursor: pointer;
+}
 /* ==== END CONTACT INFO TABLE ==== */
 
 /* ==== START MESSAGE FORM ==== */
-div#contact-message {
-    width: 500px;
-    height: 400px;
+/* Style inputs with type="text", select elements and textareas */
+div.contact-form input[type=text], div.contact-form input[type=email], div.contact-form select, div.contact-form textarea {
+    width: 100%; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+    resize: vertical; /* Allow the user to vertically resize the textarea (not horizontally) */
+    max-height: 500px;
 }
-div#contact-message fieldset {
-    width: 450px;
-    border: 1px solid #b1d6d6;
-    border-radius: 10px; 
-    display: inline-block;
-    padding:15px;
-    text-align: center;
+
+div.contact-form input:focus, div.contact-form textarea:focus {
+    outline: none;
+} 
+
+/* Style the submit button with a specific background color etc */
+div.contact-form input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
-div#contact-message fieldset legend {
-    background-color: #b1d6d6;
-    font-weight: bold;
-    border: inherit;
-    border-radius: inherit;
-    padding: 5px 10px;
+
+/* When moving the mouse over the submit button, add a darker green color */
+div.contact-form input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+/* Add a background color and some padding around the form */
+div.contact-form {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    float:right;
+    max-width: 500px;
+}
+
+div.contact-form span.bigtext {
+    width: 350px;
+    height: 40px;
     text-align: center;
+    font-family: 'Open Sans', arial, sans-serif;
+    font-size: 180%;
+    font-style: italic;
     text-transform: uppercase;
-}
-div#contact-message fieldset input {
-    border-style: none none solid none;
-    border-width: 1px;
-    border-color: #b1d6d6;
-    margin-bottom: 10px;
-    margin-right: 10px;
-    
-}
-div#contact-message fieldset textarea{
-    width:440px;
-    height:150px;
-    resize: none;
-    overflow: scroll auto auto;
-    border: inherit;
-    border-radius: inherit;
-    margin-top: 5px;
-}
-div#contact-message fieldset input[type=submit] {
+
+    color: #676766;
+
     display: block;
-    color: #1c1f1f;
-    margin: 10px auto 0px auto;
-    text-shadow: 0px 1px 1px;
-    border-bottom: 2px solid #b1d6d6;
-    background-color: #b9e4e3;
-    background: -webkit-gradient(linear, left top, left bottom, from(#beeae9), to(#a8cfce));
-    background: -moz-linear-gradient(top, #beeae9, #a8cfce);
-    background: -o-linear-gradient(top, #beeae9, #a8cfce);
-    padding: 5px 20px;
+    margin: 0 auto;
 }
-div#contact-message fieldset input[type=submit]:hover {
-    border: 1px solid #a4a4a4;
-    color: #1c1f1f;
-    background-color: #363b3b;
-    background: -webkit-gradient(linear, left top, left bottom, from(#a8cfce), to(#beeae9));
-    background: -moz-linear-gradient(top, #a8cfce, #beeae9);
-    background: -o-linear-gradient(top, #a8cfce, #beeae9);
-    
-}
+
 /* ==== END MESSAGE FORM ==== */

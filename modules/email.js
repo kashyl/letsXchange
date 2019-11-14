@@ -24,11 +24,11 @@ var transporter = nodemailer.createTransport({
   }
 })
 
-module.exports.contactUs = async(email, message) => {
+module.exports.contactUs = async(name, email, message) => {
   var mailOptions = {
     from: siteEmail.address,
     to: siteEmail.address,
-    subject: `Contact Us - ${email}`,
+    subject: `Contact Us: ${name} - ${email}`,
     text: message
   }
   transporter.sendMail(mailOptions, function (error, info) {

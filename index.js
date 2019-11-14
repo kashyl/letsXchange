@@ -154,9 +154,9 @@ router.get('/logout', async ctx => {
 router.post('/contact-us', async ctx => {
     try {
         const body = ctx.request.body
-        email.contactUs(body.email, body.message)
-        const msg = 'Thank you for contacting us, we will try to get back to you shortly!'
-        return ctx.redirect(`/contact?msg=` + msg)
+        email.contactUs(body.name, body.email, body.message)
+        const msg = ', thank you for contacting us, we will try to get back to you shortly!'
+        return ctx.redirect(`/contact?msg=` + body.name + msg)
     } catch(err) {
         return ctx.redirect(`/contact?errmsg=${err.message}`)
     }
