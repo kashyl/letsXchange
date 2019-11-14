@@ -1,20 +1,15 @@
 <div id="upper-header">
-    <a href="/" id="nav-top"> <img class="logo" src="../assets/image/Logo.png" alt="letsXchange"> </a>  
+    <a href="/" id="nav-top"> <img class="logo" src="../assets/image/LogoWhite.png" alt="letsXchange"> </a>  
 </div>
     
 <nav>
     <ul>
-        <div class="navbar-main-wrapper">
+        <div class="navbar-main-wrapper"> 
 
             <div class="navbar-left-wrapper">
                 <li><a href="/" >Home</a></li>
                 <li><a href="profile" >My Account</a></li>
                 <li><a href="contact" >Contact</a></li>
-            </div>
-    
-            <div class="navbar-search-wrapper">
-                <li> <input type="search"  name="search"
-                    placeholder="Search" /> </li> 
             </div>
         
             <div class="navbar-right-wrapper">
@@ -39,6 +34,16 @@
                     }
                 </script>
                 <li><a href="about">About</a></li>
+            </div>
+
+            <!-- MIDDLE FILL -->
+            <div class="navbar-search-wrapper"> 
+                <li>
+                <form action="/search" id="searchform" method="GET">
+                    <input type="search" name="search" placeholder="What are you looking for..." /> 
+                    <button type="submit" form="searchform"><i class="fa fa-search"></i></button>
+                </form>
+                </li>
             </div>
         </div>
 

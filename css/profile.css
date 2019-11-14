@@ -4,7 +4,13 @@ div#profile-details {
     border: none;
 }
 
-div#profile-details fieldset, form{
+div#profile-details fieldset {
+    max-width: 300px;
+    display: inline-block;
+    margin: 0 25px;
+}
+
+div#profile-details form {
     max-width: 300px;
     display: inline-block;
     margin: 0 25px;
