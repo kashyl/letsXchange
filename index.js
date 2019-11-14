@@ -15,17 +15,20 @@ const sqlite = require('sqlite-async')
 const bcrypt = require('bcrypt-promise')
 const fs = require('fs-extra')
 const mime = require('mime-types')
-// const handlebars = require('koa-hbs-renderer')
-// const jimp = require('jimp)
+const nodemailer = require('nodemailer');
+
+/* How to env variable: env.parsed.'env variable name */
+const env = require('dotenv').config();
 
 /* CUSTOM MODULES */
 const accounts = require('./modules/accounts')
+const email = require('./modules/email.js')
 
 const app = new Koa()
 const router = new Router()
 
 /* MIDDLEWARE CONFIGURATION */
-app.keys = ['verySecretKey']
+app.keys = [env.parsed.APP_KEYS]
 app.use(staticDir('.'))
 app.use(bodyParser())
 app.use(session(app))
@@ -48,10 +51,16 @@ router.get('/', async ctx => {
         await ctx.render('./pages/error', {message: err.message})
     }
 })
-//router.get('/login', async ctx => ctx.render('pages/login'))
-//router.get('/register', async ctx => ctx.render('pages/register'))
-//router.get('/profile', async ctx => ctx.render('pages/profile'))
-router.get('/contact', async ctx => ctx.render('pages/contact'))
+
+router.get('/contact', async ctx => {
+    try {
+        const data = {}
+        if (ctx.query.msg) data.msg = ctx.query.msg
+        await ctx.render('./pages/contact', data)
+    } catch(err) {
+        await ctx.render('./pages/error', {message: err.message})
+}
+})
 router.get('/listing', async ctx => ctx.render('pages/listing'))
 router.get('/about', async ctx => ctx.render('pages/about'))
 
@@ -101,7 +110,7 @@ router.post('/register', koaBody, async ctx => {
         await fs.copy(path, `assets/public/avatars/${body.user}.png`)*/
         // ENCRYPT PASSWORD, BUILD SQL
         body.pass = await bcrypt.hash(body.pass, saltRounds)
-        const sql = `INSERT INTO users(user, pass, email) VALUES("${body.user}", "${body.pass}", "${body.email}")`
+        let sql = `INSERT INTO users(user, pass, email, mobile) VALUES("${body.user}", "${body.pass}", "${body.email}", "${body.mobile}")`
         console.log(sql)
         // DATABASE COMMANDS
         const db = await sqlite.open('./database/database.db')
@@ -141,6 +150,17 @@ router.get('/logout', async ctx => {
     ctx.session.authorised = null;
     ctx.redirect('/')
 }) 
+
+router.post('/contact-us', async ctx => {
+    try {
+        const body = ctx.request.body
+        email.contactUs(body.email, body.message)
+        const msg = 'Thank you for contacting us, we will try to get back to you shortly!'
+        return ctx.redirect(`/contact?msg=` + msg)
+    } catch(err) {
+        return ctx.redirect(`/contact?errmsg=${err.message}`)
+    }
+})
 
 app.use(router.routes())
 module.exports = app.listen(port, async() => {

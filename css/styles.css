@@ -56,18 +56,20 @@ img.logo {
 
 .msg {
     border-radius: 8px;
-    background-color: red;
-    height:30px;
+    background-color: #ff7300;
     min-width: 250px;
-    text-align: left;
     color: #ffffff;
     text-align: center;
     font-size: 24px;
     text-transform: uppercase;
-    display: inline-block;
+    text-align: center;
+    font-family: 'Open Sans', arial, sans-serif;
+    font-size: 140%;
+    font-style: italic;
+    text-transform: uppercase;
   }
 
-  div.time-greet {
+div.time-greet {
     width: 100%;
     height: 100%;
     display: inline-block;

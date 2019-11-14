@@ -1,7 +1,11 @@
 
 #https://www.atlassian.com/git/tutorials/saving-changes/gitignore#git-ignore-patterns
 
+#ENVIRONMENT VARIABLES (passwords and keys)
+.env
 
+#NPM PACKAGES DIRECTORY
 node_modules
+
 css/framework/*
 **/framework

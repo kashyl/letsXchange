@@ -13,6 +13,7 @@
     "bcrypt": "^3.0.3",
     "bcrypt-promise": "^2.0.0",
     "core-util-is": "^1.0.2",
+    "dotenv": "^8.2.0",
     "fs-extra": "^7.0.1",
     "handlebars": "^4.1.0",
     "jimp": "^0.6.0",
@@ -26,6 +27,7 @@
     "koa-static": "^5.0.0",
     "koa-views": "^6.2.1",
     "mime-types": "^2.1.22",
+    "nodemailer": "^6.3.1",
     "sqlite": "^3.0.3",
     "sqlite-async": "^1.0.12",
     "sqlite3": "^4.1.0"

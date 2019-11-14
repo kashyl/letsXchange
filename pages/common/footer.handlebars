@@ -34,9 +34,9 @@
 
         <p>Contact Us</p>
 
-        <form action="#" method="post" id="contact-us">
-             <input type="text" name="email" placeholder="Email" required>
-             <textarea name="message" placeholder="Message" required></textarea>
+        <form action="/contact-us" method="post" id="contact-us">
+             <input type="email" name="email" placeholder="Contact Email" required>
+             <textarea name="message" placeholder="Message (750 characters max)" maxlength="750" required></textarea>
             <button form="contact-us">Send</button>
         </form>
     </div>
