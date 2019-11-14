@@ -3,16 +3,18 @@
 </div>
     
 <nav>
-    <ul>
-        <div class="navbar-main-wrapper"> 
+    <div class="nav_my_main">
 
-            <div class="navbar-left-wrapper">
+
+        <div class="navbar-main-wrapper">
+
+            <ul class="navbar-left-wrapper">
                 <li><a href="/" >Home</a></li>
                 <li><a href="profile" >My Account</a></li>
                 <li><a href="contact" >Contact</a></li>
-            </div>
-        
-            <div class="navbar-right-wrapper">
+            </ul>
+
+            <ul class="navbar-right-wrapper">
                 <li><a href="login" id="nav-sign-in">Sign In</a></li>
                 <li><a href="register" id="nav-register">Register</a></li>
                 <!--{{#if auth}}
@@ -34,18 +36,17 @@
                     }
                 </script>
                 <li><a href="about">About</a></li>
-            </div>
+            </ul>
 
             <!-- MIDDLE FILL -->
-            <div class="navbar-search-wrapper"> 
+            <ul class="navbar-search-wrapper"> 
                 <li>
                 <form action="/search" id="searchform" method="GET">
                     <input type="search" name="search" placeholder="What are you looking for..." /> 
                     <button type="submit" form="searchform"><i class="fa fa-search"></i></button>
                 </form>
                 </li>
-            </div>
+            </ul>
+             </div>
         </div>
-
-    </ul>
-</nav>      
+</nav>  

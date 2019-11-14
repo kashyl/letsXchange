@@ -15,7 +15,7 @@ div#upper-header:focus {
 nav {
     margin-bottom: 30px;
 }
-nav ul{
+nav .nav_my_main{
     list-style-type: none;
     margin: 0px;
     padding: 0px;
@@ -23,6 +23,13 @@ nav ul{
     background-color: #232f3e;   
     height: 47px;
     padding-bottom: 5px;
+
+    /* CENTERS SEARCH BAR (left and right li's are floated, so it shouldn't affect them) */
+    text-align: center;
+}
+
+nav ul {
+    margin: 0; /* disable default ul margin */
 }
 
 nav li {
@@ -32,19 +39,31 @@ nav li {
 }
 
 nav .navbar-left-wrapper {
-    
-    padding-left: 10%;
+    padding-left: 0;
+    padding-right: 0; 
+    margin-left: 80px;
     float: left;
+    /*width: 300px;*/
 }
 nav .navbar-right-wrapper {
     float: right;
-    padding-right: 10%;
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: 80px;
+    /*width: 360px;*/
 }
 
 nav .navbar-main-wrapper {
     margin: 0 auto;
-    max-width: 1460px;
+    /*max-width: 1460px;*/
     min-width: 1100px;
+    margin: 0px;
+    padding: 0px;
+    background-color: #232f3e;
+    height: 47px;
+    padding-bottom: 5px;
+    display: block;
+    width: 100%;
 }
 
 nav li a {
@@ -70,9 +89,10 @@ nav a.active {
 }
 
 /* ==============SEARCH BAR============== */
-
+nav .navbar-search-wrapper li{
+  width:100%;
+}
 nav input[type=search] {
-    width: 465px;
     height: 40px;  
     font-size: 16px;
     background-color: none;
@@ -81,23 +101,18 @@ nav input[type=search] {
     transition: width 0.4s ease-in-out;*/
 
     /*center element using parent text-align:center and child display:inline-block; */ 
-    display: inline-block; 
-    
+    display: inline-block;
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
     box-sizing: border-box;
     background-color: #ffffff;
     box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.1);
     border:none;
-    resize:none;
-
     margin: 4px 0px 4px 0px;
-
-    font: inherit;
     font-size: 14px;
     font-weight: normal;
-
     padding: 10px;
+    width: calc(100% - 36px);
 
 }
 
@@ -106,6 +121,9 @@ nav input[type=search]:focus {
 }
 nav .navbar-search-wrapper {
     display: inline-block;
+    width: calc(100% - 915px);
+    padding-left: 0;
+    margin: 0 auto;
     /*border: 2px solid red;*/
 }
 
@@ -113,15 +131,17 @@ nav .navbar-search-wrapper button {
     float: right;
     padding: 10px 10px;
     margin-top: 4px;
-    
+
     background: #ffa807;
     font-size: 17px;
     border: none;
     cursor: pointer;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
+    height: 40px;
+    width: 36px;
   }
-  
+
 nav .navbar-search-wrapper button:hover {
     background: #ff8808;
   }
