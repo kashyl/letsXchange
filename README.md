@@ -1,4 +1,5 @@
 # Links
+* https://dev.to/deammer/loading-environment-variables-in-js-apps-1p7p (for keys and passwords)
 * https://addyosmani.com/blog/script-priorities/
 * https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 
