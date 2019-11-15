@@ -35,19 +35,30 @@
             <form action="/register" enctype="multipart/form-data" method="post" id="registerform" class="register">    
                 <img class="logo" src="../assets/image/LogoWhite.png" alt="letsXchange">
                 <span>Create an Account</span>          
-                <input type="text" name="user" required="required" placeholder="Nickname"/>
+                <input type="text" name="user" required="required" placeholder="Nickname" minlength="3" maxlength="16"
+                    oninvalid="this.setCustomValidity('Username must be between 3 and 16 characters.')" oninput="setCustomValidity('')"/>
                 <input type="email" name="email" required="required" placeholder="Email address"/>
-                <input type="password" name="pass" required="required" placeholder="Password"/>
-                <input type="password" name="repass" required="required" placeholder="Re-type password"/>
+
+                <!-- PASSWORD FIELDS + MATCH CHECK SCRIPT -->
+                <input type="password" id="password" name="pass" required="required" placeholder="Password" minlength="3" maxlength="100"   
+                    oninput="check(this)"/>
+                <input type="password" id="password-confirm" name="pass-confirm" required="required" placeholder="Confirm password" minlength="3" maxlength="100"
+                    oninput="check(this)"/>
+                <script language='javascript' type='text/javascript'>
+                    function check(input) {
+                        if (document.getElementById('password-confirm').value != document.getElementById('password').value) {
+                            input.setCustomValidity('Password Must be Matching.');
+                        } else {
+                            // input is valid -- reset the error message
+                            input.setCustomValidity('');
+                        }
+                    }
+                </script>
+
                 <input type="number" name="mobile" placeholder="Contact number (optional)"/>
                 </br>
 
-                <!--<p>Nationality: <br /><select name="country">
-                    {{#each countries}}
-                    <option value="{{this}}">{{this}}</option>
-                    {{/each}}
-                </select></p>
-                <p>Profile Picture:<br /><input type="file" name="avatar"></p>-->
+                <!--<p>Profile Picture:<br /><input type="file" name="avatar"></p>-->
                 <button type="submit" form="registerform">Register</button>
             </form>
 
