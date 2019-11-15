@@ -69,15 +69,15 @@ router.get('/profile', async ctx => {
         if (ctx.session.authorised !== true) return ctx.redirect('/login?msg=you need to log in')   
         var data = {}
         if (ctx.query.msg) data.msg = ctx.query.msg
-        if (ctx.query.user) data.user = ctx.query.user
+        //if (ctx.query.user) data.user = ctx.query.user
+        if (ctx.session.user != null) data.user = ctx.session.user
 
-        // READ FILE COUNTRIES.JSON ASYNCHRONOUSLY AND MOVE INTO data.countries
+        // READ FILE COUNTRIES.JSON ASYNCHRONOUSLY AND MOVE DATA INTO data.countries
         const filePath = './assets/json/countries.json'
         fs.readFile(filePath, (err, rawdata) => {
             if (err) throw err;
             data.countries = JSON.parse(rawdata);
         });
-
         //if (!ctx.session.isNew) console.log('User logged in'); means user is logged in
         await ctx.render('./pages/profile', data)
     } catch(err) {
@@ -109,12 +109,14 @@ router.post('/register', koaBody, async ctx => {
         await accounts.checkNoDuplicateUsername(body.user)
         //console.log(body)
         // Processing file
-        /*const {path, type} = ctx.request.files.avatar
-        const fileExtension = mime.extension(type)
-        console.log(`path: ${path}`)
-        console.log(`type: ${type}`)
-        console.log(`fileExtension: ${fileExtension}`)
-        await fs.copy(path, `assets/public/avatars/${body.user}.png`)*/
+        if (ctx.request.files.avatar != null) {
+            const {path, type} = ctx.request.files.avatar
+            const fileExtension = mime.extension(type)
+            console.log(`path: ${path}`)
+            console.log(`type: ${type}`)
+            console.log(`fileExtension: ${fileExtension}`)
+            await fs.copy(path, `assets/public/avatars/${body.user}.png`)
+        }
         // ENCRYPT PASSWORD, BUILD SQL
         body.pass = await bcrypt.hash(body.pass, saltRounds)
         let sql = `INSERT INTO users(user, pass, email, mobile) VALUES("${body.user}", "${body.pass}", "${body.email}", "${body.mobile}")`
@@ -146,14 +148,19 @@ router.get('/login', async ctx => {
  	const body = ctx.request.body
  	try {
  		await accounts.checkCredentials(body.user, body.pass)
- 		ctx.session.authorised = true
- 		return ctx.redirect(`/profile?user=${body.user}`)
+         ctx.session.authorised = true
+
+         // ADD USERNAME TO ctx.session.user so that we keep track of which user is logged in (Need to check if there are better options)
+         ctx.session.user = body.user 
+         
+ 		return ctx.redirect(`/profile`)
  	} catch(err) {
- 		return ctx.redirect(`/login?user=${body.user}&msg=${err.message}`)
+ 		return ctx.redirect(`/login?msg=${err.message}`)
  	}
  })
 
 router.get('/logout', async ctx => {
+    console.log(ctx.session.user);
     ctx.session.authorised = null;
     ctx.redirect('/')
 }) 
