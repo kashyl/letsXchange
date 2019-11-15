@@ -13,6 +13,7 @@ form.login {
     -webkit-box-align: center;
     align-items: center;
     
+    margin: 0 auto;
 }
 
 form.login span {

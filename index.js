@@ -13,7 +13,7 @@ const koaBody = require('koa-body')({multipart: true, uploadDir: '.'})
 const session = require('koa-session')
 const sqlite = require('sqlite-async')
 const bcrypt = require('bcrypt-promise')
-const fs = require('fs-extra')
+const fs = require('fs-extra') // for files. 'fs-extra' adds more methods = no more need for 'fs'
 const mime = require('mime-types')
 const nodemailer = require('nodemailer');
 
@@ -67,10 +67,17 @@ router.get('/about', async ctx => ctx.render('pages/about'))
 router.get('/profile', async ctx => {
     try {
         if (ctx.session.authorised !== true) return ctx.redirect('/login?msg=you need to log in')   
-        const data = {}
+        var data = {}
         if (ctx.query.msg) data.msg = ctx.query.msg
         if (ctx.query.user) data.user = ctx.query.user
-        data.countries = ['UK', 'Europe', 'Other']
+
+        // READ FILE COUNTRIES.JSON ASYNCHRONOUSLY AND MOVE INTO data.countries
+        const filePath = './assets/json/countries.json'
+        fs.readFile(filePath, (err, rawdata) => {
+            if (err) throw err;
+            data.countries = JSON.parse(rawdata);
+        });
+
         //if (!ctx.session.isNew) console.log('User logged in'); means user is logged in
         await ctx.render('./pages/profile', data)
     } catch(err) {
@@ -87,7 +94,6 @@ router.get('/profile', async ctx => {
 router.get('/register', async ctx => {
     const data = {}
     if (ctx.query.msg) data.msg = ctx.query.msg
-    data.countries = ['UK', 'Europe', 'Other']
     await ctx.render('./pages/register', data)
 })
 
@@ -100,7 +106,8 @@ router.get('/register', async ctx => {
 router.post('/register', koaBody, async ctx => {
     try {
         const body = ctx.request.body
-        console.log(body)
+        await accounts.checkNoDuplicateUsername(body.user)
+        //console.log(body)
         // Processing file
         /*const {path, type} = ctx.request.files.avatar
         const fileExtension = mime.extension(type)
@@ -120,7 +127,7 @@ router.post('/register', koaBody, async ctx => {
         // Redirect user to home page
         ctx.redirect(`/?msg=new user "${body.user}" added`)
     } catch(err) {
-        await ctx.render('./pages/error', {message: err.message})
+        await ctx.redirect(`/register?msg=${err.message}`)
     }
 })
 
@@ -154,7 +161,7 @@ router.get('/logout', async ctx => {
 router.post('/contact-us', async ctx => {
     try {
         const body = ctx.request.body
-        email.contactUs(body.name, body.email, body.message)
+        await email.contactUs(body.name, body.email, body.message)
         const msg = ', thank you for contacting us, we will try to get back to you shortly!'
         return ctx.redirect(`/contact?msg=` + body.name + msg)
     } catch(err) {

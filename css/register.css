@@ -22,6 +22,8 @@ form.register {
     /*-webkit-box-align: center;*/
     /*align-items: center;*/
     text-align: center;
+
+    margin: 0 auto;
 }
 
 form.register span {

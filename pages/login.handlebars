@@ -30,8 +30,10 @@
             <form action="/login" method="post" id="loginform" class="login">
                 <div class="icon"><i class="fas fa-sign-in-alt"></i></div>
                 <span>Login</span>
-                <input type="text" name="user" placeholder="Username or Email" value="{{user}}" required="required" autofocus>
-                <input type="password" name="pass" placeholder="Password" required="required" value="">
+                <input type="text" name="user" placeholder="Username or Email" value="{{user}}" required="required" autofocus 
+                    oninvalid="this.setCustomValidity('Please enter username')" oninput="setCustomValidity('')">
+                <input type="password" name="pass" placeholder="Password" required="required" 
+                    oninvalid="this.setCustomValidity('Please enter password')" oninput="setCustomValidity('')">
                 <button type="submit" form="loginform">Log In</button>   
                 <input type="checkbox" name="rememberuser" value="rememberuser" />
                 <label for="rememberuser">Remember me</label>    

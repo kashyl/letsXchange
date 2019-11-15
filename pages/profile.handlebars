@@ -57,7 +57,7 @@
                         <label for="special">Not specified</label><br>
                         <p>Nationality: <br /><select name="country">
                             {{#each countries}}
-                            <option value="{{this}}">{{this}}</option>
+                            <option value="{{this.code}}">{{this.name}} - {{this.code}}</option>
                             {{/each}}
                         </select></p>
                         <p>Profile Picture:<br /><input type="file" name="avatar"></p>

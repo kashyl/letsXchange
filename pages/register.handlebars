@@ -27,6 +27,11 @@
 
         <main role="main">
             
+            {{#if msg}}
+                <p class='msg'>{{msg}}</p>
+            {{/if}}
+            <!-- enctype="multipart/form-data" this value is required when you are using forms that have a file upload control
+                enctype = encoding type -->
             <form action="/register" enctype="multipart/form-data" method="post" id="registerform" class="register">    
                 <img class="logo" src="../assets/image/LogoWhite.png" alt="letsXchange">
                 <span>Create an Account</span>          
@@ -34,7 +39,7 @@
                 <input type="email" name="email" required="required" placeholder="Email address"/>
                 <input type="password" name="pass" required="required" placeholder="Password"/>
                 <input type="password" name="repass" required="required" placeholder="Re-type password"/>
-                <input type="text" name="mobile" placeholder="Contact number (optional)"/>
+                <input type="number" name="mobile" placeholder="Contact number (optional)"/>
                 </br>
 
                 <!--<p>Nationality: <br /><select name="country">

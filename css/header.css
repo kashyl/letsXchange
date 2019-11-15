@@ -54,10 +54,8 @@ nav .navbar-right-wrapper {
 }
 
 nav .navbar-main-wrapper {
-    margin: 0 auto;
     /*max-width: 1460px;*/
     min-width: 1100px;
-    margin: 0px;
     padding: 0px;
     background-color: #232f3e;
     height: 47px;
