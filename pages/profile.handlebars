@@ -31,6 +31,10 @@
 
         <main role="main">
 
+            {{#if msg}}
+                <span class='msg'>{{msg}}</span>
+            {{/if}}
+            
             <div class="time-greet">
                 <h1 id="time-greet" style="display: inline-block"></h1>
                 {{#if user}}

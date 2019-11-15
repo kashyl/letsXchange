@@ -81,9 +81,9 @@ router.get('/profile', async ctx => {
         const data = {}
         data.auth = false
         if (ctx.session.authorised === true) { data.auth = true }
-        if (ctx.query.msg) data.msg = ctx.query.msg
+        if (ctx.query.msg) data.msg = ctx.query.msg;
         //if (ctx.query.user) data.user = ctx.query.user
-        if (ctx.session.user != null) data.user = ctx.session.user
+        if (ctx.session.user != null) data.user = ctx.session.user;
 
         // READ FILE COUNTRIES.JSON ASYNCHRONOUSLY AND MOVE DATA INTO data.countries
         const filePath = './assets/json/countries.json'
@@ -105,9 +105,10 @@ router.get('/profile', async ctx => {
  * @route {GET} /register
  */
 router.get('/register', async ctx => {
+    if (ctx.session.authorised === true) return ctx.redirect('/profile?msg=you are already logged in your account') 
     const data = {}
     data.auth = false
-        if (ctx.session.authorised === true) { data.auth = true }
+    if (ctx.session.authorised === true) { data.auth = true }
     if (ctx.query.msg) data.msg = ctx.query.msg
     await ctx.render('./pages/register', data)
 })
@@ -144,6 +145,7 @@ router.post('/register', koaBody, async ctx => {
 
 router.get('/login', async ctx => {
     try {
+        if (ctx.session.authorised === true) return ctx.redirect('/profile?msg=you are already logged in') 
         const data = {}
         data.auth = false
         if (ctx.session.authorised === true) { data.auth = true }
