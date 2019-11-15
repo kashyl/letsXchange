@@ -109,14 +109,8 @@ router.post('/register', koaBody, async ctx => {
         await accounts.checkNoDuplicateUsername(body.user)
         //console.log(body)
         // Processing file
-        if (ctx.request.files.avatar != null) {
-            const {path, type} = ctx.request.files.avatar
-            const fileExtension = mime.extension(type)
-            console.log(`path: ${path}`)
-            console.log(`type: ${type}`)
-            console.log(`fileExtension: ${fileExtension}`)
-            await fs.copy(path, `assets/public/avatars/${body.user}.png`)
-        }
+        accounts.saveImage(body.user, ctx.request.files.avatar)
+
         // ENCRYPT PASSWORD, BUILD SQL
         body.pass = await bcrypt.hash(body.pass, saltRounds)
         let sql = `INSERT INTO users(user, pass, email, mobile) VALUES("${body.user}", "${body.pass}", "${body.email}", "${body.mobile}")`
@@ -152,7 +146,7 @@ router.get('/login', async ctx => {
 
          // ADD USERNAME TO ctx.session.user so that we keep track of which user is logged in (Need to check if there are better options)
          ctx.session.user = body.user 
-         
+
  		return ctx.redirect(`/profile`)
  	} catch(err) {
  		return ctx.redirect(`/login?msg=${err.message}`)

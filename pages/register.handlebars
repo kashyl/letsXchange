@@ -40,25 +40,30 @@
                 <input type="email" name="email" required="required" placeholder="Email address"/>
 
                 <!-- PASSWORD FIELDS + MATCH CHECK SCRIPT -->
-                <input type="password" id="password" name="pass" required="required" placeholder="Password" minlength="3" maxlength="100"   
-                    oninput="check(this)"/>
-                <input type="password" id="password-confirm" name="pass-confirm" required="required" placeholder="Confirm password" minlength="3" maxlength="100"
-                    oninput="check(this)"/>
+                <input type="password" id="password" name="pass" required="required" placeholder="Password" minlength="3" maxlength="100"/>
+                <input type="password" id="confirm_password" name="pass-confirm" required="required" placeholder="Confirm password" minlength="3" maxlength="100"/>
                 <script language='javascript' type='text/javascript'>
-                    function check(input) {
-                        if (document.getElementById('password-confirm').value != document.getElementById('password').value) {
-                            input.setCustomValidity('Password Must be Matching.');
+                    var password = document.getElementById("password")
+                    , confirm_password = document.getElementById("confirm_password");
+
+                    function validatePassword(){
+                        if(password.value != confirm_password.value) {
+                            confirm_password.setCustomValidity("Passwords Don't Match");
                         } else {
-                            // input is valid -- reset the error message
-                            input.setCustomValidity('');
+                            confirm_password.setCustomValidity('');
                         }
                     }
+
+                    //onchange event - when the value of an element has been changed
+                    password.onchange = validatePassword;
+                    //onkeyup event - when keyboard button is released
+                    confirm_password.onkeyup = validatePassword;
                 </script>
 
                 <input type="number" name="mobile" placeholder="Contact number (optional)"/>
                 </br>
 
-                <!--<p>Profile Picture:<br /><input type="file" name="avatar"></p>-->
+                <p>Profile Picture:<br /><input type="file" name="avatar"></p>
                 <button type="submit" form="registerform">Register</button>
             </form>
 

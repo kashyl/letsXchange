@@ -10,6 +10,8 @@
 
 var sqlite = require('sqlite-async');
 let bcrypt = require('bcrypt-promise');
+const fs = require('fs-extra') // for files. 'fs-extra' adds more methods = no more need for 'fs'
+const mime = require('mime-types')
 
 /**
  * Function to open the database then execute a query
@@ -67,11 +69,22 @@ module.exports.checkNoDuplicateUsername = async(username) => {
  * The file name will be the username.
  * @param {String} path - location of uploaded image
  * @param {String} mimeType - mime type of uploaded file
- * @returns {boolean} - returns trure if the image is valid and is saved
+ * @returns {boolean} - returns true if the image is valid and is saved
  * @throws {TypeError} - throws an error if the file is not a png of jpg image
  */
-async function saveImage(path, mimetype) {
-    return true
+module.exports.saveImage = async(username, avatar) => {
+    try {
+        if (avatar != null) {
+            const {path, type} = avatar
+            const fileExtension = mime.extension(type)
+            console.log(`path: ${path}`)
+            console.log(`type: ${type}`)
+            console.log(`fileExtension: ${fileExtension}`)
+            await fs.copy(path, `assets/public/avatars/${username}.png`)
+        }
+    } catch(err) {
+        throw err
+    }
 }
 
 /**
