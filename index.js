@@ -55,19 +55,32 @@ router.get('/', async ctx => {
 router.get('/contact', async ctx => {
     try {
         const data = {}
+        data.auth = false
+        if (ctx.session.authorised === true) { data.auth = true }
         if (ctx.query.msg) data.msg = ctx.query.msg
         await ctx.render('./pages/contact', data)
     } catch(err) {
         await ctx.render('./pages/error', {message: err.message})
-}
+    }
 })
 router.get('/listing', async ctx => ctx.render('pages/listing'))
-router.get('/about', async ctx => ctx.render('pages/about'))
+router.get('/about', async ctx => {
+    try {
+        const data = {}
+        data.auth = false
+        if (ctx.session.authorised === true) { data.auth = true }
+        await ctx.render('pages/about', data)
+    } catch(err) {
+        await ctx.render('./pages/error', {message: err.message})
+    }
+})
 
 router.get('/profile', async ctx => {
     try {
         if (ctx.session.authorised !== true) return ctx.redirect('/login?msg=you need to log in')   
-        var data = {}
+        const data = {}
+        data.auth = false
+        if (ctx.session.authorised === true) { data.auth = true }
         if (ctx.query.msg) data.msg = ctx.query.msg
         //if (ctx.query.user) data.user = ctx.query.user
         if (ctx.session.user != null) data.user = ctx.session.user
@@ -78,7 +91,7 @@ router.get('/profile', async ctx => {
             if (err) throw err;
             data.countries = JSON.parse(rawdata);
         });
-        //if (!ctx.session.isNew) console.log('User logged in'); means user is logged in
+        
         await ctx.render('./pages/profile', data)
     } catch(err) {
         await ctx.render('./pages/error', {message: err.message})
@@ -93,6 +106,8 @@ router.get('/profile', async ctx => {
  */
 router.get('/register', async ctx => {
     const data = {}
+    data.auth = false
+        if (ctx.session.authorised === true) { data.auth = true }
     if (ctx.query.msg) data.msg = ctx.query.msg
     await ctx.render('./pages/register', data)
 })
@@ -130,6 +145,8 @@ router.post('/register', koaBody, async ctx => {
 router.get('/login', async ctx => {
     try {
         const data = {}
+        data.auth = false
+        if (ctx.session.authorised === true) { data.auth = true }
         if (ctx.query.msg) data.msg = ctx.query.msg
         if (ctx.query.user) data.user = ctx.query.user
         await ctx.render('./pages/login', data)
@@ -154,7 +171,7 @@ router.get('/login', async ctx => {
  })
 
 router.get('/logout', async ctx => {
-    console.log(ctx.session.user);
+    console.log('User ' + ctx.session.user + ' logged out');
     ctx.session.authorised = null;
     ctx.redirect('/')
 }) 

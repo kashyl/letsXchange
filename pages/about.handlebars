@@ -18,9 +18,15 @@
     <body>
 
         <header>
+            {{#if auth}}
+                <script>
+                    $("header:first-of-type").load("./pages/common/header-auth.handlebars");
+                </script> 
+            {{else}}
             <script>
                 $("header:first-of-type").load("./pages/common/header.handlebars");
-            </script>       
+            </script>     
+            {{/if}}
         </header>
 
         <main role="main">

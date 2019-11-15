@@ -10,14 +10,20 @@
 
             <ul class="navbar-left-wrapper">
                 <li><a href="/" >Home</a></li>
-                <li><a href="" >Make Offer</a></li>
-                <li><a href="" >Browse</a></li>
-
             </ul>
 
             <ul class="navbar-right-wrapper">
-                <li><a href="register" id="nav-register">Sign up</a></li>
-                <li><a href="login" id="nav-sign-in">Log in</a></li>
+                <li><a href="profile" >My Account</a></li>
+                <li><a href="logout" id="nav-logout" onclick="logoutConfirm()">Logout</a></li>
+                <script>
+                    function logoutConfirm() {
+                        var r = confirm('Are you sure you want to log out?');
+                        //if the user clicks "Cancel" on the pop-up, user doesn't logout
+                        if (r !== true) {
+                            event.preventDefault();
+                        }
+                    }
+                </script>
                 <li><a href="contact" >Contact</a></li>
             </ul>
 

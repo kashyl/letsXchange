@@ -20,9 +20,15 @@
     <body>
 
         <header>
+            {{#if auth}}
+                <script>
+                    $("header:first-of-type").load("./pages/common/header-auth.handlebars");
+                </script> 
+            {{else}}
             <script>
                 $("header:first-of-type").load("./pages/common/header.handlebars");
-            </script>       
+            </script>     
+            {{/if}}
         </header>
 
         <main role="main">
@@ -30,6 +36,7 @@
             {{#if msg}}
                 <p class='msg'>{{msg}}</p>
             {{/if}}
+
             <!-- enctype="multipart/form-data" this value is required when you are using forms that have a file upload control
                 enctype = encoding type -->
             <form action="/register" enctype="multipart/form-data" method="post" id="registerform" class="register">    
