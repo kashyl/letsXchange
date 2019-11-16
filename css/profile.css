@@ -112,7 +112,8 @@ div.edit-profile form {
     margin-bottom: 16px; /* Bottom margin */
 }
 
-div.edit-profile input[type=text], 
+div.edit-profile input[type=text],
+div.edit-profile input[type=password], 
 div.edit-profile input[type=email],
 div.edit-profile input[type=number], 
 div.edit-profile input[type=file],

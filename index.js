@@ -87,7 +87,7 @@ router.get('/profile', async ctx => {
         if (ctx.session.user != null) data.user = ctx.session.user;
 
         // USER DATA
-        if (ctx.session.userData != null) { data.userData = ctx.session.userData }
+        if (ctx.session.user != null) { data.userData = ctx.session.userData }
         else {console.log("Couldn't fetch user data! (index.js, router.get('/profile', ...)")}
         // READ FILE COUNTRIES.JSON ASYNCHRONOUSLY AND MOVE DATA INTO data.countries
         fs.readFile('./assets/json/countries.json', (err, rawdata) => {
@@ -217,7 +217,11 @@ router.post('/edit-username', async ctx => {
         await accounts.updateField(currentUsername, 'user', newUsername, 'unique')
         
         // update session username with the new username
+        ctx.session.user = newUsername
         ctx.session.userData.user = newUsername
+
+        // updated avatar name
+        await accounts.renameImage(currentUsername, newUsername)
 
         return ctx.redirect('/profile?msg=username updated')
     } catch(err) {
@@ -298,6 +302,27 @@ router.post('/edit-gender', async ctx => {
         ctx.session.userData.gender = body.gender
 
         return ctx.redirect('/profile?msg=profile updated')
+    } catch(err) {
+        return ctx.redirect(`/profile?msg=${err.message}`)
+    }
+})
+// ------ PASSWORD ------
+router.post('/edit-pass', async ctx => {
+    try {
+        const body = ctx.request.body
+        const username = ctx.session.user
+
+        // checks if "Current password" is correct
+        await accounts.checkCredentials(username, body.pass)
+        bcrypt.genSalt(10, function(err, salt) {
+            bcrypt.hash(body.pass, salt, function(err, hash) {
+              body.pass = hash;
+        // encrypts password
+            })});
+
+        await accounts.updateField(username, 'pass', body.pass)
+
+        return ctx.redirect('/profile?msg=password updated')
     } catch(err) {
         return ctx.redirect(`/profile?msg=${err.message}`)
     }

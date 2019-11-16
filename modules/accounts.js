@@ -93,6 +93,36 @@ async function saveImage(username, avatar) {
 module.exports.saveImage = saveImage;
 
 /**
+ * This function takes two strings, finds a file named after the first one and renames it to the second string
+ * @param {String} currentName - searches for file whose name equals this value
+ * @param {String} newName - renames file to this value
+ * @returns {boolean} - true if file was successfully renamed
+ * @throws {Error}
+ */
+async function renameImage(currentName, newName) {
+    try {
+        // check if file exists with fs.access
+        fs.access(`./assets/public/avatars/${currentName}.png`, fs.F_OK, (err) => {
+            if (err) {
+                //console.log('fs.access AVATAR NOT FOUND (most likely)' + err)
+                return
+            }
+            // if file exists, rename it
+            fs.rename(`./assets/public/avatars/${currentName}.png`,
+            `./assets/public/avatars/${newName}.png`, 
+            function(err) {
+                if (err) console.log('Rename avatar ERROR: ' + err)
+            });
+        })
+
+        return true
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.renameImage = renameImage;
+
+/**
  * Function to add new users to the database
  * @param {String} username - the username to add
  * @param {String} password - the password to add
