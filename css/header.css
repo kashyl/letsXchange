@@ -41,16 +41,22 @@ nav li {
 nav .navbar-left-wrapper {
     padding-left: 0;
     padding-right: 0; 
-    margin-left: 80px;
+    /*margin-left: 80px;*/
     float: left;
-    width: 300px;
+    width: 400px;
+}
+nav .navbar-left-wrapper div.contents-nav-left {
+    float: right;
 }
 nav .navbar-right-wrapper {
     float: right;
     padding-right: 0;
     padding-left: 0;
-    margin-right: 80px;
-    width: 300px;
+    /*margin-right: 80px;*/
+    width: 400px;
+}
+nav .navbar-right-wrapper div.contents-nav-right {
+    float: left;
 }
 
 nav .navbar-main-wrapper {
@@ -119,9 +125,9 @@ nav input[type=search]:focus {
 }
 nav .navbar-search-wrapper {
     display: inline-block;
-    width: calc(100% - 780px);
-    padding-left: 0;
-    margin: 0 auto;
+    width: calc(100% - 860px);
+    padding: 0;
+    /*margin: 0 auto;*/
     /*border: 2px solid red;*/
 }
 

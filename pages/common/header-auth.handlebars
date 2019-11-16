@@ -9,22 +9,28 @@
         <div class="navbar-main-wrapper">
 
             <ul class="navbar-left-wrapper">
-                <li><a href="/" >Home</a></li>
+                <div class="contents-nav-left">
+                    <li><a href="/" >Home</a></li>
+                    <li><a href="" >New Offer</a></li>
+                    <li><a href="" >My Listings</a></li>
+                </div>
             </ul>
 
             <ul class="navbar-right-wrapper">
-                <li><a href="profile" >My Account</a></li>
-                <li><a href="logout" id="nav-logout" onclick="logoutConfirm()">Logout</a></li>
-                <script>
-                    function logoutConfirm() {
-                        var r = confirm('Are you sure you want to log out?');
-                        //if the user clicks "Cancel" on the pop-up, user doesn't logout
-                        if (r !== true) {
-                            event.preventDefault();
+                <div class="contents-nav-right">
+                    <li><a href="profile" >My Account</a></li>
+                    <li><a href="logout" id="nav-logout" onclick="logoutConfirm()">Logout</a></li>
+                    <script>
+                        function logoutConfirm() {
+                            var r = confirm('Are you sure you want to log out?');
+                            //if the user clicks "Cancel" on the pop-up, user doesn't logout
+                            if (r !== true) {
+                                event.preventDefault();
+                            }
                         }
-                    }
-                </script>
-                <li><a href="contact" >Contact</a></li>
+                    </script> 
+                    <li><a href="contact" >Contact</a></li>
+                </div>              
             </ul>
 
             <!-- MIDDLE FILL -->

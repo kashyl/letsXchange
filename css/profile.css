@@ -1,41 +1,161 @@
 div#profile-details {
     display: flex;
-    justify-content: center;
+    justify-content: left;
     border: none;
-}
-
-div#profile-details fieldset {
-    max-width: 300px;
-    display: inline-block;
-    margin: 0 25px;
-}
-
-div#profile-details form {
-    max-width: 300px;
-    display: inline-block;
-    margin: 0 25px;
-}
-
-div#profile-details fieldset:first-child {
-    margin-left: 0;
-}
-
-div#profile-details fieldset:last-child {
-    margin-right: 0;
-}
-div#profile-details fieldset:last-child {
-    margin-right: 0;
-}
-
-div#profile-details img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-}
-
-div#current {
-    border: 2px solid grey;
+    /*border: 2px solid red;*/
     min-width: 250px;
     min-height: 400px;
-    /*padding: 5.6px 12px 10px;*/
+
+    margin: 35px 0;
+}
+div.time-greet {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background-color: #fff;
+    text-align: center;
+    font-family: 'Open Sans', arial, sans-serif;
+    font-size: 100%;
+    font-style: italic;
+    font-weight: 800;
+    line-height: 80%;
+    letter-spacing: -0.2%;
+    text-transform: uppercase;
+
+    color: #545453;
+
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    
+    clear: both; /* in profile, text was a bit to the left, clear: both; seems to fix this */
+}
+
+/* Add a background color and some padding around the form */
+div.edit-profile {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px 0px;
+    /*float:right;*/
+    width: 50%;
+}
+
+div.profile-block {
+    margin-bottom: 20px;
+    margin-left: 40px;
+    margin-right: 40px;
+    padding: 15px;
+    border-bottom: 1px solid rgb(160, 160, 160);
+    text-align: center;
+}
+div.profile-block:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+/* ------ CATEGORY AND VALUES ------ */
+div.profile-block span.category {
+    float: left;
+    width: 100px;
+    text-align: left;
+    font-size: 115%;
+}
+div.profile-block span.value {
+    display: inline-block;
+    width: 60%;
+    white-space: nowrap;
+    overflow: auto !important;
+    font-size: 120%;
+}
+div.profile-block span.value-empty {
+    display: inline-block;
+    width: 1px;
+}
+
+div.profile-block span#email {
+    font-size: 90%;
+}
+
+/* ------ EDIT BUTTONS ------ */
+div.profile-block button.edit {
+    float: right;
+    width: 85px;
+    background-color: #ff7707; 
+    border: none;
+    color: white;
+    padding: 4px 20px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 16px;
+    font-size: 100%;
+}
+
+div.profile-block button.edit:focus {
+    outline: none;
+}
+
+div.edit-profile form {
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+}
+
+div.edit-profile input[type=text], div.edit-profile input[type=email], div.edit-profile select, div.edit-profile textarea {
+    width: 100%; /* Full width */
+    padding: 12px; /* Some padding */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 6px; /* Bottom margin */
+    resize: vertical; /* Allow the user to vertically resize the textarea (not horizontally) */
+    max-height: 500px;
+}
+
+/* ------ NAME FORM ------ */
+div.edit-profile form#realname-form input[type=text] {
+    width: 49%;
+}
+
+/* ------ PASSWORD BUTTON & FORM ------ */
+div.edit-profile button#pass-form-button {
+    float: none;
+    padding: 8px 20px;
+    width: 200px;
+    height: 50px;
+    font-size: 120%;
+}
+
+div.edit-profile input:focus, div.edit-profile textarea:focus {
+    outline: none;
+} 
+
+/* Style the submit button with a specific background color etc */
+div.edit-profile input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 100%;
+}
+
+/* When moving the mouse over the submit button, add a darker green color */
+div.edit-profile input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+div.edit-profile span.bigtext {
+    width: 350px;
+    height: 40px;
+    text-align: center;
+    font-family: 'Open Sans', arial, sans-serif;
+    font-size: 180%;
+    font-style: italic;
+    text-transform: uppercase;
+
+    color: #676766;
+
+    display: block;
+    margin: 0 auto;
 }

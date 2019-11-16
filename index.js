@@ -85,9 +85,12 @@ router.get('/profile', async ctx => {
         //if (ctx.query.user) data.user = ctx.query.user
         if (ctx.session.user != null) data.user = ctx.session.user;
 
+        // FETCH USER INFO FROM DATABASE AND PUT IT INTO CONST DATA
+
+
+
         // READ FILE COUNTRIES.JSON ASYNCHRONOUSLY AND MOVE DATA INTO data.countries
-        const filePath = './assets/json/countries.json'
-        fs.readFile(filePath, (err, rawdata) => {
+        fs.readFile('./assets/json/countries.json', (err, rawdata) => {
             if (err) throw err;
             data.countries = JSON.parse(rawdata);
         });
@@ -122,22 +125,13 @@ router.get('/register', async ctx => {
 router.post('/register', koaBody, async ctx => {
     try {
         const body = ctx.request.body
-        await accounts.checkNoDuplicateUsername(body.user)
-        //console.log(body)
-        // Processing file
-        accounts.saveImage(body.user, ctx.request.files.avatar)
+        const avatar = ctx.request.files.avatar
 
-        // ENCRYPT PASSWORD, BUILD SQL
-        body.pass = await bcrypt.hash(body.pass, saltRounds)
-        let sql = `INSERT INTO users(user, pass, email, mobile) VALUES("${body.user}", "${body.pass}", "${body.email}", "${body.mobile}")`
-        console.log(sql)
-        // DATABASE COMMANDS
-        const db = await sqlite.open('./database/database.db')
-        await db.run(sql)
-        await db.close()
+        // Accounts.js exported function
+        accounts.addUser(body, avatar, saltRounds)
 
-        // Redirect user to home page
-        ctx.redirect(`/?msg=new user "${body.user}" added`)
+        // Redirect user to login page
+        ctx.redirect(`/login?msg=account created, you can now log in`)
     } catch(err) {
         await ctx.redirect(`/register?msg=${err.message}`)
     }
@@ -161,11 +155,12 @@ router.get('/login', async ctx => {
  	const body = ctx.request.body
  	try {
  		await accounts.checkCredentials(body.user, body.pass)
-         ctx.session.authorised = true
+        ctx.session.authorised = true
 
-         // ADD USERNAME TO ctx.session.user so that we keep track of which user is logged in (Need to check if there are better options)
-         ctx.session.user = body.user 
+        // ADD USERNAME TO ctx.session.user so that we keep track of which user is logged in (Need to check if there are better options)
+        ctx.session.user = body.user 
 
+        console.log('User ' + body.user + ' logged in')
  		return ctx.redirect(`/profile`)
  	} catch(err) {
  		return ctx.redirect(`/login?msg=${err.message}`)
@@ -193,7 +188,16 @@ app.use(router.routes())
 module.exports = app.listen(port, async() => {
     // make sure the database has correct schema
     const db = await sqlite.open('./database/database.db')
-    await db.run('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, user TEXT, pass TEXT);')
+    await db.run('CREATE TABLE IF NOT EXISTS users (' +
+        'id	INTEGER PRIMARY KEY AUTOINCREMENT,' +
+        'user	TEXT,' +
+        'pass	TEXT,' +
+        'email	TEXT,' +
+        'mobile	TEXT,' +
+        'gender	TEXT,' +
+        'country	TEXT,' +
+        'forename	TEXT,' +
+        'surname	TEXT);')
     await db.close()
     console.log(`listening on port ${port}`)
 }) 
