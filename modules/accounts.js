@@ -117,25 +117,20 @@ async function addUser(body, avatar, saltRounds) {
 }
 module.exports.addUser = addUser;
 
-
-/* Old index.js code without accounts.js module (and its further functionality)
-router.post('/login', async ctx => {
+/**
+ * Function to fetch data from users table
+ * @param {String} username - the name of the user
+ * @returns {Object} - returns an object with all the data
+ * @throws {Error}
+ */
+async function fetchData(username) {
     try {
-        const body = ctx.request.body
-        const db = await sqlite.open('./database/database.db')
-        // Check if the username exists
-        const records = await db.get(`SELECT count(id) AS count FROM users WHERE user="${body.user}";`)
-        if (!records.count) return ctx.redirect('/login?msg=invalid%20username')
-        const record = await db.get(`SELECT pass FROM users WHERE user = "${body.user}";`)
-        await db.close()
-        // Check if the password matches
-        const valid = await bcrypt.compare(body.pass, record.pass)
-        if (valid == false) return ctx.redirect(`/login?user=${body.user}&msg=invalid%20password`)
-        // If the username and password are VALID
-        ctx.session.authorised = true // AUTHORISES SESSION
-        return ctx.redirect('/?msg=you are now logged in...')
+        let records = await runSQL(`SELECT count(id) AS count FROM users WHERE user="${username}";`);
+        if(!records.count) throw new Error(`user not found`)
+        records = await runSQL(`SELECT user, email, mobile, gender, country, forename, surname FROM users WHERE user="${username}";`);
+        return records
     } catch(err) {
-        await ctx.render('./pages/error', {message: err.message})
+        throw err
     }
-})
-*/
+}
+module.exports.fetchData = fetchData;

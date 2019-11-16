@@ -53,7 +53,7 @@
 
                     <!-- USERNAME -->
                     <div class="profile-block">
-                        <span class="category">Username: </span> <span class="value">{{user}}</span>
+                        <span class="category">Username: </span> <span class="value">{{userData.user}}</span>
                         <button class="edit" onclick="editField(this)" name="username">Edit</button>
                         <form action="/edit-username" method="post" id="username-form" hidden>
                             <input type="text" name="name" placeholder="Enter new username.." required>
@@ -64,7 +64,7 @@
 
                     <!-- EMAIL -->
                     <div class="profile-block">
-                        <span class="category">Email: </span> <span class="value" id="email">{{user}}</span>
+                        <span class="category">Email: </span> <span class="value" id="email">{{userData.email}}</span>
                         <button class="edit" onclick="editField(this)" name="email">Edit</button>
                         <form action="/edit-email" method="post" id="email-form" hidden>
                             <input type="text" name="name" placeholder="Enter new email.." required>
@@ -74,10 +74,10 @@
 
                     <!-- NAME -->
                     <div class="profile-block">
-                        <span class="category">Name: </span> <span class="value">{{user}}</span>
+                        <span class="category">Name: </span> <span class="value">{{userData.forename}} {{userData.surname}}</span>
                         <button class="edit" onclick="editField(this)" name="realname">Edit</button>
                         <form action="/edit-realname" method="post" id="realname-form" hidden>
-                            <input type="text" name="forename" placeholder="Forename.." required>
+                            <input type="text" name="forename" placeholder="First and middle names.." required>
                             <input type="text" name="surname" placeholder="Surname.." required>
                             <input type="submit" value="Update name">
                         </form>
@@ -85,7 +85,7 @@
 
                     <!-- COUNTRY -->
                     <div class="profile-block">
-                        <span class="category">Country: </span> <span class="value">{{user}}</span>
+                        <span class="category">Country: </span> <span class="value">{{userData.country}}</span>
                         <button class="edit" onclick="editField(this)" name="country">Edit</button>
                         <form action="/edit-username" method="post" id="country-form" hidden>
                             <input type="text" name="name" placeholder="Enter new username.." required>

@@ -85,10 +85,9 @@ router.get('/profile', async ctx => {
         //if (ctx.query.user) data.user = ctx.query.user
         if (ctx.session.user != null) data.user = ctx.session.user;
 
-        // FETCH USER INFO FROM DATABASE AND PUT IT INTO CONST DATA
-
-
-
+        // USER DATA
+        if (ctx.session.userData != null) { data.userData = ctx.session.userData }
+        else {console.log("Couldn't fetch user data! (index.js, router.get('/profile', ...)")}
         // READ FILE COUNTRIES.JSON ASYNCHRONOUSLY AND MOVE DATA INTO data.countries
         fs.readFile('./assets/json/countries.json', (err, rawdata) => {
             if (err) throw err;
@@ -128,7 +127,7 @@ router.post('/register', koaBody, async ctx => {
         const avatar = ctx.request.files.avatar
 
         // Accounts.js exported function
-        accounts.addUser(body, avatar, saltRounds)
+        await accounts.addUser(body, avatar, saltRounds)
 
         // Redirect user to login page
         ctx.redirect(`/login?msg=account created, you can now log in`)
@@ -141,10 +140,12 @@ router.get('/login', async ctx => {
     try {
         if (ctx.session.authorised === true) return ctx.redirect('/profile?msg=you are already logged in') 
         const data = {}
+        data.userData = {}
         data.auth = false
         if (ctx.session.authorised === true) { data.auth = true }
         if (ctx.query.msg) data.msg = ctx.query.msg
         if (ctx.query.user) data.user = ctx.query.user
+
         await ctx.render('./pages/login', data)
     } catch(err) {
         await ctx.render('./pages/error', {message: err.message})
@@ -159,10 +160,16 @@ router.get('/login', async ctx => {
 
         // ADD USERNAME TO ctx.session.user so that we keep track of which user is logged in (Need to check if there are better options)
         ctx.session.user = body.user 
+        
+        // FETCH USER INFO FROM DATABASE AND PUT THE DATA IN SESSION
+        let userData = await accounts.fetchData(body.user)
+        ctx.session.userData = userData
+        console.log(ctx.session.userData)
 
         console.log('User ' + body.user + ' logged in')
  		return ctx.redirect(`/profile`)
  	} catch(err) {
+        ctx.session.authorised = false // also prevents user from getting "double"-redirected from login page because auth is true
  		return ctx.redirect(`/login?msg=${err.message}`)
  	}
  })
