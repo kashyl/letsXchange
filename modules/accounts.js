@@ -12,7 +12,7 @@ var sqlite = require('sqlite-async');
 let bcrypt = require('bcrypt-promise');
 const fs = require('fs-extra') // for files. 'fs-extra' adds more methods = no more need for 'fs'
 const mime = require('mime-types')
-const jimp = require('jimp') // for image conversion
+const Jimp = require('jimp') // for image conversion
 
 /**
  * Function to open the database then execute a query
@@ -72,18 +72,34 @@ module.exports.checkNoDuplicate = checkNoDuplicate;
  * The file name will be the username.
  * @param {String} path - location of uploaded image
  * @param {String} mimeType - mime type of uploaded file
+ * @param {boolean} avatar - if set to true, image will be cropped and resized to fit avatar
  * @returns {boolean} - returns true if the image is valid and is saved
  * @throws {TypeError} - throws an error if the file is not a png of jpg image
  */
-async function saveImage(username, avatar) {
+async function saveImage(username, imageInfo, isAvatar=true) {
     try {
-        if (avatar != null) {
-            const {path, type} = avatar
+        if (imageInfo != null) {
+            const {path, type} = imageInfo
             const fileExtension = mime.extension(type)
-            console.log(`path: ${path}`)
-            console.log(`type: ${type}`)
-            console.log(`fileExtension: ${fileExtension}`)
-            await fs.copy(path, `assets/public/avatars/${username}.png`)
+            // console.log(`path: ${path}`)
+            // console.log(`type: ${type}`)
+            // console.log(`fileExtension: ${fileExtension}`)
+            
+            // if file is not sent as avatar
+            if (isAvatar !== true) {
+                await fs.copy(path, `assets/public/avatars/${username}.png`)
+                return true;
+            }  
+
+            const image = await Jimp.read(path);
+            // image.cover( w, h[, alignBits || mode, mode] ); 
+            // scale the image to the given width and height, some parts of the image may be clipped
+            // for avatars, .resize will make the image lose aspect ratio when height and width are not the same
+            // thus, using .cover is much better as it takes the part in the middle while keeping aspect ratio, using the ALIGN_CENTER Jimp methods
+            image.cover(256, 256, Jimp.HORIZONTAL_ALIGN_CENTER | Jimp.VERTICAL_ALIGN_CENTER)
+                .quality(100)
+                .write(`assets/public/avatars/${username}.png`);
+                
             return true
         }
     } catch(err) {
@@ -91,6 +107,8 @@ async function saveImage(username, avatar) {
     }
 }
 module.exports.saveImage = saveImage;
+
+
 
 /**
  * This function takes two strings, finds a file named after the first one and renames it to the second string

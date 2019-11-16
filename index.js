@@ -16,7 +16,7 @@ const bcrypt = require('bcrypt-promise')
 const fs = require('fs-extra') // for files. 'fs-extra' adds more methods = no more need for 'fs'
 const mime = require('mime-types')
 const nodemailer = require('nodemailer');
-const jimp = require('jimp') // for image conversion
+const Jimp = require('jimp') // for image conversion
 
 /* How to env variable: env.parsed.'env variable name */
 const env = require('dotenv').config();
