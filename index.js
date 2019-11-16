@@ -314,13 +314,11 @@ router.post('/edit-pass', async ctx => {
 
         // checks if "Current password" is correct
         await accounts.checkCredentials(username, body.pass)
-        bcrypt.genSalt(10, function(err, salt) {
-            bcrypt.hash(body.pass, salt, function(err, hash) {
-              body.pass = hash;
-        // encrypts password
-            })});
 
-        await accounts.updateField(username, 'pass', body.pass)
+        // encrypts password
+        body.passNew = await bcrypt.hash(body.passNew, saltRounds)
+
+        await accounts.updateField(username, 'pass', body.passNew)
 
         return ctx.redirect('/profile?msg=password updated')
     } catch(err) {
