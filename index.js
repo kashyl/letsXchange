@@ -16,6 +16,7 @@ const bcrypt = require('bcrypt-promise')
 const fs = require('fs-extra') // for files. 'fs-extra' adds more methods = no more need for 'fs'
 const mime = require('mime-types')
 const nodemailer = require('nodemailer');
+const jimp = require('jimp') // for image conversion
 
 /* How to env variable: env.parsed.'env variable name */
 const env = require('dotenv').config();
@@ -124,10 +125,9 @@ router.get('/register', async ctx => {
 router.post('/register', koaBody, async ctx => {
     try {
         const body = ctx.request.body
-        const avatar = ctx.request.files.avatar
 
         // Accounts.js exported function
-        await accounts.addUser(body, avatar, saltRounds)
+        await accounts.addUser(body, saltRounds)
 
         // Redirect user to login page
         ctx.redirect(`/login?msg=account created, you can now log in`)
@@ -153,7 +153,8 @@ router.get('/login', async ctx => {
 })
 
  router.post('/login', async ctx => { 
- 	const body = ctx.request.body
+     const body = ctx.request.body
+     console.log(body)
  	try {
  		await accounts.checkCredentials(body.user, body.pass)
         ctx.session.authorised = true
@@ -164,7 +165,7 @@ router.get('/login', async ctx => {
         // FETCH USER INFO FROM DATABASE AND PUT THE DATA IN SESSION
         let userData = await accounts.fetchData(body.user)
         ctx.session.userData = userData
-        console.log(ctx.session.userData)
+        // console.log(ctx.session.userData)
 
         console.log('User ' + body.user + ' logged in')
  		return ctx.redirect(`/profile`)
@@ -188,6 +189,20 @@ router.post('/contact-us', async ctx => {
         return ctx.redirect(`/contact?msg=` + body.name + msg)
     } catch(err) {
         return ctx.redirect(`/contact?errmsg=${err.message}`)
+    }
+})
+
+// ------ PROFILE UPDATE FORMS (notice there is koaBody too) ------
+router.post('/edit-avatar', koaBody, async ctx => {
+    try {
+        const user = ctx.session.user
+        const avatar = ctx.request.files.avatar
+        console.log(avatar)
+        await accounts.saveImage(user, avatar)
+
+        return ctx.redirect('/profile')
+    } catch(err) {
+        return ctx.redirect(`/profile?msg=${err.message}`)
     }
 })
 

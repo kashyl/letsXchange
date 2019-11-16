@@ -37,6 +37,15 @@ div.edit-profile {
     padding: 20px 0px;
     /*float:right;*/
     width: 50%;
+    text-align: center;
+}
+/* ------ AVATAR ------ */
+div.edit-profile input[type=image] {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    border-radius: 50%;
+    margin-bottom: 40px;
 }
 
 div.profile-block {
@@ -46,6 +55,10 @@ div.profile-block {
     padding: 15px;
     border-bottom: 1px solid rgb(160, 160, 160);
     text-align: center;
+}
+div.profile-block:first-child {
+    border-bottom: none;
+    margin-bottom: 0;
 }
 div.profile-block:last-child {
     border-bottom: none;
@@ -99,7 +112,12 @@ div.edit-profile form {
     margin-bottom: 16px; /* Bottom margin */
 }
 
-div.edit-profile input[type=text], div.edit-profile input[type=email], div.edit-profile select, div.edit-profile textarea {
+div.edit-profile input[type=text], 
+div.edit-profile input[type=email],
+div.edit-profile input[type=number], 
+div.edit-profile input[type=file],
+div.edit-profile select, 
+div.edit-profile textarea {
     width: 100%; /* Full width */
     padding: 12px; /* Some padding */ 
     border: 1px solid #ccc; /* Gray border */
@@ -109,6 +127,9 @@ div.edit-profile input[type=text], div.edit-profile input[type=email], div.edit-
     margin-bottom: 6px; /* Bottom margin */
     resize: vertical; /* Allow the user to vertically resize the textarea (not horizontally) */
     max-height: 500px;
+}
+div.edit-profile input[type=file] {
+    width: 60%;
 }
 
 /* ------ NAME FORM ------ */

@@ -49,7 +49,21 @@
 
                 <!-- PROFILE EDIT -->
                 <div class="edit-profile">
-                    <span class="bigtext" style="margin-bottom: 20px;">Edit Profile</span>
+
+                    <!-- AVATAR (with margin-bottom) -->
+                    <!-- img class="avatar" src="../assets/public/avatars/{{userData.user}}.png" alt="Image not found" onerror="this.onerror=null;this.src='../assets/image/default_avatar.png';" /> -->
+                    <div class="profile-block">
+                        <input type="image" class="avatar" onclick="editField(this)" name="avatar"
+                            src="../assets/public/avatars/{{userData.user}}.png" alt="Image not found" 
+                            onerror="this.onerror=null;this.src='../assets/image/default_avatar.png';" />
+                        <!-- enctype="multipart/form-data" this value is required when you are using forms that have a file upload control
+                        enctype = encoding type -->
+                        <form action="/edit-avatar" method="post" enctype="multipart/form-data" id="avatar-form" hidden style="border-bottom: 1px solid rgb(160, 160, 160); margin-bottom: 20px;">
+                            <input type="file" name="avatar" required>
+                            <input type="submit" value="Upload avatar">
+                        </form>
+                    </div>
+
 
                     <!-- USERNAME -->
                     <div class="profile-block">
@@ -88,8 +102,39 @@
                         <span class="category">Country: </span> <span class="value">{{userData.country}}</span>
                         <button class="edit" onclick="editField(this)" name="country">Edit</button>
                         <form action="/edit-username" method="post" id="country-form" hidden>
-                            <input type="text" name="name" placeholder="Enter new username.." required>
+                            <select name="country" required>
+                                <option disabled selected value> -- select an option -- </option>
+                                {{#each countries}}
+                                <option value="{{this.code}}">{{this.name}} - {{this.code}}</option>
+                                {{/each}}
+                                <option value=''>N/A (other - not listed)</option>
+                            </select>
                             <input type="submit" value="Update country">
+                        </form>
+                    </div>
+
+                    <!-- CONTACT NUMBER -->
+                    <div class="profile-block">
+                        <span class="category">Mobile: </span> <span class="value">{{userData.mobile}}</span>
+                        <button class="edit" onclick="editField(this)" name="mobile">Edit</button>
+                        <form action="/edit-mobile" method="post" id="mobile-form" hidden>
+                            <input type="number" name="name" placeholder="Enter new contact number.." required>
+                            <input type="submit" value="Update mobile number">
+                        </form>
+                    </div>
+
+                    <!-- GENDER -->
+                    <div class="profile-block">
+                        <span class="category">Gender: </span> <span class="value">{{userData.gender}}</span>
+                        <button class="edit" onclick="editField(this)" name="gender">Edit</button>
+                        <form action="/edit-gender" method="post" id="gender-form" hidden>
+                            <select name="country" required>
+                                <option disabled selected value> -- select an option -- </option>
+                                <option value='Male'>Male</option>
+                                <option value='Female'>Female</option>
+                                <option value='Not specified'>Not specified</option>
+                            </select>
+                            <input type="submit" value="Save">
                         </form>
                     </div>
 
@@ -107,13 +152,6 @@
                 </div>
 
             </div>
-            <p>Nationality: <br /><select name="country">
-                <option disabled selected value> -- select an option -- </option>
-                {{#each countries}}
-                <option value="{{this.code}}">{{this.name}} - {{this.code}}</option>
-                {{/each}}
-                <option value=''>N/A (other - not listed)</option>
-            </select></p>
 
         </main>
 

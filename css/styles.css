@@ -53,6 +53,13 @@ img.logo {
     height: 60px;
     width: 250px;
 }
+img.avatar {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    border-radius: 50%;
+}
+
 
 .msg {
     border-radius: 8px;

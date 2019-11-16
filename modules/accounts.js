@@ -12,6 +12,7 @@ var sqlite = require('sqlite-async');
 let bcrypt = require('bcrypt-promise');
 const fs = require('fs-extra') // for files. 'fs-extra' adds more methods = no more need for 'fs'
 const mime = require('mime-types')
+const jimp = require('jimp') // for image conversion
 
 /**
  * Function to open the database then execute a query
@@ -22,7 +23,7 @@ const mime = require('mime-types')
 
 async function runSQL(query) {
     try {
-        console.log(query)
+        //console.log(query)
         let DBName = "./database/database.db";
         const db = await sqlite.open(DBName);
         const data = await db.all(query);
@@ -82,6 +83,7 @@ async function saveImage(username, avatar) {
             console.log(`type: ${type}`)
             console.log(`fileExtension: ${fileExtension}`)
             await fs.copy(path, `assets/public/avatars/${username}.png`)
+            return true
         }
     } catch(err) {
         throw err
@@ -96,17 +98,15 @@ module.exports.saveImage = saveImage;
  * @returns {boolean} - returns true if the username does not exist
  * @throws {Error} - throws an error if the new user account has already been created
  */
-async function addUser(body, avatar, saltRounds) {
+async function addUser(body, saltRounds) {
     try {
         await checkNoDuplicateUsername(body.user)
-
-        // Processing file
-        await saveImage(body.user, avatar)
 
         // ENCRYPT PASSWORD, BUILD SQL
         body.pass = await bcrypt.hash(body.pass, saltRounds)
         let sql = `INSERT INTO users(user, pass, email, mobile) VALUES("${body.user}", "${body.pass}", "${body.email}", "${body.mobile}")`
-        console.log(sql)
+        // console.log(sql)
+
         // DATABASE COMMANDS
         const db = await sqlite.open('./database/database.db')
         await db.run(sql)
