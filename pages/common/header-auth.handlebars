@@ -19,16 +19,11 @@
             <ul class="navbar-right-wrapper">
                 <div class="contents-nav-right">
                     <li><a href="profile" >My Account</a></li>
-                    <li><a href="logout" id="nav-logout" onclick="logoutConfirm()">Logout</a></li>
-                    <script>
-                        function logoutConfirm() {
-                            var r = confirm('Are you sure you want to log out?');
-                            //if the user clicks "Cancel" on the pop-up, user doesn't logout
-                            if (r !== true) {
-                                event.preventDefault();
-                            }
-                        }
-                    </script> 
+
+                    <!-- LOGOUT + CONFIRM SCRIPT -->
+                    <li><a href="logout" id="nav-logout" class="confirmation">Logout</a></li>
+                    <script src="../../js/confirm.js"></script> 
+
                     <li><a href="contact" >Contact</a></li>
                 </div>              
             </ul>

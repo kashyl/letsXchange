@@ -36,10 +36,9 @@ app.use(session(app))
 app.use(views(`${__dirname}`, { extension: 'handlebars' }, { map: { handlebars: 'handlebars' } }))
 
 const port = 8080
-/**
- * For BCrypt - password hashing (encryption) function
- * The higher the "salt rounds" number, the stronger the encryption
- */
+/*
+*  For BCrypt - password hashing (encryption) function
+*/
 const saltRounds = 10 
 
 router.get('/', async ctx => {

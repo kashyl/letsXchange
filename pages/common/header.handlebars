@@ -18,8 +18,40 @@
 
             <ul class="navbar-right-wrapper">
                 <div class="contents-nav-right">
-                    <li><a href="register" id="nav-register">Sign up</a></li>
-                    <li><a href="login" id="nav-sign-in">Log in</a></li>
+
+                    <!-- REGISTER PAGE LINK -->
+                    <li><a href="register" >Sign Up</a></li>
+
+                    <!-- LOGIN FORM AND POPUP BUTTON -->
+                    <li><button class="open-button" onclick="openForm(this)" name="login">Log In</button></li>
+                        <form action="/login" method="post" id="login-form" class="login" hidden>
+                            <div class="icon"><i class="fas fa-sign-in-alt"></i></div>
+                            <span>Login</span>
+                            <input type="text" name="user" placeholder="Username" required="required" autofocus 
+                                oninvalid="this.setCustomValidity('Please enter username')" oninput="setCustomValidity('')">
+                            <input type="password" name="pass" placeholder="Password" required="required" 
+                                oninvalid="this.setCustomValidity('Please enter password')" oninput="setCustomValidity('')">
+                            <button type="submit" form="login-form">Log In</button>   
+                            <input type="checkbox" name="rememberuser" value="rememberuser" />
+                            <label for="rememberuser">Remember me</label>    
+                        </form> 
+
+                    <!-- OPEN & CLOSE FORM SCRIPT -->
+                    <script>
+                        function openForm(button) {
+                            console.log('a')
+                            const form = document.getElementById(button.name + '-form');
+                            if (form.hasAttribute('hidden')) {
+                                form.removeAttribute('hidden');
+                                button.setAttribute('class', 'active')
+                            } else {
+                                form.setAttribute('hidden', true);
+                                button.setAttribute('class', 'inactive')
+                            }
+                        }
+                    </script> 
+
+                    <!-- contact link -->
                     <li><a href="contact" >Contact</a></li>
                 </div>
             </ul>

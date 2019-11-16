@@ -40,7 +40,11 @@
             <div class="time-greet">
                 <h1 id="time-greet" style="display: inline-block"></h1>
                 {{#if user}}
-                    <h1 style="display: inline-block">, {{userData.user}}!</h1>
+                    {{#if userData.forename}}
+                        <h1 style="display: inline-block">, {{userData.forename}}!</h1>
+                    {{else}}
+                        <h1 style="display: inline-block">, {{userData.user}}!</h1>
+                    {{/if}}
                 {{/if}}
             </div>
             
@@ -93,8 +97,8 @@
                         <span class="category">Name: </span> <span class="value">{{userData.forename}} {{userData.surname}}</span>
                         <button class="edit" onclick="editField(this)" name="realname">Edit</button>
                         <form action="/edit-realname" method="post" id="realname-form" hidden>
-                            <input type="text" name="forename" placeholder="First and middle names.." required>
-                            <input type="text" name="surname" placeholder="Surname.." required>
+                            <input type="text" name="forename" placeholder="First name.." required maxlength="32">
+                            <input type="text" name="surname" placeholder="Surname (family name).." required maxlength="32">
                             <input type="submit" value="Update name">
                         </form>
                     </div>

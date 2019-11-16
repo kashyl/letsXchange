@@ -70,25 +70,38 @@ nav .navbar-main-wrapper {
     width: 100%;
 }
 
-nav li a {
+nav li a,
+nav li button {
     display: block;
     color: white;
+    font-size: 100%;
     /*text-align: center;*/
     padding: 14px 16px;
     text-decoration: none;
     font-family: Arial, Helvetica, sans-serif;
     border-radius: 10%;
 }
+nav li button {
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+}
+nav li button:focus {
+    outline: none;
+}
 
-nav li a:hover:not(.active) {
+nav li a:hover:not(.active),
+nav li button:hover:not(.active) {
     background-color: #485769; 
 }
 
-nav li a#nav-logout:hover:not(.active) {
+nav li a#nav-logout:hover:not(.active),
+nav li button#nav-logout:hover:not(.active) {
     background-color: rgb(221, 34, 34);
 }
 
-nav a.active {
+nav a.active,
+nav button.active {
     background-color: #586a80;
 }
 
@@ -151,5 +164,10 @@ nav .navbar-search-wrapper button:hover {
   }
 
 /* ==============END SEARCH BAR============== */  
+
+/* ======= LOGIN FORM ======= */
+nav form#login-form {
+    position: absolute;
+}
 
 /* ==== END NAVIGATION BAR ==== */
