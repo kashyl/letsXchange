@@ -49,22 +49,23 @@ async function checkCredentials(username, password) {
 module.exports.checkCredentials = checkCredentials;
 
 /**
- * The following function checks the database to see if a username already exists in the database.
+ * The following function checks the field of the database to see if a value already exists.
  * If it detects a duplicate it throws an exception.
- * @param {String} username
+ * @param {String} fieldName - the field in which to search the value
+ * @param {String} searchValue - the searched value
  * @returns {boolean}
  * @throws {Error}
  */
-async function checkNoDuplicateUsername(username) {
+async function checkNoDuplicate(fieldName, searchValue) {
     try {
-        var records = await runSQL(`SELECT count(id) AS count FROM users WHERE user="${username}";`);
-        if (records.count) throw new Error(`username already exists`)
+        var records = await runSQL(`SELECT count(id) AS count FROM users WHERE ${fieldName}="${searchValue}";`);
+        if (records.count) throw new Error(`${fieldName} already exists`)
         return true
     } catch(err) {
         throw err
     }
 }
-module.exports.checkNoDuplicateUsername = checkNoDuplicateUsername;
+module.exports.checkNoDuplicate = checkNoDuplicate;
 
 /**
  * This function takes data from an uploaded image and saves it to the `avatars` directory.
@@ -95,12 +96,12 @@ module.exports.saveImage = saveImage;
  * Function to add new users to the database
  * @param {String} username - the username to add
  * @param {String} password - the password to add
- * @returns {boolean} - returns true if the username does not exist
+ * @returns {boolean} - returns true if the user successfully registered
  * @throws {Error} - throws an error if the new user account has already been created
  */
 async function addUser(body, saltRounds) {
     try {
-        await checkNoDuplicateUsername(body.user)
+        await checkNoDuplicate('user', body.user)
 
         // ENCRYPT PASSWORD, BUILD SQL
         body.pass = await bcrypt.hash(body.pass, saltRounds)
@@ -116,6 +117,59 @@ async function addUser(body, saltRounds) {
     }
 }
 module.exports.addUser = addUser;
+
+/**
+ * Username change function
+ * @param {String} username - the current username
+ * @param {String} newUsername - the new username which replaces the current
+ * @returns {boolean} - returns true if change was successful
+ * @throws {Error} 
+ */
+async function changeUsername(username, newUsername) {
+    try {
+        // Check if desired username is already taken
+        await checkNoDuplicate('user', newUsername)
+
+        let sql = `UPDATE users SET user = "${newUsername}" WHERE user="${username}";`
+
+        const db = await sqlite.open('./database/database.db')
+        await db.run(sql)
+        await db.close()
+        return true
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.changeUsername = changeUsername;
+
+/**
+ * Database field update function
+ * @param {String} username - (user)name of user who wants to update profile
+ * @param {String} field - what attribute of the user table to update
+ * @param {String} newData - the new data which will update the chosen field
+ * @param {String} unique - if unique is set, function will throw an error if value already exists in the database
+ * @returns {boolean} - returns true if update was successful
+ * @throws {Error} - If value already exists in the database, throws an error
+ */
+async function updateField(username, field, newValue, unique='no') {
+    try {
+
+        if (unique !== 'no') {
+            // NO DUPLICATES - check to see if value already exists in table
+            await checkNoDuplicate(field, newValue)
+        }
+
+        let sql = `UPDATE users SET ${field} = "${newValue}" WHERE user="${username}";`
+
+        const db = await sqlite.open('./database/database.db')
+        await db.run(sql)
+        await db.close()
+        return true
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.updateField = updateField;
 
 /**
  * Function to fetch data from users table

@@ -154,7 +154,6 @@ router.get('/login', async ctx => {
 
  router.post('/login', async ctx => { 
      const body = ctx.request.body
-     console.log(body)
  	try {
  		await accounts.checkCredentials(body.user, body.pass)
         ctx.session.authorised = true
@@ -192,7 +191,9 @@ router.post('/contact-us', async ctx => {
     }
 })
 
-// ------ PROFILE UPDATE FORMS (notice there is koaBody too) ------
+// --------------- PROFILE UPDATE FORMS ---------------
+
+// ------ AVATAR ------ (notice there is koaBody too)
 router.post('/edit-avatar', koaBody, async ctx => {
     try {
         const user = ctx.session.user
@@ -200,12 +201,109 @@ router.post('/edit-avatar', koaBody, async ctx => {
         console.log(avatar)
         await accounts.saveImage(user, avatar)
 
-        return ctx.redirect('/profile')
+        return ctx.redirect('/profile?msg=avatar uploaded')
+    } catch(err) {
+        return ctx.redirect(`/profile?msg=${err.message}`)
+    }
+})
+// ------ USERNAME ------
+router.post('/edit-username', async ctx => {
+    try {
+        const body = ctx.request.body
+        const currentUsername = ctx.session.user
+        const newUsername = body.name
+
+        // accounts.js function to change username
+        await accounts.updateField(currentUsername, 'user', newUsername, 'unique')
+        
+        // update session username with the new username
+        ctx.session.userData.user = newUsername
+
+        return ctx.redirect('/profile?msg=username updated')
+    } catch(err) {
+        return ctx.redirect(`/profile?msg=${err.message}`)
+    }
+})
+// ------ EMAIL ------
+router.post('/edit-email', async ctx => {
+    try {
+        const body = ctx.request.body
+        const username = ctx.session.user
+        const newEmail = body.email
+
+        await accounts.updateField(username, 'email', newEmail, 'unique')
+        
+        ctx.session.userData.email = newEmail
+
+        return ctx.redirect('/profile?msg=email updated')
+    } catch(err) {
+        return ctx.redirect(`/profile?msg=${err.message}`)
+    }
+})
+// ------ REAL NAME ------
+router.post('/edit-realname', async ctx => {
+    try {
+        const body = ctx.request.body
+        const username = ctx.session.user
+
+        await accounts.updateField(username, 'forename', body.forename)
+        await accounts.updateField(username, 'surname', body.surname)
+        
+        ctx.session.userData.forename = body.forename
+        ctx.session.userData.surname = body.surname
+
+        return ctx.redirect('/profile?msg=name updated')
+    } catch(err) {
+        return ctx.redirect(`/profile?msg=${err.message}`)
+    }
+})
+// ------ COUNTRY ------
+router.post('/edit-country', async ctx => {
+    try {
+        const body = ctx.request.body
+        const username = ctx.session.user
+        
+        await accounts.updateField(username, 'country', body.country)
+
+        ctx.session.userData.country = body.country
+
+        return ctx.redirect('/profile?msg=country updated')
+    } catch(err) {
+        return ctx.redirect(`/profile?msg=${err.message}`)
+    }
+})
+// ------ MOBILE ------
+router.post('/edit-mobile', async ctx => {
+    try {
+        const body = ctx.request.body
+        const username = ctx.session.user
+        
+        await accounts.updateField(username, 'mobile', body.mobile)
+
+        ctx.session.userData.mobile = body.mobile
+
+        return ctx.redirect('/profile?msg=contact number updated')
+    } catch(err) {
+        return ctx.redirect(`/profile?msg=${err.message}`)
+    }
+})
+// ------ GENDER ------
+router.post('/edit-gender', async ctx => {
+    try {
+        const body = ctx.request.body
+        const username = ctx.session.user
+        
+        await accounts.updateField(username, 'gender', body.gender)
+
+        ctx.session.userData.gender = body.gender
+
+        return ctx.redirect('/profile?msg=profile updated')
     } catch(err) {
         return ctx.redirect(`/profile?msg=${err.message}`)
     }
 })
 
+// ============= LISTENER ============= 
 app.use(router.routes())
 module.exports = app.listen(port, async() => {
     // make sure the database has correct schema

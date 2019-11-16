@@ -74,6 +74,8 @@ img.avatar {
     font-style: italic;
     display: block;
 
+    margin-bottom: 10px;
+
     clear: both; /* in profile, text of .msg was bit to the left, clear: both; seems to fix this */
   }
 
