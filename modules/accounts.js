@@ -82,6 +82,25 @@ async function checkCredentials(username, password) {
 module.exports.checkCredentials = checkCredentials;
 
 /**
+ * Function to check if password of user matches
+ * @param {String} username - the user of the password
+ * @param {String} password - password to check with the one in the database
+ * @return {boolean} - returns true if user exists and passwords match
+ * @throws {Error} - if user does not exist or password doesn't match
+ */
+async function checkPassword(username, password) {
+    try {
+        const record = await runSQL(`SELECT pass FROM users WHERE user = "${username}";`)
+        const valid = await bcrypt.compare(password, record.pass)
+        if (valid == false) throw new Error(`invalid username or password`)
+        return true
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.checkPassword = checkPassword;
+
+/**
  * The following function checks the field of the database to see if a value already exists.
  * If it detects a duplicate it throws an exception.
  * @param {String} fieldName - the field in which to search the value
@@ -141,7 +160,26 @@ async function saveImage(username, imageInfo, isAvatar=true) {
 }
 module.exports.saveImage = saveImage;
 
-
+/**
+ * This function deletes the file with the given path with fs.unlink(path)
+ * @param {String} path - the path of the file
+ * @return {boolean} - returns true if image was deleted
+ * @throws {Error} - if image was not deleted
+ */
+async function deleteFile(path) {
+    try {
+        fs.unlink(path, (err) => {
+            if (err) {
+                throw err
+            }
+        })
+        console.log(`File deleted. Path: (${path})`)
+        return true
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.deleteFile = deleteFile;
 
 /**
  * This function takes two strings, finds a file named after the first one and renames it to the second string
@@ -193,6 +231,8 @@ async function addUser(body, saltRounds) {
         const db = await sqlite.open('./database/database.db')
         await db.run(sql)
         await db.close()
+        console.log(`New user "${body.user}" registered!`)
+        true
     } catch(err) {
         throw err
     }
@@ -269,3 +309,89 @@ async function fetchUserData(username) {
     }
 }
 module.exports.fetchUserData = fetchUserData;
+
+/**
+ * Function to fetch user id using username
+ * @param {String} username - the user whose id is requested
+ * @returns {Object} - returns an object with the id
+ * @throws {Error} - if ID couldn't be found with given arguments
+ */
+async function fetchUserId(username) {
+    try {
+        let records = await runSQL(`SELECT count(id) AS count FROM users WHERE user="${username}";`);
+        if(!records.count) throw new Error(`user not found`)
+
+        records = await runSQL(`SELECT id FROM users WHERE user="${username}";`);
+
+        return records
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.fetchUserId = fetchUserId;
+
+/**
+ * Function which checks if table exists in the database
+ * @param {String} table - the table to search for
+ * @returns {boolean} - returns true if table is found
+ * @throws {Error} - if table is not found
+ */
+async function findTable(table) {
+    try {
+        var query = `SELECT name FROM sqlite_sequence WHERE name='${table}';`
+        var records = await runSQL(query)    
+        if(records == '') throw new Error(`table not found`)
+        return true
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.findTable = findTable;
+
+/**
+ * Function to check if value exists in the database
+ * @param {String} table - the table to be searched for the value
+ * @param {String} field - the field of the value
+ * @param {String} value - the value
+ * @return {boolean} - returns true if value found
+ * @throws {Error} - throws error if value is NOT found
+ */
+async function checkValue(table, field, value) {
+    try {
+        var records = await runSQL(`SELECT count(id) AS count FROM ${table} WHERE ${field}="${value}";`);
+        if(!records.count) throw new Error(`checkValue: value "${value}" was not found in table "${table}" as "${field}"`)
+        return true
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.checkValue = checkValue;
+
+/**
+ * Function to delete record from database
+ * @param {String} table - which table to delete the record from
+ * @param {String} id - the id of the record to delete
+ * @returns {boolean} - returns true if user successfully deleted 
+ * @throws {Error}
+ */
+async function deleteRecord(table, id) {
+    try {
+        // check if table exists
+        await findTable(table)
+        // check if id exists in the table
+        await checkValue(table, 'id', id)
+        
+        // delete record from database
+        let sql = (`DELETE FROM ${table} WHERE id=${id}`)
+        const db = await sqlite.open('./database/database.db')
+        await db.run(sql)
+        await db.close()
+
+        console.log(`deleteRecord(accounts.js): Deleted record with id "${id}" from table "${table}"`)
+        return true
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.deleteRecord = deleteRecord;
+

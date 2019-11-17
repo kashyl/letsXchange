@@ -64,6 +64,7 @@ const saltRounds = 10
 router.get('/', async ctx => {
     try {
         const data = {}
+        if (ctx.query.msg) data.msg = ctx.query.msg
         data.auth = false
         if (ctx.session.authorised === true) { data.auth = true }
         if (ctx.session.user != null) { data.user = ctx.session.user }
@@ -146,12 +147,16 @@ router.get('/profile', async ctx => {
  * @route {GET} /register
  */
 router.get('/register', async ctx => {
-    if (ctx.session.authorised === true) return ctx.redirect('/profile?msg=you are already logged in your account') 
-    const data = {}
-    data.auth = false
-    if (ctx.session.authorised === true) { data.auth = true }
-    if (ctx.query.msg) data.msg = ctx.query.msg
-    await ctx.render('./views/register', data)
+    try {
+        if (ctx.session.authorised === true) return ctx.redirect('/profile?msg=you are already logged in your account') 
+        const data = {}
+        data.auth = false
+        if (ctx.session.authorised === true) { data.auth = true }
+        if (ctx.query.msg) data.msg = ctx.query.msg
+        await ctx.render('./views/register', data)
+    } catch(err) {
+        ctx.redirect(`/?msg=${err.message}`)
+    }
 })
 
 /**
@@ -162,6 +167,7 @@ router.get('/register', async ctx => {
  */
 router.post('/register', koaBody, async ctx => {
     try {
+
         const body = ctx.request.body
 
         // Accounts.js exported function
@@ -264,7 +270,7 @@ router.get('/login', async ctx => {
  	} catch(err) {
         ctx.session.authorised = false // also prevents user from getting "double"-redirected from login page because auth is true
  		return ctx.redirect(`/login?msg=${err.message}`)
- 	}
+ 	}   
  })
 
  /**
@@ -309,7 +315,7 @@ router.post('/edit-avatar', koaBody, async ctx => {
     try {
         const user = ctx.session.user
         const avatar = ctx.request.files.avatar
-        console.log(avatar)
+        // console.log(avatar)
         await accounts.saveImage(user, avatar)
 
         return ctx.redirect('/profile?msg=avatar uploaded')
@@ -478,6 +484,43 @@ router.post('/edit-pass', async ctx => {
         return ctx.redirect(`/profile?msg=${err.message}`)
     }
 })
+// ------ PASSWORD ------
+/**
+ * Script to process account deletion
+ * 
+ * @name DeleteAccount Script
+ * @route {POST} /delete-user
+ */
+router.post('/delete-user', async ctx => {
+    try {
+        const body = ctx.request.body
+        // check if user field matches
+        if (body.username !== ctx.session.user) {
+            return ctx.redirect('/profile?msg=invalid username or password')
+        }
+
+        // check if password is valid
+        await accounts.checkPassword(body.username, body.pass)
+
+        // fetches the user id from the database using username
+        const records = await accounts.fetchUserId(body.username)
+        const userid = records.id
+
+        // deletes user avatar file
+        const path = `assets/public/avatars/${body.username}.png`
+        await accounts.deleteFile(path)
+
+        // deletes user record with specified id
+        await accounts.deleteRecord('users', userid)
+
+        // unauthorises session
+        ctx.session.authorised = null;
+        ctx.redirect('/')
+    } catch(err) {
+        return ctx.redirect(`/profile?msg=${err.message}`)
+    }
+})
+
 
 // ============= LISTENER ============= 
 app.use(router.routes())

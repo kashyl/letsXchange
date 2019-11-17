@@ -60,9 +60,14 @@ div.profile-block:first-child {
     border-bottom: none;
     margin-bottom: 0;
 }
-div.profile-block:last-child {
+div.profile-block:nth-last-child(2) {
     border-bottom: none;
     margin-bottom: 0;
+}
+div.profile-block:nth-last-child(1) {
+    border-bottom: none;
+    margin-bottom: 0;
+    margin-top: 100px;
 }
 
 /* ------ CATEGORY AND VALUES ------ */
@@ -180,4 +185,72 @@ div.edit-profile span.bigtext {
 
     display: block;
     margin: 0 auto;
+}
+
+/* ADVANCED BUTTON */
+div.profile-block:last-of-type {
+    text-align: left;
+}
+div.edit-profile button#advanced-form-button {  
+    width: auto;
+    border: none;
+    padding: 4px 20px;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 16px;
+    font-size: 100%;
+    color: rgb(71, 71, 71);
+}
+div.edit-profile button#advanced-form-button:focus {
+    outline: none;
+}
+div.edit-profile form#advanced-form {
+    border-radius: 5px;
+    text-align: center;
+    background-color: rgb(177, 2, 8);
+    padding: 20px 20px;
+    margin-top: 50px;
+}
+div.edit-profile form#advanced-form .bigtext {
+    margin: 0 auto;
+    font-size: 170%;
+    color: white;
+    margin-bottom: 20px;
+    width: 100%;
+    border-radius: 5px;
+    border-bottom: 5px solid white;
+}
+
+div.edit-profile form#advanced-form input[type="text"],
+div.edit-profile form#advanced-form input[type="password"] {
+    width: 75%;
+    display: block;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+div.edit-profile form#advanced-form input[type="submit"].red {
+    background-color: rgb(111, 111, 111);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 100%;
+    margin: 0 auto;
+    display: block;
+    margin-top: 20px;
+}
+div.edit-profile form#advanced-form input[type="submit"].red:hover {
+    background-color: red;
+}
+div.edit-profile form#advanced-form p {
+    font-weight: bolder;
+    color: white;
+}
+div.edit-profile form#advanced-form div#check {
+    color: white;
+    margin: 20px auto 0 auto;
+    width: 300px;
+    
 }

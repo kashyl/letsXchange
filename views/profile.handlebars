@@ -67,7 +67,7 @@
 
                     <!-- USERNAME -->
                     <div class="profile-block">
-                        <span class="category">Username: </span> <span class="value">{{userData.user}}</span>
+                        <span class="category">Username: </span> <span class="value" id="profile-username">{{userData.user}}</span>
                         <button class="edit" onclick="editField(this)" name="username">Edit</button>
                         <form action="/edit-username" method="post" id="username-form" hidden>
                             <input type="text" name="name" placeholder="Enter new username.." required minlength="3" maxlength="16">
@@ -91,8 +91,8 @@
                         <span class="category">Name: </span> <span class="value">{{userData.forename}} {{userData.surname}}</span>
                         <button class="edit" onclick="editField(this)" name="realname">Edit</button>
                         <form action="/edit-realname" method="post" id="realname-form" hidden>
-                            <input type="text" name="forename" placeholder="First name.." required maxlength="32">
-                            <input type="text" name="surname" placeholder="Surname (family name).." required maxlength="32">
+                            <input type="text" name="forename" placeholder="First name.." required minlength="2" maxlength="32">
+                            <input type="text" name="surname" placeholder="Surname (family name).." required minlength="2" maxlength="32">
                             <input type="submit" value="Update name">
                         </form>
                     </div>
@@ -149,6 +149,24 @@
                         </form>
                     </div>
 
+                    <!-- ADVANCED -->
+                    <div class="profile-block">
+                        <button onclick="editField(this)" name="advanced" id="advanced-form-button">Advanced</button>
+                        <form action="/delete-user" method="post" id="advanced-form" hidden onsubmit="return confirm('All of your information and listings will be lost.\nThis action is irreversible.\nDo you really want to delete your account? ');">
+                            <h1 class="bigtext">Delete account</h1>
+                            <p>Warning! This action will delete all data and listing associated with this account.</p>
+                            <p>This action is irreversible.</p>
+                            <p>If you still wish to proceed, please verify your credentials below then click the confirm button.</p>
+                            <input type="text" id="account-delete-user-check" name="username" placeholder="Enter username to proceed.." required>
+                            <input type="password" name="pass" placeholder="Verify password.." required>
+                            <div id="check">
+                                <input type="checkbox" name="check" required />
+                                <label for="check">I understand all my data, including listings, will be lost.</label>
+                            </div>
+                            <input type="submit" value="Confirm Delete" class="red">
+                        </form>
+                    </div>
+
                 </div>
 
             </div>
@@ -170,6 +188,8 @@
                     form.setAttribute('hidden', true);
                     if (button.name == 'pass') {
                         button.innerHTML='Change password';
+                    } else if (button.name == 'advanced') {
+                        button.innerHTML='Advanced';
                     } else {
                         button.innerHTML='Edit';
                     }
@@ -194,6 +214,25 @@
             password.onchange = validatePassword;
             //onkeyup event - when keyboard button is released
             confirm_password.onkeyup = validatePassword;
+        </script>
+
+        <!-- USERNAME MATCH CHECK FOR ADVANCED -->
+        <script language='javascript' type='text/javascript'>
+            var userfield = document.getElementById("account-delete-user-check")
+            , username = document.getElementById("profile-username").innerHTML
+            
+            function validateField(){
+                if(userfield.value != username) {
+                    userfield.setCustomValidity("Username Doesn't Match");
+                } else {
+                    userfield.setCustomValidity('');
+                }
+            }
+
+            //onchange event - when the value of an element has been changed
+            userfield.onchange = validateField;
+            //onkeyup event - when keyboard button is released
+            userfield.onkeyup = validateField;
         </script>
     </body>
 </html>
