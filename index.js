@@ -66,6 +66,7 @@ router.get('/', async ctx => {
         const data = {}
         data.auth = false
         if (ctx.session.authorised === true) { data.auth = true }
+        if (ctx.session.user != null) { data.user = ctx.session.user }
         await ctx.render('./views/index', data)
     } catch(err) {
         await ctx.render('./views/error', {message: err.message})
@@ -84,6 +85,7 @@ router.get('/contact', async ctx => {
         data.auth = false
         if (ctx.session.authorised === true) { data.auth = true }
         if (ctx.query.msg) data.msg = ctx.query.msg
+        if (ctx.session.user != null) { data.user = ctx.session.user }
         await ctx.render('./views/contact', data)
     } catch(err) {
         await ctx.render('./views/error', {message: err.message})

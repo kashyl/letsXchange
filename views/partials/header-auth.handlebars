@@ -1,11 +1,18 @@
 <div id="upper-header">
     <div id="header-left-wrapper">
+        
     </div>
     <div id="header-middle-wrapper">
         <a href="/" id="nav-top"> <img class="logo" src="../assets/image/LogoWhite.png" alt="letsXchange"> </a>
     </div>
     <div id="header-right-wrapper">
         <div id="logged-as">
+            <span>Logged in as</span>
+            <a href="/profile">
+            <span id="username">{{user}}</span>
+            <img class="avatar-small" src="../assets/public/avatars/{{user}}.png" alt="Image not found" 
+                onerror="this.onerror=null;this.src='../assets/image/default_avatar.png';" />
+            </a>
         </div>
     </div>
 </div>

@@ -11,27 +11,84 @@ div#upper-header {
 div#upper-header:focus {
     outline: none;
 }
-div#upper-header img.logo {
-    margin: 0 auto;
-}
-div#header-left-wrapper {
-    float: left;
-    padding-left: 0;
-    padding-right: 0; 
-    /*margin-left: 80px;*/
-    width: 400px;
-}
-div#header-right-wrapper {
-    float: right;
-    padding-right: 0;
-    padding-left: 0;
-    /*margin-right: 80px;*/
-    width: 400px;
-}
+
 div#header-middle-wrapper {
     display: inline-block;
     width: calc(100% - 860px);
     padding: 0;
+}
+div#upper-header img.logo {
+    margin: 0 auto;
+}
+
+div#header-left-wrapper {
+    padding-left: 0;
+    padding-right: 0; 
+    height: 64px;
+    width: 400px;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+div#header-right-wrapper {
+    padding-right: 0;
+    padding-left: 0;
+    height: 64px;
+    width: 400px;
+
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+div#header-right-wrapper div#logged-as {
+    display: inline-block;
+    height: 40px;
+    width: 300px;
+    margin-top: 10px;
+}
+div#header-right-wrapper div#logged-as:before,
+div#header-right-wrapper div#logged-as_before {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+div#header-right-wrapper div#logged-as span {
+    height: auto;
+    color: white;
+    vertical-align: middle;
+    overflow: hidden;
+}
+div#header-right-wrapper div#logged-as img.avatar-small {
+    vertical-align: middle;
+   
+}
+div#header-right-wrapper div#logged-as img.avatar-small:hover {
+    vertical-align: middle;
+    height: 40px;
+    width: 40px;
+}
+div#header-right-wrapper div#logged-as a[href^="/profile"] {
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 110%;
+}
+div#header-right-wrapper div#logged-as span#username {
+    display: inline-block;
+    color: #ff7707;
+    white-space: nowrap;
+    max-width: 140px;
+    overflow: auto !important;
+    font-size: 110%;   
+}
+div#header-right-wrapper div#logged-as span#username::-webkit-scrollbar {
+    display: none;
+}
+div#header-right-wrapper div#logged-as span#username:hover {
+    font-size: 115%;
 }
 
 /* ==== START NAVIGATION BAR ==== */
