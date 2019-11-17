@@ -67,6 +67,9 @@ form.login input {
     width: 150px;
     padding: 10px;
 }
+form.login input:focus {
+    outline: none;
+}
 form.login input:first-of-type {
     margin-top: 6px;
 }
