@@ -19,14 +19,9 @@
 
         <header>
             {{#if auth}}
-                <script>
-                    //$("header:first-of-type").load("./views/partials/header-auth.handlebars");
-                </script> 
-                {{> header}}
+                {{> headerAuth}}
             {{else}}
-            <script>
-                $("header:first-of-type").load("./views/partials/header.handlebars");
-            </script>     
+                {{> header}}
             {{/if}}
         </header>
 
@@ -69,9 +64,7 @@
         </main>
 
         <footer>
-            <script>
-                $("footer:last-of-type").load("./views/partials/footer.handlebars");
-            </script>
+            {{> footer}}
         </footer>
         <!-- scripts -->
         <script src="../js/time-greeting.js"></script>

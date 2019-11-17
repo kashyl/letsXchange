@@ -17,6 +17,7 @@ const fs = require('fs-extra') // for files. 'fs-extra' adds more methods = no m
 const mime = require('mime-types')
 const nodemailer = require('nodemailer');
 const Jimp = require('jimp') // for image conversion
+const handlebars = require('handlebars')
 
 /* How to env variable: env.parsed.'env variable name */
 const env = require('dotenv').config();
@@ -27,6 +28,20 @@ const email = require('./modules/email.js')
 
 const app = new Koa()
 const router = new Router()
+
+/* Register HBS Partials for Header, HeaderAuth and Footer */
+handlebars.registerPartial(
+    'headerAuth',
+    fs.readFileSync(__dirname + "\\views\\partials\\header-auth.handlebars", 'utf8')
+)
+handlebars.registerPartial(
+    'header',
+    fs.readFileSync(__dirname + "\\views\\partials\\header.handlebars", 'utf8')
+)
+handlebars.registerPartial(
+    'footer',
+    fs.readFileSync(__dirname + "\\views\\partials\\footer.handlebars", 'utf8')
+)
 
 /* MIDDLEWARE CONFIGURATION */
 app.keys = [env.parsed.APP_KEYS]
