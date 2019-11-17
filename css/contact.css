@@ -35,12 +35,20 @@ section#contact-info table {
     min-width: inherit;
     font-family: sans-serif;
     border-collapse: collapse;
+    background: #f2f2f2;
 }
 section#contact-info table th.table-title {
     text-align: center;
     font-size: 125%;
     padding: 5px;
-    background-color: #f2f2f2;
+    background-color: #ebe9e9;
+    text-align: center;
+    font-family: 'Open Sans', arial, sans-serif;
+    font-size: 140%;
+    font-style: italic;
+    text-transform: uppercase;
+
+    color: #676766;
 }
 section#contact-info table th{
     text-transform: uppercase;

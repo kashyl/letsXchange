@@ -1,13 +1,37 @@
-
+/* ==== UPPER HEADER ==== */
 div#upper-header {
-    margin: 0 auto;
+    height: 64px;  
     min-width: 1100px;
     background-color: #232f3e;
     text-align: center;
+    padding: 0px;
+    display: block;
+    width: 100%;
 }
-
 div#upper-header:focus {
     outline: none;
+}
+div#upper-header img.logo {
+    margin: 0 auto;
+}
+div#header-left-wrapper {
+    float: left;
+    padding-left: 0;
+    padding-right: 0; 
+    /*margin-left: 80px;*/
+    width: 400px;
+}
+div#header-right-wrapper {
+    float: right;
+    padding-right: 0;
+    padding-left: 0;
+    /*margin-right: 80px;*/
+    width: 400px;
+}
+div#header-middle-wrapper {
+    display: inline-block;
+    width: calc(100% - 860px);
+    padding: 0;
 }
 
 /* ==== START NAVIGATION BAR ==== */
@@ -71,7 +95,7 @@ nav .navbar-main-wrapper {
 }
 
 nav li a,
-nav li button {
+nav li button:not(.search) {
     display: block;
     color: white;
     font-size: 100%;
@@ -144,7 +168,7 @@ nav .navbar-search-wrapper {
     /*border: 2px solid red;*/
 }
 
-nav .navbar-search-wrapper button {
+nav .navbar-search-wrapper button.search {
     float: right;
     padding: 10px 10px;
     margin-top: 4px;
@@ -159,7 +183,7 @@ nav .navbar-search-wrapper button {
     width: 36px;
   }
 
-nav .navbar-search-wrapper button:hover {
+nav .navbar-search-wrapper button.search:hover {
     background: #ff8808;
   }
 

@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>LetsXchange Contact Us</title>
+        <link rel="icon" href="/assets/ico/favicon.ico">
+
         <link href="../css/styles.css" rel="stylesheet" type="text/css" />
         <link href="../css/contact.css" rel="stylesheet" type="text/css" />
  
         <link rel="stylesheet" type="text/css" href="../assets/svg/fontawesome-free-5.11.2-web/css/all.css" />
-        <title>LetsXchange Contact Us</title>
-        <link rel="icon" href="/assets/ico/favicon.ico">
-
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+        
+        <!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script> -->
         <script src="../js/jquery-3.4.1.js"></script>
+
         <!-- sets nav active element by checkling page url -->
-        <script src="../js/nav-active-page.js"></script>
+        <script>
+            $.getScript("../js/nav-active-page.js");
+        </script>
       
     </head>
     <body>
@@ -93,7 +97,7 @@
 
                 <div class="contact-form">
                     <form action="/contact-us" method="POST" id="contact-us">
-                        <span class="bigtext">Contact Us</span>
+                        <span class="bigtext">Send us a message</span>
                         <label for="name">Name</label>
                         <input type="text" id="name" name="name" placeholder="Your name..">
 

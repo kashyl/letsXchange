@@ -11,7 +11,7 @@
             <ul class="navbar-left-wrapper">
                 <div class="contents-nav-left">
                     <li><a href="/" >Home</a></li>
-                    <li><a href="" >New Offer</a></li>
+                    <li><a href="additem" >New Offer</a></li>
                     <li><a href="" >My Listings</a></li>
                 </div>
             </ul>
@@ -40,19 +40,6 @@
                     <script>
                         $.getScript("../../js/display-container.js");
                     </script>
-                    <!--<script>
-                        function openForm(button) {
-                            console.log('a')
-                            const form = document.getElementById(button.name + '-form');
-                            if (form.hasAttribute('hidden')) {
-                                form.removeAttribute('hidden');
-                                button.setAttribute('class', 'active')
-                            } else {
-                                form.setAttribute('hidden', true);
-                                button.setAttribute('class', 'inactive')
-                            }
-                        }
-                    </script> -->
 
                     <!-- contact link -->
                     <li><a href="contact" >Contact</a></li>
@@ -64,7 +51,7 @@
                 <li>
                 <form action="/search" id="searchform" method="GET">
                     <input type="search" name="search" placeholder="What are you looking for..." /> 
-                    <button type="submit" form="searchform"><i class="fa fa-search"></i></button>
+                    <button type="submit" form="searchform" class="search"><i class="fa fa-search"></i></button>
                 </form>
                 </li>
             </ul>

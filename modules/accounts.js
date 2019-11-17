@@ -34,6 +34,39 @@ async function runSQL(query) {
         throw err
     }
 }
+
+/**
+ * Adds item to the database
+ * @param {String} username - name of the user who adds the item
+ * @param {String} item - form body (ctx.form.body) of the add item form
+ * @returns {boolean} - returns true if successfully added
+ * @throws {Error} - if something went wrong and item wasn't added
+ */
+async function addItem(username, item) {
+    try {
+        // Build SQL command with data
+        let sql = `INSERT INTO items(title, seller, description, exchange, condition, location, date)` +
+                    `VALUES("${item.title}", "${username}", "${item.description}", "${item.exchange}", "${item.condition}"` +
+                    `, "${item.location}", "${item.date}")`
+
+        // DATABASE COMMANDS
+        const db = await sqlite.open('./database/database.db')
+        await db.run(sql)
+        await db.close()
+        return true
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.addItem = addItem;
+
+/**
+ * Function to check if user exists in the database and if passwords match
+ * @param {String} username - user to search in the database
+ * @param {String} password - password to check if it matches with the one in the database
+ * @return {boolean} - returns true if user exists and passwords match
+ * @throws {Error} - if user does not exist or password doesn't match
+ */
 async function checkCredentials(username, password) {
     try {
         var records = await runSQL(`SELECT count(id) AS count FROM users WHERE user="${username}";`);
@@ -225,7 +258,7 @@ module.exports.updateField = updateField;
  * @returns {Object} - returns an object with all the data
  * @throws {Error}
  */
-async function fetchData(username) {
+async function fetchUserData(username) {
     try {
         let records = await runSQL(`SELECT count(id) AS count FROM users WHERE user="${username}";`);
         if(!records.count) throw new Error(`user not found`)
@@ -235,4 +268,4 @@ async function fetchData(username) {
         throw err
     }
 }
-module.exports.fetchData = fetchData;
+module.exports.fetchUserData = fetchUserData;
