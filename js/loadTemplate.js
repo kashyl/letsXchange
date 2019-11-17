@@ -11,7 +11,7 @@ var LoadTemplate = function (element, template, data) {
   this.data = data || null
 
   // You can change this to path of your template folder.
-  this.folderPath = '../pages/common/'
+  this.folderPath = '../views/common/'
 }
 
 LoadTemplate.prototype.create = function (callback) {

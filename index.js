@@ -33,7 +33,7 @@ app.keys = [env.parsed.APP_KEYS]
 app.use(staticDir('.'))
 app.use(bodyParser())
 app.use(session(app))
-app.use(views(`${__dirname}`, { extension: 'handlebars' }, { map: { handlebars: 'handlebars' } }))
+app.use(views(`${__dirname}`, { extension: 'handlebars' }, { map: { handlebars: 'handlebars' } }))  
 
 const port = 8080
 
@@ -51,9 +51,9 @@ router.get('/', async ctx => {
         const data = {}
         data.auth = false
         if (ctx.session.authorised === true) { data.auth = true }
-        await ctx.render('./pages/index', data)
+        await ctx.render('./views/index', data)
     } catch(err) {
-        await ctx.render('./pages/error', {message: err.message})
+        await ctx.render('./views/error', {message: err.message})
     }
 })
 
@@ -69,9 +69,9 @@ router.get('/contact', async ctx => {
         data.auth = false
         if (ctx.session.authorised === true) { data.auth = true }
         if (ctx.query.msg) data.msg = ctx.query.msg
-        await ctx.render('./pages/contact', data)
+        await ctx.render('./views/contact', data)
     } catch(err) {
-        await ctx.render('./pages/error', {message: err.message})
+        await ctx.render('./views/error', {message: err.message})
     }
 })
 
@@ -86,9 +86,9 @@ router.get('/about', async ctx => {
         const data = {}
         data.auth = false
         if (ctx.session.authorised === true) { data.auth = true }
-        await ctx.render('pages/about', data)
+        await ctx.render('views/about', data)
     } catch(err) {
-        await ctx.render('./pages/error', {message: err.message})
+        await ctx.render('./views/error', {message: err.message})
     }
 })
 
@@ -116,9 +116,9 @@ router.get('/profile', async ctx => {
             data.countries = JSON.parse(rawdata);
         });
         
-        await ctx.render('./pages/profile', data)
+        await ctx.render('./views/profile', data)
     } catch(err) {
-        await ctx.render('./pages/error', {message: err.message})
+        await ctx.render('./views/error', {message: err.message})
     }
 })
 
@@ -134,7 +134,7 @@ router.get('/register', async ctx => {
     data.auth = false
     if (ctx.session.authorised === true) { data.auth = true }
     if (ctx.query.msg) data.msg = ctx.query.msg
-    await ctx.render('./pages/register', data)
+    await ctx.render('./views/register', data)
 })
 
 /**
@@ -177,9 +177,9 @@ router.get('/additem', async ctx => {
 
         if (ctx.query.msg) data.msg = ctx.query.msg
 
-        await ctx.render('./pages/additem', data)
+        await ctx.render('./views/additem', data)
     } catch(err) {
-        await ctx.render('./pages/error', {message: err.message})
+        await ctx.render('./views/error', {message: err.message})
 }
 })
 /**
@@ -216,9 +216,9 @@ router.get('/login', async ctx => {
         if (ctx.session.authorised === true) { data.auth = true }
         if (ctx.query.msg) data.msg = ctx.query.msg
 
-        await ctx.render('./pages/login', data)
+        await ctx.render('./views/login', data)
     } catch(err) {
-        await ctx.render('./pages/error', {message: err.message})
+        await ctx.render('./views/error', {message: err.message})
 }
 })
 

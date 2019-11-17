@@ -22,11 +22,11 @@
         <header>
             {{#if auth}}
                 <script>
-                    $("header:first-of-type").load("./pages/common/header-auth.handlebars");
+                    $("header:first-of-type").load("./views/partials/header-auth.handlebars");
                 </script> 
             {{else}}
             <script>
-                $("header:first-of-type").load("./pages/common/header.handlebars");
+                $("header:first-of-type").load("./views/partials/header.handlebars");
             </script>     
             {{/if}}
         </header>
@@ -76,7 +76,7 @@
 
         <footer>
             <script>
-                $("footer:last-of-type").load("./pages/common/footer.handlebars");
+                $("footer:last-of-type").load("./views/partials/footer.handlebars");
             </script>
         </footer>
 
