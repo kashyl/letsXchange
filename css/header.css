@@ -249,6 +249,10 @@ nav .navbar-search-wrapper button.search:hover {
 /* ======= LOGIN FORM ======= */
 nav form#login-form {
     position: absolute;
+    right: 135px;
+    top: 122px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
 }
 
 /* ==== END NAVIGATION BAR ==== */
