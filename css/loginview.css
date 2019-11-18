@@ -1,17 +1,7 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:800italic);
-#nav, #feature, .article, #footer {
-    background-color: #efefef;
-    margin-top: 20px;
-    padding: 10px 0px 5px 0px;
-}
-#feature, .article {
-    height: 100px;
-}
-
-form.register {
+form.login-large {
     border-radius: 8px;
     width: 300px;
-    min-height: 400px;
+    min-height: 350px;
     padding: 0px 5px;
     background-color: #232f3e;
     /*text-align: left;*/
@@ -26,7 +16,7 @@ form.register {
     margin: 0 auto;
 }
 
-form.register span {
+form.login-large span {
     width: 250px;
     height: 40px;
     text-align: center;
@@ -36,9 +26,11 @@ form.register span {
     text-transform: uppercase;
 
     display: inline-block;
+
+    margin: 10px 0;
 }
 
-form.register input {
+form.login-large input:not([type="checkbox"]) {
     text-align: center; 
 
     /*center element using parent text-align:center and child display:inline-block; */ 
@@ -59,12 +51,15 @@ form.register input {
 
     width: 200px;
     padding: 10px;
+
+    margin-bottom: 5px;
 }
-form.register input:focus {
+
+form.login-large input:focus {
     outline: none;
 }
 
-form.register button {
+form.login-large button {
     width: 120px;
     height: 35px;
     border-radius: 3px;
@@ -75,7 +70,22 @@ form.register button {
     font-weight: bold;
     margin: 10px 0;
 }
-form.register button:hover {
+form.login-large button:hover {
     background-color: #2ca02c;
     cursor: pointer;
+}
+
+form.login-large div#remember-me {
+    text-align: left;
+}
+form.login-large input[type="checkbox"] {
+    margin-left: 80px;
+}
+
+form.login-large div#forgot-password {
+    margin-top: 25px;
+}
+form.login-large div#forgot-password a {
+    color: white;
+    text-decoration: none;
 }

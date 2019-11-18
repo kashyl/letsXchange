@@ -2,7 +2,7 @@
 <html>
     <head>
         <link href="../css/styles.css" rel="stylesheet" type="text/css" />
-        <link href="../css/index.css" rel="stylesheet" type="text/css" />
+        <link href="../css/loginview.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" type="text/css" href="../assets/svg/fontawesome-free-5.11.2-web/css/all.css" />
 
         <title> LetsXchange Log In </title>
@@ -30,17 +30,25 @@
                 <p class="msg">{{msg}}</p>
             {{/if}}
 
-            <form action="/login" method="post" id="loginform" class="login">
-                <div class="icon"><i class="fas fa-sign-in-alt"></i></div>
-                <span>Login</span>
+            <form action="/login" method="post" id="loginform" class="login-large">
+                <img class="logo" src="../assets/image/LogoWhite.png" alt="letsXchange">
+                <span>Login to account</span>
                 <input type="text" name="user" placeholder="Username" value="{{user}}" required="required" autofocus 
                     oninvalid="this.setCustomValidity('Please enter username')" oninput="setCustomValidity('')">
                 <input type="password" name="pass" placeholder="Password" required="required" 
-                    oninvalid="this.setCustomValidity('Please enter password')" oninput="setCustomValidity('')">
-                <button type="submit" form="loginform">Log In</button>   
-                <input type="checkbox" name="rememberuser" value="rememberuser" />
-                <label for="rememberuser">Remember me</label>    
-            </form> 
+                    oninvalid="this.setCustomValidity('Please enter password')" oninput="setCustomValidity('')"> 
+                
+                <button type="submit" form="loginform">Log In</button> 
+
+                <div id="remember-me">
+                    <input type="checkbox" name="rememberuser" value="rememberuser" />
+                    <label for="rememberuser">Remember me</label>    
+                </div>
+
+                <div id="forgot-password">
+                    <a href="/login">Forgot password</a>
+                </div>
+            </form>  
     
         </main>
 

@@ -18,36 +18,34 @@ form.login {
 
 form.login span {
     width: 60px;
-    height: 40px;
+    height: 20px;
 
     text-align: left;
     position: absolute;
-    margin: 5px 0 0 5px;
 
     font-family: 'Open Sans', arial, sans-serif;
     font-size: 120%;
     font-style: italic;
     text-transform: uppercase;
-
-    display: inline-block;
-    
 }
 
 form.login .icon {
-    display: inline-block;
-	width: 35px;
-    height: 35px;
+	width: 60px;
+    height: 60px;
     position: absolute;
-    margin-left: 5px;
-    margin-top: 25px;
-	/*background-color:  #33383b;*/
+    top: 25px;
 	border-radius: 2px;
 
 	font-size: 60px;
     color: #ffffff;
 	text-align: center;
     line-height: 35px;
+    color: white;
 }
+form.login .icon:hover {
+    color: #ff7707;
+}
+
 form.login input {
     float: right;
     display: block;

@@ -33,7 +33,7 @@
                     <!-- LOGIN FORM AND POPUP BUTTON -->
                     <li><button id="login-show" name="login">Log In</button></li>
                         <form action="/login" method="post" id="login-form" class="login" hidden>
-                            <div class="icon"><i class="fas fa-sign-in-alt"></i></div>
+                            <a href="/login" title="Go to the login page"><div class="icon"><i class="fas fa-sign-in-alt"></i></div></a>
                             <span>Login</span>
                             <input type="text" name="user" placeholder="Username" required="required" autofocus 
                                 oninvalid="this.setCustomValidity('Please enter username')" oninput="setCustomValidity('')">
@@ -41,7 +41,7 @@
                                 oninvalid="this.setCustomValidity('Please enter password')" oninput="setCustomValidity('')">
                             <button type="submit" form="login-form">Log In</button>   
                             <input type="checkbox" name="rememberuser" value="rememberuser" />
-                            <label for="rememberuser">Remember me</label>    
+                            <label for="rememberuser">Remember me</label>   
                         </form> 
 
                     <!-- OPEN & CLOSE FORM SCRIPT -->
