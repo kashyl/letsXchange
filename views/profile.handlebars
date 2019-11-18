@@ -102,12 +102,7 @@
                         <span class="category">Country: </span> <span class="value">{{userData.country}}</span>
                         <button class="edit" onclick="editField(this)" name="country">Edit</button>
                         <form action="/edit-country" method="post" id="country-form" hidden>
-                            <select name="country" required>
-                                <option disabled selected value> Select country </option>
-                                {{#each countries}}
-                                <option value="{{this.name}}">{{this.name}} - {{this.code}}</option>
-                                {{/each}}
-                                <option value='Other'>N/A (other - not listed)</option>
+                            <select name="countries" class="loadjson" required>
                             </select>
                             <input type="submit" value="Update country">
                         </form>
@@ -233,6 +228,9 @@
             userfield.onchange = validateField;
             //onkeyup event - when keyboard button is released
             userfield.onkeyup = validateField;
+        </script>
+        <script>
+            $.getScript('../js/populate-select.js');
         </script>
     </body>
 </html>

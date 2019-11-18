@@ -240,5 +240,7 @@
     {"name":"Venezuela, Bolivarian Republic of","dial_code":"+58","code":"VE"},
     {"name":"Viet Nam","dial_code":"+84","code":"VN"},
     {"name":"Virgin Islands, British","dial_code":"+1 284","code":"VG"},
-    {"name":"Virgin Islands, U.S.","dial_code":"+1 340","code":"VI"}
+    {"name":"Virgin Islands, U.S.","dial_code":"+1 340","code":"VI"},
+    {"name":"Other","dial_code":"", "code":""}
+
 ]
