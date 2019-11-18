@@ -152,7 +152,9 @@ div.edit-profile button#pass-form-button {
     font-size: 120%;
 }
 
-div.edit-profile input:focus, div.edit-profile textarea:focus {
+div.edit-profile input:focus,
+div.edit-profile textarea:focus,
+div.edit-profile select:focus {
     outline: none;
 } 
 

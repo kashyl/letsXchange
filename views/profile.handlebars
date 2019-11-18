@@ -103,11 +103,11 @@
                         <button class="edit" onclick="editField(this)" name="country">Edit</button>
                         <form action="/edit-country" method="post" id="country-form" hidden>
                             <select name="country" required>
-                                <option disabled selected value> -- select an option -- </option>
+                                <option disabled selected value> Select country </option>
                                 {{#each countries}}
                                 <option value="{{this.name}}">{{this.name}} - {{this.code}}</option>
                                 {{/each}}
-                                <option value=''>N/A (other - not listed)</option>
+                                <option value='Other'>N/A (other - not listed)</option>
                             </select>
                             <input type="submit" value="Update country">
                         </form>

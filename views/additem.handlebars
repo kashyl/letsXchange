@@ -37,7 +37,7 @@
                     <form action="/add-item" enctype="multipart/form-data" method="POST">
                         <h1 class="title">Create new offer</h1>
                         <label for="name">Title</label>
-                        <input type="text" id="name" name="name" placeholder="What do you want to trade?">
+                        <input type="text" id="name" name="name" placeholder="What do you want to trade?" required maxlength="64">
 
 
                         <label for="email">Email</label>
@@ -48,6 +48,29 @@
                             <textarea id="description" class="jTextarea" name="description" maxlength="750" required data-gramm_editor="false"
                             placeholder="Add information about your product like condition, color..."></textarea>
                             <span class="character-count"></span>
+                        </div>
+
+                        <div class="grid">
+                            <div class="column">
+                                Category
+                                <!-- Script to adjust select color once a value has been chosen -->
+                                <script type="text/javascript">
+                                    function changeMe(sel)
+                                    {
+                                    sel.setAttribute('style', 'color: rgb(72, 98, 112);')
+                                    }
+                                </script>
+                                <select name="country" required onchange="changeMe(this)">
+                                    <option disabled selected> Choose a category </option>
+                                    {{#each categories}}
+                                        <option value="{{this.name}}">{{this.name}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                            <div class="column">
+                           
+                            </div>
+                            
                         </div>
 
 

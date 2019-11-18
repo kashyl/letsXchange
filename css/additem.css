@@ -37,6 +37,7 @@ div.add-item {
     padding: 20px;
     float:right;
     width: 66.667%;
+    height: auto;
     color: rgb(72, 98, 112);
     font-size: 16px;
     line-height: 24px;
@@ -86,7 +87,6 @@ div.add-item textarea {
     text-align: start;
     -webkit-appearance: textfield;
     -webkit-rtl-ordering: logical;
-    cursor: text;
     font: 400 13.3333px Arial;
 
     text-size-adjust: 100%;
@@ -121,7 +121,9 @@ div.add-item input[type=file] {
     width: 60%;
 }
 
-div.add-item input:focus, div.add-item textarea:focus {
+div.add-item input:focus, 
+div.add-item textarea:focus,
+div.add-item select:focus {
     outline: none;
 } 
 
@@ -193,5 +195,27 @@ h1.title {
     font-size: 24px;
     line-height: 36px;
     margin-bottom: 16px;
+}
+
+div.add-item select {
+    color: rgb(146, 161, 169);
+}
+div.add-item select:hover {
+    cursor: pointer;
+}
+div.add-item option {
+    color: rgb(72, 98, 112);
+}
+div.add-item option:first-child {
+    color: rgb(146, 161, 169);
+}
+
+div.grid {
+    width: 100%;
+    margin-bottom: 16px;
+}
+div.grid div.column {
+    display: inline-block;
+    width: 49%;
 }
 

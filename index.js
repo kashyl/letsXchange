@@ -200,6 +200,12 @@ router.get('/additem', async ctx => {
 
         if (ctx.query.msg) data.msg = ctx.query.msg
 
+        // read contents of categories.json and move contents into data.categories
+        fs.readFile('./assets/json/categories.json', (err, rawdata) => {
+            if (err) throw err;
+            data.categories = JSON.parse(rawdata);
+        });
+
         await ctx.render('./views/additem', data)
     } catch(err) {
         await ctx.render('./views/error', {message: err.message})
