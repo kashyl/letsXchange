@@ -1,11 +1,11 @@
 // jQuery function to count characters left in textarea
-$('.character-count').html(`0 / ${$('textarea').attr('maxlength')}`)
+// $('.character-count').html(`0 / ${$('textarea').attr('maxlength')}`)
 
 $('textarea').on('input', function () {
     var maxlength = $(this).attr('maxlength')
     var currentLength = $(this).val().length
 
-    $('.character-count').html(`${currentLength} / ${maxlength}`)
+    $(`#${$(this).attr('id')}.character-count`).html(`${currentLength} / ${maxlength}`)
 
     /* if (currentLength >= maxlength) {
         console.log('You have reached the maximum number of characters.')

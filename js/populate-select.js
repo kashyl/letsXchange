@@ -2,10 +2,10 @@ const dropdown = $('select.loadjson')
 
 const name = dropdown.attr('name')
 
-dropdown.empty()
+// dropdown.empty()
 
-dropdown.append('<option disabled selected> Choose an option </option>')
-dropdown.prop('selectedIndex', 0)
+// dropdown.append('<option disabled selected> Choose an option </option>')
+// dropdown.prop('selectedIndex', 0)
 
 const path = `../assets/json/${name}.json`
 

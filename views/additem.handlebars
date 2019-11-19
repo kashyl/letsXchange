@@ -11,9 +11,13 @@
         <link rel="stylesheet" type="text/css" href="../assets/svg/fontawesome-free-5.11.2-web/css/all.css" />
     
         <script src="../js/jquery-3.4.1.js"></script>
+
         <!-- sets nav active element by checkling page url -->
         <script src="../js/nav-active-page.js"></script>
-      
+
+        <script>
+            $.getScript('../js/populate-select.js');
+        </script>
     </head>
     <body>
 
@@ -35,15 +39,31 @@
 
                 <div class="add-item">  
                     <form action="/add-item" enctype="multipart/form-data" method="POST">
+
                         <h1 class="title">Create new offer</h1>
+
+                        Add photos
+                        <div id="image-upload">
+                            <input type="file" id="item-photos" name="images" multiple required>    
+                            <div id="thumbs">
+                                <!-- 
+                                            file-functions.js
+                                    THIS WILL BE POPULATED UPON FILE UPLOAD
+                                    <div class="thumbnail-container"> 
+                                        <img src="(file)" class="thumbnail">
+                                    </div>
+                                -->
+                            </div>
+                        </div>
+
                         <label for="name">Title</label>
                         <input type="text" id="name" name="name" placeholder="What do you want to trade?" required maxlength="64">
 
                         Description
-                        <div id="description">
+                        <div class="expanding-textarea">
                             <textarea id="description" class="jTextarea" name="description" maxlength="750" required data-gramm_editor="false"
                             placeholder="Add information about your product like condition, color..."></textarea>
-                            <span class="character-count"></span>
+                            <span class="character-count" id="description">0 / 750</span>
                         </div>
 
                         <div class="grid">
@@ -57,18 +77,46 @@
                                     }
                                 </script>
                                 <select name="categories" class="loadjson" required onchange="changeMe(this)">
-                                    <!-- populate with jQuery from categories.json file -->     
+                                    <!-- populate with jQuery from categories.json file -->   
+                                    <option disabled selected value> Choose a category </option>  
                                 </select>
+
+                                <label for="location">Location</label>
+                                <input type="text" id="searchTextField" name="location" class="Autocomplete" maxlength="64"
+                                    placeholder="Where would you like to make the exchange?" required>
                             </div>
                             <div class="column">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" name="email" placeholder="Your email address.." required>
+                                <div id="exchange-item-category">
+                                    Categories of desired items
+                                    <button type="button" class="clear-select" name="exchange-categories">Clear selection</button>
+                                    <select class="loadjson multiple-select" name="categories" id="exchange-categories" multiple required>
+                                    </select>               
+                                </div>
                             </div>
-                            
+                        </div>
+
+                        Desired items description
+                        <div class="expanding-textarea">
+                            <textarea id="exchange" class="jTextarea" name="exchange" maxlength="500" required data-gramm_editor="false"
+                            placeholder="What would you like to exchange your product for?"></textarea>
+                            <span class="character-count" id="exchange">0 / 500</span>
+                        </div>
+                        
+                        <div class="grid">
+                            <div class="column">
+
+                            </div>
+                            <div class="column">
+
+                            </div>
+
+
                         </div>
 
 
-                        <input type="submit" value="Submit">
+                        <div id="submit-wrapper">
+                            <input type="submit" class="submit" value="List now">
+                        </div>
                     </form>
                 </div>
 
@@ -82,8 +130,9 @@
         <!-- scripts -->
         <script>
             $.getScript('../js/textarea-auto-expand.js');
-            $.getScript('../js/populate-select.js');
             $.getScript('../js/textarea-character-count.js');
+            $.getScript('../js/select-functions.js');
+            $.getScript('../js/file-functions.js');
         </script>
     </body>
 </html>

@@ -128,11 +128,6 @@ router.get('/profile', async ctx => {
         // USER DATA
         if (ctx.session.user != null) { data.userData = ctx.session.userData }
         else {console.log("Couldn't fetch user data! (index.js, router.get('/profile', ...)")}
-        // READ FILE COUNTRIES.JSON ASYNCHRONOUSLY AND MOVE DATA INTO data.countries
-        fs.readFile('./assets/json/countries.json', (err, rawdata) => {
-            if (err) throw err;
-            data.countries = JSON.parse(rawdata);
-        });
         
         await ctx.render('./views/profile', data)
     } catch(err) {
@@ -200,11 +195,7 @@ router.get('/additem', async ctx => {
 
         if (ctx.query.msg) data.msg = ctx.query.msg
 
-        // read contents of categories.json and move contents into data.categories
-        fs.readFile('./assets/json/categories.json', (err, rawdata) => {
-            if (err) throw err;
-            data.categories = JSON.parse(rawdata);
-        });
+        data.placesApiKey = [env.parsed.PLACES_API_KEY]
 
         await ctx.render('./views/additem', data)
     } catch(err) {
@@ -406,7 +397,7 @@ router.post('/edit-realname', async ctx => {
 /**
  * Script to process user location update
  * 
- * @name EditCountryy Script
+ * @name EditCountry Script
  * @route {POST} /edit-country
  */
 router.post('/edit-country', async ctx => {
@@ -414,9 +405,9 @@ router.post('/edit-country', async ctx => {
         const body = ctx.request.body
         const username = ctx.session.user
         
-        await accounts.updateField(username, 'country', body.country)
+        await accounts.updateField(username, 'country', body.countries)
 
-        ctx.session.userData.country = body.country
+        ctx.session.userData.country = body.countries
 
         return ctx.redirect('/profile?msg=country updated')
     } catch(err) {

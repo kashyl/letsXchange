@@ -46,7 +46,7 @@ main {
 div#upper-header {
     height: 70px;
 }
-img.auto {
+img.autoresize {
     height: auto;
     width: auto;
 }

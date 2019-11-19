@@ -1,12 +1,12 @@
 $('.open-button').click(function (e) {
-  $('.dropdown').show()
-  e.stopPropagation()
+    $('.dropdown').show()
+    e.stopPropagation()
 })
 
 $('.dropdown').click(function (e) {
-  e.stopPropagation()
+    e.stopPropagation()
 })
 
 $(document).click(function () {
-  $('.dropdown').hide()
+    $('.dropdown').hide()
 })

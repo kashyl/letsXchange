@@ -103,6 +103,7 @@
                         <button class="edit" onclick="editField(this)" name="country">Edit</button>
                         <form action="/edit-country" method="post" id="country-form" hidden>
                             <select name="countries" class="loadjson" required>
+                                <option disabled selected value> Choose country </option>
                             </select>
                             <input type="submit" value="Update country">
                         </form>
