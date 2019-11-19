@@ -27,9 +27,7 @@ div#header-left-wrapper {
     height: 64px;
     width: 400px;
 
-    position: absolute;
-    left: 0;
-    top: 0;
+    float: left;
 }
 
 div#header-right-wrapper {
@@ -38,9 +36,7 @@ div#header-right-wrapper {
     height: 64px;
     width: 400px;
 
-    position: absolute;
-    right: 0;
-    top: 0;
+    float: right;
 }
 div#header-right-wrapper div#logged-as {
     display: inline-block;
