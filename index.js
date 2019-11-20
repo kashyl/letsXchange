@@ -211,17 +211,25 @@ router.get('/additem', async ctx => {
 router.post('/add-item', koaBody, async ctx => { 
     try {
         const body = ctx.request.body
-        const username = ctx.session.user
-        console.log(username)
+        const user = {}
+        user.name = ctx.session.user
+
+        const useridobj = ctx.session.userid
+
+        user.id = useridobj.id
+
+        console.log(user.name)
+        console.log(user.id)
         const images = ctx.request.files.images
         console.log(images)
 
         console.log(body)
 
-        //await accounts.addItem(username, body)
+        await accounts.addItem(user.id, body)
 
         return ctx.redirect(`/?msg=new offer listed`)
     } catch(err) {
+        console.log(err)
         return ctx.redirect(`/additem?msg=${err.message}`)
     }
 })
@@ -261,6 +269,9 @@ router.get('/login', async ctx => {
 
         // ADD USERNAME TO ctx.session.user so that we keep track of which user is logged in (Need to check if there are better options)
         ctx.session.user = body.user 
+
+        // ADD USER ID to ctx.session.id
+        ctx.session.userid = await accounts.fetchUserId(ctx.session.user)
         
         // FETCH USER INFO FROM DATABASE AND PUT THE DATA IN SESSION
         let userData = await accounts.fetchUserData(body.user)
@@ -318,7 +329,7 @@ router.post('/edit-avatar', koaBody, async ctx => {
         const user = ctx.session.user
         const avatar = ctx.request.files.avatar
         // console.log(avatar)
-        await accounts.saveImage(user, avatar)
+        await accounts.saveAvatar(user, avatar)
 
         return ctx.redirect('/profile?msg=avatar uploaded')
     } catch(err) {
@@ -346,7 +357,7 @@ router.post('/edit-username', async ctx => {
         ctx.session.userData.user = newUsername
 
         // updated avatar name
-        await accounts.renameImage(currentUsername, newUsername)
+        await accounts.renameAvatar(currentUsername, newUsername)
 
         return ctx.redirect('/profile?msg=username updated')
     } catch(err) {

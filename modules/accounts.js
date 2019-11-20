@@ -37,17 +37,21 @@ async function runSQL(query) {
 
 /**
  * Adds item to the database
- * @param {String} username - name of the user who adds the item
+ * @param {String} userid - id of the user who adds the item
  * @param {String} item - form body (ctx.form.body) of the add item form
  * @returns {boolean} - returns true if successfully added
  * @throws {Error} - if something went wrong and item wasn't added
  */
-async function addItem(username, item) {
+async function addItem(userid, item) {
     try {
+
+        // fetches date and time
+        var date = new Date()
+
         // Build SQL command with data
-        let sql = `INSERT INTO items(title, seller, description, exchange, condition, location, date)` +
-                    `VALUES("${item.title}", "${username}", "${item.description}", "${item.exchange}", "${item.condition}"` +
-                    `, "${item.location}", "${item.date}")`
+        let sql = `INSERT INTO items(seller, title, description, category, location, ecategories, edescription, date)` +
+                    `VALUES("${userid}", "${item.title}", "${item.description}", "${item.category}", "${item.location}"` +
+                    `, "${item.exchangeCategories}", "${item.exchangeDescription}", "${date}")`
 
         // DATABASE COMMANDS
         const db = await sqlite.open('./database/database.db')
@@ -128,14 +132,18 @@ module.exports.checkNoDuplicate = checkNoDuplicate;
  * @returns {boolean} - returns true if the image is valid and is saved
  * @throws {TypeError} - throws an error if the file is not a png of jpg image
  */
-async function saveImage(username, imageInfo, isAvatar=true) {
+async function saveAvatar(username, imageInfo, isAvatar=true) {
     try {
         if (imageInfo != null) {
             const {path, type} = imageInfo
             const fileExtension = mime.extension(type)
-            // console.log(`path: ${path}`)
-            // console.log(`type: ${type}`)
-            // console.log(`fileExtension: ${fileExtension}`)
+            console.log(`path: ${path}`)
+            console.log(`type: ${type}`)
+            console.log(`fileExtension: ${fileExtension}`)
+
+            if(fileExtension !== 'png' && fileExtension !== 'jpg' && fileExtension !== 'jpeg') {
+                throw new Error('supported file types: png, jpg and jpeg only')
+            }
             
             // if file is not sent as avatar
             if (isAvatar !== true) {
@@ -158,7 +166,7 @@ async function saveImage(username, imageInfo, isAvatar=true) {
         throw err
     }
 }
-module.exports.saveImage = saveImage;
+module.exports.saveAvatar = saveAvatar;
 
 /**
  * This function deletes the file with the given path with fs.unlink(path)
@@ -188,7 +196,7 @@ module.exports.deleteFile = deleteFile;
  * @returns {boolean} - true if file was successfully renamed
  * @throws {Error}
  */
-async function renameImage(currentName, newName) {
+async function renameAvatar(currentName, newName) {
     try {
         // check if file exists with fs.access
         fs.access(`./assets/public/avatars/${currentName}.png`, fs.F_OK, (err) => {
@@ -209,7 +217,7 @@ async function renameImage(currentName, newName) {
         throw err
     }
 }
-module.exports.renameImage = renameImage;
+module.exports.renameAvatar = renameAvatar;
 
 /**
  * Function to add new users to the database
