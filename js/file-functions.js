@@ -9,13 +9,13 @@ $(function () {
     var $fileUpload = $('#item-photos', $form)
 
     // Define submit class or id or tag
-    var $button = $('.submit', $form)
+    // var $button = $('.submit', $form)
 
     $fileUpload.on('change', function () {
         // Disable submit button on field change
         // If no images are uploaded, submit will take care of that
         // as long as the input is required
-        $button.prop('disabled', 'disabled')
+        // $button.prop('disabled', 'disabled')
         var uploadedFileNumber = $(this)[0].files.length
 
         // clear any previous upload thumbnails
@@ -25,11 +25,13 @@ $(function () {
         // raise an alert to the user to let them know they exceeded it
         // disable / keep disabled the submit button
         if (uploadedFileNumber > maxFileNumber) {
-            alert(`You can upload maximum ${maxFileNumber} files.`)
+            // alert(`You can upload maximum ${maxFileNumber} files.`)
+            $('#image-upload-under-text').attr('style', 'color: red;')
             $(this).val('')
-            $button.prop('disabled', 'disabled')
+            // $button.prop('disabled', 'disabled')
         } else {
             // if the number of files doesn't exceed the maximum number
+            $('#image-upload-under-text').removeAttr('style')
             // begin loading the thumbnails in the div#thumbs container
 
             // loops through all the files
@@ -43,7 +45,7 @@ $(function () {
                 }
                 fr.readAsDataURL(this.files[i])
             }
-            $button.prop('disabled', false)
+            // $button.prop('disabled', false)
         }
     })
 })

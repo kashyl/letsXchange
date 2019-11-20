@@ -256,6 +256,11 @@ button.clear-select:focus {
 
 /* ----------- IMAGE UPLOAD ----------- */
 
+#image-upload-wrapper {
+    margin-bottom: 16px; /* Bottom margin */
+    overflow: hidden;
+}
+
 #image-upload {
     height: auto;
 
@@ -264,7 +269,6 @@ button.clear-select:focus {
     border-radius: 4px; /* Rounded borders */
     box-sizing: border-box; /* Make sure that padding and width stays in place */
     margin-top: 6px; /* Add a top margin */
-    margin-bottom: 16px; /* Bottom margin */
 
     overflow: hidden;
 
@@ -316,4 +320,12 @@ button.clear-select:focus {
     height: 150px;
     border-radius: 20px;
     padding: 2px;
+}
+
+#image-upload-under-text {
+    margin-top: 0;
+    margin-bottom: 0;
+    color: rgb(108, 130, 140);
+    font-size: 14px;
+    line-height: 21px;
 }

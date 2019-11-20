@@ -42,23 +42,27 @@
 
                         <h1 class="title">Create new offer</h1>
 
-                        Add photos
-                        <div id="image-upload">
-                            <span id="image-upload-field-text">Click to add or change photos</span>
-                            <input type="file" id="item-photos" name="images" multiple required>    
-                            <div id="thumbs">
-                                <!-- 
-                                            file-functions.js
-                                    THIS WILL BE POPULATED UPON FILE UPLOAD
-                                    <div class="thumbnail-container"> 
-                                        <img src="(file)" class="thumbnail">
-                                    </div>
-                                -->
+                        <div id="image-upload-wrapper">
+                            Add photos
+                            <div id="image-upload">
+                                <span id="image-upload-field-text">Click to add or change photos</span>
+                                <input type="file" id="item-photos" name="images" multiple required>    
+                                <div id="thumbs">
+                                    <!-- 
+                                                file-functions.js
+                                        THIS WILL BE POPULATED UPON FILE UPLOAD
+                                        <div class="thumbnail-container"> 
+                                            <img src="(file)" class="thumbnail">
+                                        </div>
+                                    -->
+                                </div>
                             </div>
+                            <span id="image-upload-under-text">You can add up to 5 photos.</span>
+                            </br>
                         </div>
 
-                        <label for="name">Title</label>
-                        <input type="text" id="name" name="name" placeholder="What do you want to trade?" required maxlength="64">
+                        <label for="title">Title</label>
+                        <input type="text" id="title" name="title" placeholder="What do you want to trade?" required maxlength="64">
 
                         Description
                         <div class="expanding-textarea">
@@ -77,7 +81,7 @@
                                     sel.setAttribute('style', 'color: rgb(72, 98, 112);')
                                     }
                                 </script>
-                                <select name="categories" class="loadjson" required onchange="changeMe(this)">
+                                <select name="category" class="categories loadjson" required onchange="changeMe(this)">
                                     <!-- populate with jQuery from categories.json file -->   
                                     <option disabled selected value> Choose a category </option>  
                                 </select>
@@ -90,7 +94,7 @@
                                 <div id="exchange-item-category">
                                     Categories of desired items
                                     <button type="button" class="clear-select" name="exchange-categories">Clear selection</button>
-                                    <select class="loadjson multiple-select" name="categories" id="exchange-categories" multiple required>
+                                    <select class="categories loadjson multiple-select" name="exchangeCategories" id="exchange-categories" multiple required>
                                     </select>               
                                 </div>
                             </div>
@@ -98,7 +102,7 @@
 
                         Desired items description
                         <div class="expanding-textarea">
-                            <textarea id="exchange" class="jTextarea" name="exchange" maxlength="500" required data-gramm_editor="false"
+                            <textarea id="exchange" class="jTextarea" name="exchangeDescription" maxlength="500" required data-gramm_editor="false"
                             placeholder="What would you like to exchange your product for?"></textarea>
                             <span class="character-count" id="exchange">0 / 500</span>
                         </div>

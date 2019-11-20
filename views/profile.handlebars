@@ -102,7 +102,7 @@
                         <span class="category">Country: </span> <span class="value">{{userData.country}}</span>
                         <button class="edit" onclick="editField(this)" name="country">Edit</button>
                         <form action="/edit-country" method="post" id="country-form" hidden>
-                            <select name="countries" class="loadjson" required>
+                            <select name="countries" class="countries loadjson" required>
                                 <option disabled selected value> Choose country </option>
                             </select>
                             <input type="submit" value="Update country">

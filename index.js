@@ -205,15 +205,20 @@ router.get('/additem', async ctx => {
 /**
  * Script to process new item add
  * 
- * @name Additem Script
- * @route {POST} /additem
+ * @name AddItem Script
+ * @route {POST} /add-item
  */
-router.post('/additem', async ctx => { 
+router.post('/add-item', koaBody, async ctx => { 
     try {
         const body = ctx.request.body
         const username = ctx.session.user
+        console.log(username)
+        const images = ctx.request.files.images
+        console.log(images)
 
-        await accounts.addItem(username, body)
+        console.log(body)
+
+        //await accounts.addItem(username, body)
 
         return ctx.redirect(`/?msg=new offer listed`)
     } catch(err) {

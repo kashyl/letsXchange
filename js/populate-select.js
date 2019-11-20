@@ -1,17 +1,19 @@
-const dropdown = $('select.loadjson')
+$(window).on('load', function () {
+    const dropdown = $('select.loadjson')
 
-const name = dropdown.attr('name')
+    const jsonFileName = dropdown.attr('class').split(' ')[0]
 
-// dropdown.empty()
+    // dropdown.empty()
 
-// dropdown.append('<option disabled selected> Choose an option </option>')
-// dropdown.prop('selectedIndex', 0)
+    // dropdown.append('<option disabled selected> Choose an option </option>')
+    // dropdown.prop('selectedIndex', 0)
 
-const path = `../assets/json/${name}.json`
+    const path = `../assets/json/${jsonFileName}.json`
 
-// Populate dropdown with list from json
-$.getJSON(path, function (data) {
-    $.each(data, function (key, entry) {
-        dropdown.append($('<option></option>').attr('value', entry.name).text(entry.name))
+    // Populate dropdown with list from json
+    $.getJSON(path, function (data) {
+        $.each(data, function (key, entry) {
+            dropdown.append($('<option></option>').attr('value', entry.name).text(entry.name))
+        })
     })
 })
