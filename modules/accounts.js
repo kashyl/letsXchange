@@ -36,6 +36,82 @@ async function runSQL(query) {
 }
 
 /**
+ * This function takes data from an uploaded image and saves it to the `avatars` directory.
+ * The file name will be the username.
+ * @param {Object} files - full body info of uploaded file (ctx.request.files.___)
+ * @param {String} itemid - the id of the item to find the folder with images
+ * @returns {boolean} - returns true if all the images are valid and saved
+ * @throws {TypeError} - throws an error if one or more of the files is not a png, jpg or jpeg image
+ */
+async function saveItemImages(images, itemid) {
+    try {
+        if (images != null) {
+            // console.log(itemid)
+            let imageCount = images.length
+
+            // if only one image is uploaded, it's not an array so .length will return undefined
+            // we already know from the condition above that there is at least an image, so we assign 1 to the count
+            // --- SINGLE IMAGE ---
+            if (imageCount == null) {
+                const {path, type} = images
+                const fileExtension = mime.extension(type)
+    
+                if(fileExtension !== 'png' && fileExtension !== 'jpg' && fileExtension !== 'jpeg') {
+                    throw new Error('supported file types: png, jpg and jpeg only')
+                }
+
+                const image = await Jimp.read(path);
+                // image.cover( w, h[, alignBits || mode, mode] ); 
+                // scale the image to the given width and height, some parts of the image may be clipped
+                // for images, .resize will make the image lose aspect ratio when height and width are not the same
+                // thus, using .cover is much better as it takes the part in the middle while keeping aspect ratio, using the ALIGN_CENTER Jimp methods
+                image.cover(1024, 1024, Jimp.HORIZONTAL_ALIGN_CENTER | Jimp.VERTICAL_ALIGN_CENTER)
+                    .quality(100)
+                    .write(`assets/public/items/${itemid}/0.png`);
+
+            } 
+            // --- MULTIPLE IMAGES ---
+            else {
+                let invalidImages = 0
+                // CHECK ALL FILES FORMAT
+                // if one or more are not in the right format, throw an error. else continue
+                for (let i = 0; i < imageCount; i++) {
+                    const {type} = images[i]
+                    const fileExtension = mime.extension(type)
+                    // console.log(fileExtension)
+                    if(fileExtension !== 'png' && fileExtension !== 'jpg' && fileExtension !== 'jpeg') {
+                        invalidImages++
+                    }
+                }
+                if (invalidImages > 0) {
+                    throw new Error(`${invalidImages} image(s) out of ${imageCount} uploaded are in the wrong format. supported file types: png, jpg and jpeg only`)
+                }    
+
+                for (let i = 0; i < imageCount; i++) {
+                    const {path} = images[i]
+                    // console.log(`path: ${path}`)
+                    // console.log(`type: ${type}`)
+                    //console.log(`fileExtension: ${fileExtension}`)
+        
+                    const image = await Jimp.read(path);
+                    // image.cover( w, h[, alignBits || mode, mode] ); 
+                    // scale the image to the given width and height, some parts of the image may be clipped
+                    // for images, .resize will make the image lose aspect ratio when height and width are not the same
+                    // thus, using .cover is much better as it takes the part in the middle while keeping aspect ratio, using the ALIGN_CENTER Jimp methods
+                    image.cover(1024, 1024, Jimp.HORIZONTAL_ALIGN_CENTER | Jimp.VERTICAL_ALIGN_CENTER)
+                        .quality(100)
+                        .write(`assets/public/items/${itemid}/${i}.png`);
+                }  
+                return true
+            }
+        }
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.saveItemImages = saveItemImages;
+
+/**
  * Adds item to the database
  * @param {String} userid - id of the user who adds the item
  * @param {String} item - form body (ctx.form.body) of the add item form
@@ -63,6 +139,28 @@ async function addItem(userid, item) {
     }
 }
 module.exports.addItem = addItem;
+
+/**
+ * Function to fetch last id
+ * @param {String} tablename - the name of the table to get the id from
+ * @returns {Object} - returns an object with the id
+ * @throws {Error} - if ID couldn't be found with given arguments
+ */
+async function lastTableId(tablename) {
+    try {
+
+        await findTable(tablename)
+
+        let query = `SELECT seq FROM sqlite_sequence WHERE name='${tablename}';`
+        let records = await runSQL(query)    
+        console.log(records)
+
+        return records
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.lastTableId = lastTableId;
 
 /**
  * Function to check if user exists in the database and if passwords match
@@ -126,11 +224,11 @@ module.exports.checkNoDuplicate = checkNoDuplicate;
 /**
  * This function takes data from an uploaded image and saves it to the `avatars` directory.
  * The file name will be the username.
- * @param {String} path - location of uploaded image
- * @param {String} mimeType - mime type of uploaded file
+ * @param {String} username - user who uploads the files
+ * @param {Object} imageInfo - information of the image (from ctx.request.files.___)
  * @param {boolean} avatar - if set to true, image will be cropped and resized to fit avatar
  * @returns {boolean} - returns true if the image is valid and is saved
- * @throws {TypeError} - throws an error if the file is not a png of jpg image
+ * @throws {TypeError} - throws an error if the file is not a png, jpg or jpeg image
  */
 async function saveAvatar(username, imageInfo, isAvatar=true) {
     try {

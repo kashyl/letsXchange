@@ -214,16 +214,22 @@ router.post('/add-item', koaBody, async ctx => {
         const user = {}
         user.name = ctx.session.user
 
-        const useridobj = ctx.session.userid
-
-        user.id = useridobj.id
+        user.id = ctx.session.userid
 
         console.log(user.name)
         console.log(user.id)
         const images = ctx.request.files.images
         console.log(images)
-
         console.log(body)
+
+        // gets the amount of records in the table items
+        // as the id's are incremental, the value of this is number of total + 1
+        // since the function returns an object, we get the integer by adding .seq at the end
+        let idobj = await accounts.lastTableId('items')
+        let itemid = idobj.seq + 1
+        // console.log(itemid)
+        // we pass this to the saveImages function
+        await accounts.saveItemImages(images, itemid)
 
         await accounts.addItem(user.id, body)
 
@@ -271,7 +277,8 @@ router.get('/login', async ctx => {
         ctx.session.user = body.user 
 
         // ADD USER ID to ctx.session.id
-        ctx.session.userid = await accounts.fetchUserId(ctx.session.user)
+        let useridobj = await accounts.fetchUserId(ctx.session.user)
+        ctx.session.userid = useridobj.id
         
         // FETCH USER INFO FROM DATABASE AND PUT THE DATA IN SESSION
         let userData = await accounts.fetchUserData(body.user)

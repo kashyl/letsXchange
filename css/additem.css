@@ -329,3 +329,12 @@ button.clear-select:focus {
     font-size: 14px;
     line-height: 21px;
 }
+
+#format-info {
+    margin-top: 0;
+    margin-bottom: 0;
+    color: rgb(108, 130, 140);
+    font-size: 14px;
+    line-height: 21px;
+    float: right;
+}
