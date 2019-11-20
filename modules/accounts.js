@@ -34,6 +34,33 @@ async function runSQL(query) {
         throw err
     }
 }
+module.exports.runSQL = runSQL;
+
+/**
+ * Function to open the database then execute a query
+ * After, closes the database connection and returns the data
+ * @param {String} query - The SQL statement to execute
+ * @returns {Object} - data returned by the query
+ */
+
+async function fetchListings(query) {
+    try {
+        let sql = 'SELECT title, category, description FROM items'
+
+        if(query !== undefined && query.q !== undefined) {
+			sql = `SELECT title, category, description FROM books 
+							WHERE upper(title) LIKE "%${ctx.query.q}%" 
+							OR upper(category) LIKE upper("%${ctx.query.q}%")
+							OR upper(description) LIKE upper("%${ctx.query.q}%");`
+		}
+        let records = await runSQL(sql)
+
+        return records;
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.fetchListings = fetchListings;
 
 /**
  * This function takes data from an uploaded image and saves it to the `avatars` directory.

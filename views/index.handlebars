@@ -19,7 +19,7 @@
     <body>
 
         <header>
-            {{#if auth}}
+            {{#if data.auth}}
                 {{> headerAuth}}
             {{else}}
                 {{> header}}     
@@ -28,9 +28,13 @@
 
         <main role="main">
 
-            {{#if msg}}
-                <span class='msg'>{{msg}}</span>
+            {{#if data.msg}}
+                <span class='msg'>{{data.msg}}</span>
             {{/if}}
+
+
+
+
 
             <div class="container-box">
                 <div class="card-grid">

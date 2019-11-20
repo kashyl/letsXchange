@@ -18,7 +18,7 @@
     <body>
         
         <header>
-            {{#if auth}}
+            {{#if data.auth}}
                 {{> headerAuth}}
             {{else}}
                 {{> header}}     
@@ -26,8 +26,8 @@
         </header>
 
         <main role="main">
-            {{#if msg}}
-                <p class="msg">{{msg}}</p>
+            {{#if data.msg}}
+                <p class="msg">{{data.msg}}</p>
             {{/if}}
 
             <form action="/login" method="post" id="loginform" class="login-large">

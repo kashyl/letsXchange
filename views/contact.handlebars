@@ -21,7 +21,7 @@
     <body>
 
         <header>
-            {{#if auth}}
+            {{#if data.auth}}
                 {{> headerAuth}}
             {{else}}
                 {{> header}}     
@@ -30,8 +30,8 @@
 
         <main role="main">
 
-            {{#if msg}}
-                <p class='msg'>{{msg}}</p>
+            {{#if data.msg}}
+                <p class='msg'>{{data.msg}}</p>
             {{/if}}
 
             <!-- COLUMN 01 START -->

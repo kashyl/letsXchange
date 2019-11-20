@@ -63,12 +63,29 @@ const saltRounds = 10
  */
 router.get('/', async ctx => {
     try {
-        const data = {}
+
+        // let querystring = ''
+        let query = ''
+
+        if(query !== undefined && query.q !== undefined) {
+        query = ctx.query.q
+        }
+
+        
+        // gets listing data from database and puts it into data
+        // if query is undefined (no search) then get all
+        let items = await accounts.fetchListings(query)
+
+        // message
         if (ctx.query.msg) data.msg = ctx.query.msg
+
+        let data = {}
+        // authorisation and user
         data.auth = false
+
         if (ctx.session.authorised === true) { data.auth = true }
         if (ctx.session.user != null) { data.user = ctx.session.user }
-        await ctx.render('./views/index', data)
+        await ctx.render('./views/index', {data: data, query: query, items: items})
     } catch(err) {
         await ctx.render('./views/error', {message: err.message})
     }
@@ -82,12 +99,12 @@ router.get('/', async ctx => {
  */
 router.get('/contact', async ctx => {
     try {
-        const data = {}
+        let data = {}
         data.auth = false
         if (ctx.session.authorised === true) { data.auth = true }
         if (ctx.query.msg) data.msg = ctx.query.msg
         if (ctx.session.user != null) { data.user = ctx.session.user }
-        await ctx.render('./views/contact', data)
+        await ctx.render('./views/contact', {data: data})
     } catch(err) {
         await ctx.render('./views/error', {message: err.message})
     }
@@ -101,10 +118,10 @@ router.get('/contact', async ctx => {
  */
 router.get('/about', async ctx => {
     try {
-        const data = {}
+        let data = {}
         data.auth = false
         if (ctx.session.authorised === true) { data.auth = true }
-        await ctx.render('views/about', data)
+        await ctx.render('views/about', {data: data})
     } catch(err) {
         await ctx.render('./views/error', {message: err.message})
     }
@@ -119,7 +136,7 @@ router.get('/about', async ctx => {
 router.get('/profile', async ctx => {
     try {
         if (ctx.session.authorised !== true) return ctx.redirect('/login?msg=you need to log in')   
-        const data = {}
+        let data = {}
         data.auth = false
         if (ctx.session.authorised === true) { data.auth = true }
         if (ctx.query.msg) data.msg = ctx.query.msg;
@@ -129,7 +146,7 @@ router.get('/profile', async ctx => {
         if (ctx.session.user != null) { data.userData = ctx.session.userData }
         else {console.log("Couldn't fetch user data! (index.js, router.get('/profile', ...)")}
         
-        await ctx.render('./views/profile', data)
+        await ctx.render('./views/profile', {data: data})
     } catch(err) {
         await ctx.render('./views/error', {message: err.message})
     }
@@ -144,11 +161,11 @@ router.get('/profile', async ctx => {
 router.get('/register', async ctx => {
     try {
         if (ctx.session.authorised === true) return ctx.redirect('/profile?msg=you are already logged in your account') 
-        const data = {}
+        let data = {}
         data.auth = false
         if (ctx.session.authorised === true) { data.auth = true }
         if (ctx.query.msg) data.msg = ctx.query.msg
-        await ctx.render('./views/register', data)
+        await ctx.render('./views/register', {data: data})
     } catch(err) {
         ctx.redirect(`/?msg=${err.message}`)
     }
@@ -183,7 +200,7 @@ router.post('/register', koaBody, async ctx => {
  */
 router.get('/additem', async ctx => {
     try {
-        const data = {}
+        let data = {}
         data.auth = false
 
         if (ctx.session.authorised === true) { data.auth = true }
@@ -197,7 +214,7 @@ router.get('/additem', async ctx => {
 
         data.placesApiKey = [env.parsed.PLACES_API_KEY]
 
-        await ctx.render('./views/additem', data)
+        await ctx.render('./views/additem', {data: data})
     } catch(err) {
         await ctx.render('./views/error', {message: err.message})
 }
@@ -249,13 +266,13 @@ router.post('/add-item', koaBody, async ctx => {
 router.get('/login', async ctx => {
     try {
         if (ctx.session.authorised === true) return ctx.redirect('/profile?msg=you are already logged in') 
-        const data = {}
+        let data = {}
         data.userData = {}
         data.auth = false
         if (ctx.session.authorised === true) { data.auth = true }
         if (ctx.query.msg) data.msg = ctx.query.msg
 
-        await ctx.render('./views/login', data)
+        await ctx.render('./views/login', {data: data})
     } catch(err) {
         await ctx.render('./views/error', {message: err.message})
 }

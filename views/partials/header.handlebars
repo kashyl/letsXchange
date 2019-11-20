@@ -58,8 +58,8 @@
             <ul class="navbar-search-wrapper"> 
                 <li>
                 <form action="/search" id="searchform" method="GET">
-                    <input type="search" name="search" placeholder="What are you looking for..." /> 
-                    <button type="submit" form="searchform" class="search"><i class="fa fa-search"></i></button>
+                    <input type="search" name="q" value="{{query}}" placeholder="What are you looking for..." /> 
+                    <button type="submit" value="Search" form="searchform" class="search"><i class="fa fa-search"></i></button>
                 </form>
                 </li>
             </ul>

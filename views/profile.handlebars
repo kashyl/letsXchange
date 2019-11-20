@@ -18,7 +18,7 @@
     <body>
 
         <header>
-            {{#if auth}}
+            {{#if data.auth}}
                 {{> headerAuth}}
             {{else}}
                 {{> header}}     
@@ -27,17 +27,17 @@
 
         <main role="main">
 
-            {{#if msg}}
-                <span class='msg'>{{msg}}</span>
+            {{#if data.msg}}
+                <span class='msg'>{{data.msg}}</span>
             {{/if}}
             
             <div class="time-greet">
                 <h1 id="time-greet" style="display: inline-block"></h1>
-                {{#if user}}
-                    {{#if userData.forename}}
-                        <h1 style="display: inline-block">, {{userData.forename}}!</h1>
+                {{#if data.user}}
+                    {{#if data.userData.forename}}
+                        <h1 style="display: inline-block">, {{data.userData.forename}}!</h1>
                     {{else}}
-                        <h1 style="display: inline-block">, {{userData.user}}!</h1>
+                        <h1 style="display: inline-block">, {{data.userData.user}}!</h1>
                     {{/if}}
                 {{/if}}
             </div>
@@ -49,12 +49,12 @@
                 <div class="edit-profile">
 
                     <!-- AVATAR (with margin-bottom) -->
-                    <!-- img class="avatar" src="../assets/public/avatars/{{userData.user}}.png" alt="Image not found" onerror="this.onerror=null;this.src='../assets/image/default_avatar.png';" /> -->
+                    <!-- img class="avatar" src="../assets/public/avatars/{{data.userData.user}}.png" alt="Image not found" onerror="this.onerror=null;this.src='../assets/image/default_avatar.png';" /> -->
                     <div class="profile-block">
                         <!-- default src is an image with the username as filename and .png format -->
                         <!-- if not found, the src points to the default avatar -->
                         <input type="image" class="avatar" onclick="editField(this)" name="avatar"
-                            src="../assets/public/avatars/{{userData.user}}.png" alt="Image not found" 
+                            src="../assets/public/avatars/{{data.userData.user}}.png" alt="Image not found" 
                             onerror="this.onerror=null;this.src='../assets/image/default_avatar.png';" />
                         <!-- enctype="multipart/form-data" this value is required when you are using forms that have a file upload control
                         enctype = encoding type -->
@@ -67,7 +67,7 @@
 
                     <!-- USERNAME -->
                     <div class="profile-block">
-                        <span class="category">Username: </span> <span class="value" id="profile-username">{{userData.user}}</span>
+                        <span class="category">Username: </span> <span class="value" id="profile-username">{{data.userData.user}}</span>
                         <button class="edit" onclick="editField(this)" name="username">Edit</button>
                         <form action="/edit-username" method="post" id="username-form" hidden>
                             <input type="text" name="name" placeholder="Enter new username.." required minlength="3" maxlength="16">
@@ -78,7 +78,7 @@
 
                     <!-- EMAIL -->
                     <div class="profile-block">
-                        <span class="category">Email: </span> <span class="value" id="email">{{userData.email}}</span>
+                        <span class="category">Email: </span> <span class="value" id="email">{{data.userData.email}}</span>
                         <button class="edit" onclick="editField(this)" name="email">Edit</button>
                         <form action="/edit-email" method="post" id="email-form" hidden>
                             <input type="text" name="email" placeholder="Enter new email.." required>
@@ -88,7 +88,7 @@
 
                     <!-- NAME -->
                     <div class="profile-block">
-                        <span class="category">Name: </span> <span class="value">{{userData.forename}} {{userData.surname}}</span>
+                        <span class="category">Name: </span> <span class="value">{{data.userData.forename}} {{data.userData.surname}}</span>
                         <button class="edit" onclick="editField(this)" name="realname">Edit</button>
                         <form action="/edit-realname" method="post" id="realname-form" hidden>
                             <input type="text" name="forename" placeholder="First name.." required minlength="2" maxlength="32">
@@ -99,7 +99,7 @@
 
                     <!-- COUNTRY -->
                     <div class="profile-block">
-                        <span class="category">Country: </span> <span class="value">{{userData.country}}</span>
+                        <span class="category">Country: </span> <span class="value">{{data.userData.country}}</span>
                         <button class="edit" onclick="editField(this)" name="country">Edit</button>
                         <form action="/edit-country" method="post" id="country-form" hidden>
                             <select name="countries" class="countries loadjson" required>
@@ -111,7 +111,7 @@
 
                     <!-- CONTACT NUMBER -->
                     <div class="profile-block">
-                        <span class="category">Mobile: </span> <span class="value">{{userData.mobile}}</span>
+                        <span class="category">Mobile: </span> <span class="value">{{data.userData.mobile}}</span>
                         <button class="edit" onclick="editField(this)" name="mobile">Edit</button>
                         <form action="/edit-mobile" method="post" id="mobile-form" hidden>
                             <input type="number" name="mobile" placeholder="Enter new contact number.." required>
@@ -121,7 +121,7 @@
 
                     <!-- GENDER -->
                     <div class="profile-block">
-                        <span class="category">Gender: </span> <span class="value">{{userData.gender}}</span>
+                        <span class="category">Gender: </span> <span class="value">{{data.userData.gender}}</span>
                         <button class="edit" onclick="editField(this)" name="gender">Edit</button>
                         <form action="/edit-gender" method="post" id="gender-form" hidden>
                             <select name="gender" required>
