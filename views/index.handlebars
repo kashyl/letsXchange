@@ -42,11 +42,29 @@
                 {{/if}}
             {{/if}}
 
-            
-            {{#each items}}
-                <li><a href="/details/{{this.id}}">{{this.title}}</a></li>
+            <div class="card-grid">
+                {{#each items}}
+                <div class="card">
+                    <a class="anchor" href="/details/{{this.id}}">
+                        <div class="card-container">
+                            <div class="card-content">
+                                <div class="thumbnail-area">
+                                    <img src="../assets/public/items/{{this.id}}/0.png" alt="Image not found" 
+                                        onerror="this.onerror=null;this.src='../assets/image/no_image.png';" >
+                                </div>
+                                <div class="content-area">
+                                    <p class="title">{{this.title}}</p>
+                                    <p class="category">{{this.category}}</p>
+                                    <span class="space"></span>
+                                    <p class="description">{{this.description}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             {{/each}}
-            
+            </div>
+
         </main>
 
         <footer>

@@ -72,8 +72,8 @@ div#header-right-wrapper {
 #header-left-wrapper #motto-wrapper span {
     font-family: Simplifica, Arial, Helvetica, sans-serif;
     
-    font-weight: 500;
-    font-size: 150%;
+    font-size: 125%;
+    letter-spacing: 2px;
     color: #ff7707;
     cursor: default;
 }

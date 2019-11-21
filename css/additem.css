@@ -172,6 +172,8 @@ div.add-item div.expanding-textarea {
 
     overflow: hidden;
 
+    background-color: white;
+
 }
 div.expanding-textarea span.character-count {
     padding: 0 8px;
@@ -273,6 +275,8 @@ button.clear-select:focus {
     overflow: hidden;
 
     text-align: center;
+
+    background-color: white;
 }
 
 /* upload file button + text */

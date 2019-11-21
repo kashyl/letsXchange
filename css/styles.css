@@ -32,6 +32,7 @@ html, body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0 auto;
     /*background: #100e17;*/
+    background-color: rgb(249, 250, 251);
 }
 body {
     box-sizing: border-box;
