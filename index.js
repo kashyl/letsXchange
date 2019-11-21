@@ -65,29 +65,28 @@ router.get('/', async ctx => {
     try {
 
         // let querystring = ''
-        let query = ''
+        let querystring = ''
 
-        if(query !== undefined && query.q !== undefined) {
-        query = ctx.query.q
+        if(ctx.query!== undefined && ctx.query.q !== undefined) {
+        querystring = ctx.query.q
         }
-
         
         // gets listing data from database and puts it into data
         // if query is undefined (no search) then get all
-        let items = await accounts.fetchListings(query)
+        let items = await accounts.fetchListings(querystring)
+        // console.log(items)
 
-        console.log(items)
+        let data = {}
 
         // message
         if (ctx.query.msg) data.msg = ctx.query.msg
-
-        let data = {}
+        
         // authorisation and user
         data.auth = false
 
         if (ctx.session.authorised === true) { data.auth = true }
         if (ctx.session.user != null) { data.user = ctx.session.user }
-        await ctx.render('./views/index', {data: data, query: query, items: items})
+        await ctx.render('./views/index', {data: data, query: querystring, items: items})
     } catch(err) {
         await ctx.render('./views/error', {error: err})
     }
@@ -116,7 +115,7 @@ router.get('/details/:id', async ctx => {
 
         await ctx.render('./views/details', {data: data, item: item})
     } catch(err) {
-        await ctx.render('./views/error', {error: err})
+        await ctx.redirect('/?msg=listing not found')
     }
 })
 

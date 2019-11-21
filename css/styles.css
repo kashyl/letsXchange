@@ -4,6 +4,19 @@
 @import url(login.css);
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:800italic);
 
+@font-face {
+    font-family: 'Simplifica';
+    src: url('../assets/fonts/Simplifica.eot');
+    src: local('Simplifica'),
+        url('../assets/fonts/Simplifica.eot?#iefix') format('embedded-opentype'),
+        url('../assets/fonts/Simplifica.woff2') format('woff2'),
+        url('../assets/fonts/Simplifica.woff') format('woff'),
+        url('../assets/fonts/Simplifica.ttf') format('truetype'),
+        url('../assets/fonts/Simplifica.svg#Simplifica') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* html5 elements for older browsers*/
 header, section, footer, aside, nav, article, figure, figcaption {
     display: block;

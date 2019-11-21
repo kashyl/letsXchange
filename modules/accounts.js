@@ -46,17 +46,27 @@ module.exports.runSQL = runSQL;
 
 async function fetchListings(query) {
     try {
-        let sql = 'SELECT id, title, category, description FROM items'
+        if (query == '') {
+            let sql = 'SELECT id, title, category, description, location FROM items ORDER BY id DESC'
+            let records = await runSQL(sql)
+            return records;
+        } else {
+            let sql =  `SELECT id, title, category, description FROM items 
+                        WHERE upper(title) LIKE "%${query}%" 
+                        OR upper(category) LIKE upper("%${query}%")
+                        OR upper(description) LIKE upper("%${query}%")
+                        OR upper(location) LIKE upper("%${query}%")
+                        ORDER BY id DESC;`
+            let records = await runSQL(sql)
 
-        if(query !== undefined && query.q !== undefined) {
-			sql = `SELECT id, title, category, description FROM books 
-							WHERE upper(title) LIKE "%${ctx.query.q}%" 
-							OR upper(category) LIKE upper("%${ctx.query.q}%")
-							OR upper(description) LIKE upper("%${ctx.query.q}%");`
-		}
-        let records = await runSQL(sql)
+            // if only one item is returned, create an array for it
+            if (records != null && records.length == undefined) {
+                records = [records]
+            }
+            // console.log(records)
 
-        return records;
+            return records;
+        }
     } catch(err) {
         throw err
     }

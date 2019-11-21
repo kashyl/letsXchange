@@ -34,12 +34,15 @@
 
 
             {{#if query}}
-                <p>{{query}}</p>
+                <h1>Listings for "{{query}}"</h1>
                 {{#if items}}
-                    <h2>{{items.length}} results for "{{query}}"</h2>
+                    <h3>{{items.length}} results</h3>
+                {{else}}
+                    <h3>No results found, please refine your search</h3>
                 {{/if}}
             {{/if}}
 
+            
             {{#each items}}
                 <li><a href="/details/{{this.id}}">{{this.title}}</a></li>
             {{/each}}

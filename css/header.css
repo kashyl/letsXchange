@@ -28,6 +28,8 @@ div#header-left-wrapper {
     width: 400px;
 
     float: left;
+
+    text-align: right;
 }
 
 div#header-right-wrapper {
@@ -38,41 +40,59 @@ div#header-right-wrapper {
 
     float: right;
 }
-div#header-right-wrapper div#logged-as {
+#header-right-wrapper #logged-as,
+#header-left-wrapper #motto-wrapper {
     display: inline-block;
     height: 40px;
     width: 300px;
     margin-top: 10px;
 }
-div#header-right-wrapper div#logged-as:before,
-div#header-right-wrapper div#logged-as_before {
+#header-left-wrapper #motto-wrapper {
+    text-align: center;
+}
+#header-right-wrapper #logged-as:before,
+#header-right-wrapper #logged-as_before
+#header-left-wrapper #motto-wrapper:before,
+#header-left-wrapper #motto-wrapper_before {
     content: "";
     display: inline-block;
     height: 100%;
     vertical-align: middle;
 }
-div#header-right-wrapper div#logged-as span {
+#header-right-wrapper #logged-as span,
+#header-left-wrapper #motto-wrapper span {
     height: auto;
     color: white;
     vertical-align: middle;
     overflow: hidden;
 }
-div#header-right-wrapper div#logged-as img.avatar-small {
+#header-right-wrapper #logged-as span.default-cursor {
+    cursor: default;
+}
+#header-left-wrapper #motto-wrapper span {
+    font-family: Simplifica, Arial, Helvetica, sans-serif;
+    
+    font-weight: 500;
+    font-size: 150%;
+    color: #ff7707;
+    cursor: default;
+}
+#header-right-wrapper #logged-as img.avatar-small {
     vertical-align: middle;
    
 }
-div#header-right-wrapper div#logged-as img.avatar-small:hover {
+#header-right-wrapper #logged-as img.avatar-small:hover {
     vertical-align: middle;
     height: 40px;
     width: 40px;
 }
-div#header-right-wrapper div#logged-as a[href^="/profile"] {
+#header-right-wrapper #logged-as a[href^="/profile"] {
     text-decoration: none;
     cursor: pointer;
     display: inline-block;
     font-size: 110%;
 }
-div#header-right-wrapper div#logged-as span#username {
+#header-right-wrapper #logged-as span#username {
     display: inline-block;
     color: #ff7707;
     white-space: nowrap;
@@ -80,10 +100,10 @@ div#header-right-wrapper div#logged-as span#username {
     overflow: auto !important;
     font-size: 110%;   
 }
-div#header-right-wrapper div#logged-as span#username::-webkit-scrollbar {
+#header-right-wrapper #logged-as span#username::-webkit-scrollbar {
     display: none;
 }
-div#header-right-wrapper div#logged-as span#username:hover {
+#header-right-wrapper #logged-as span#username:hover {
     font-size: 115%;
 }
 
