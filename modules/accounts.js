@@ -37,18 +37,19 @@ async function runSQL(query) {
 module.exports.runSQL = runSQL;
 
 /**
- * Function to open the database then execute a query
+ * Function to fetch all records of items from the database
+ * based on query or without
  * After, closes the database connection and returns the data
- * @param {String} query - The SQL statement to execute
+ * @param {String} query - The searched records. The query will be searched in the record's title, category and description
  * @returns {Object} - data returned by the query
  */
 
 async function fetchListings(query) {
     try {
-        let sql = 'SELECT title, category, description FROM items'
+        let sql = 'SELECT id, title, category, description FROM items'
 
         if(query !== undefined && query.q !== undefined) {
-			sql = `SELECT title, category, description FROM books 
+			sql = `SELECT id, title, category, description FROM books 
 							WHERE upper(title) LIKE "%${ctx.query.q}%" 
 							OR upper(category) LIKE upper("%${ctx.query.q}%")
 							OR upper(description) LIKE upper("%${ctx.query.q}%");`
@@ -61,6 +62,30 @@ async function fetchListings(query) {
     }
 }
 module.exports.fetchListings = fetchListings;
+
+/**
+ * Function to open the database an fetch an item based on id
+ * After, closes the database connection and returns the data
+ * @param {String} itemid - The id of item whose data will be returned
+ * @returns {Object} - data returned by the query
+ */
+
+async function fetchItem(itemid) {
+    try {
+        let sql = `SELECT * FROM items WHERE id = ${itemid};`
+
+        let records = await runSQL(sql)
+
+        // sanitizes the text
+        records.description = records.description.replace(/(?:\r\r|\r|\n)/g, '<br>');
+
+        return records;
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.fetchItem = fetchItem;
+
 
 /**
  * This function takes data from an uploaded image and saves it to the `avatars` directory.

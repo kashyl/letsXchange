@@ -76,6 +76,8 @@ router.get('/', async ctx => {
         // if query is undefined (no search) then get all
         let items = await accounts.fetchListings(query)
 
+        console.log(items)
+
         // message
         if (ctx.query.msg) data.msg = ctx.query.msg
 
@@ -87,9 +89,37 @@ router.get('/', async ctx => {
         if (ctx.session.user != null) { data.user = ctx.session.user }
         await ctx.render('./views/index', {data: data, query: query, items: items})
     } catch(err) {
-        await ctx.render('./views/error', {message: err.message})
+        await ctx.render('./views/error', {error: err})
     }
 })
+
+/**
+ * The item details page
+ * 
+ * @name Details Page
+ * @route {GET} /details
+ */
+router.get('/details/:id', async ctx => {
+    try {
+        const itemid = ctx.params.id
+        // console.log(ctx.params.id)
+        let data = {}
+        data.auth = false
+        if (ctx.session.authorised === true) { data.auth = true }
+        if (ctx.query.msg) data.msg = ctx.query.msg
+        if (ctx.session.user != null) { data.user = ctx.session.user }
+
+        // fetches full item info from database
+
+        let item = await accounts.fetchItem(itemid)
+        // console.log(item)
+
+        await ctx.render('./views/details', {data: data, item: item})
+    } catch(err) {
+        await ctx.render('./views/error', {error: err})
+    }
+})
+
 
 /**
  * The website contact page
@@ -106,7 +136,7 @@ router.get('/contact', async ctx => {
         if (ctx.session.user != null) { data.user = ctx.session.user }
         await ctx.render('./views/contact', {data: data})
     } catch(err) {
-        await ctx.render('./views/error', {message: err.message})
+        await ctx.render('./views/error', {error: err})
     }
 })
 
@@ -123,7 +153,7 @@ router.get('/about', async ctx => {
         if (ctx.session.authorised === true) { data.auth = true }
         await ctx.render('views/about', {data: data})
     } catch(err) {
-        await ctx.render('./views/error', {message: err.message})
+        await ctx.render('./views/error', {error: err})
     }
 })
 
@@ -148,7 +178,7 @@ router.get('/profile', async ctx => {
         
         await ctx.render('./views/profile', {data: data})
     } catch(err) {
-        await ctx.render('./views/error', {message: err.message})
+        await ctx.render('./views/error', {error: err})
     }
 })
 
@@ -216,7 +246,7 @@ router.get('/additem', async ctx => {
 
         await ctx.render('./views/additem', {data: data})
     } catch(err) {
-        await ctx.render('./views/error', {message: err.message})
+        await ctx.render('./views/error', {error: err})
 }
 })
 /**
@@ -274,7 +304,7 @@ router.get('/login', async ctx => {
 
         await ctx.render('./views/login', {data: data})
     } catch(err) {
-        await ctx.render('./views/error', {message: err.message})
+        await ctx.render('./views/error', {error: err})
 }
 })
 

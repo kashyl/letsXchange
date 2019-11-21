@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>LetsXchange Profile</title>
+        <link rel="icon" type="image/x-icon" href="../assets/ico/favicon.ico">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
         <link href="../css/styles.css" rel="stylesheet" type="text/css" />
-        <link href="../css/index.css" rel="stylesheet" type="text/css" />
+        <link href="../css/details.css" rel="stylesheet" type="text/css" />
+        
         <link rel="stylesheet" type="text/css" href="../assets/svg/fontawesome-free-5.11.2-web/css/all.css" />
-
-        <title> LetsXchange Homepage </title>
-        <meta name="description" content="Search and Post anything for trade!" />
-        <meta name="keywords" content="exchange, trade, search, find, post" />
-        <link rel="icon" href="/assets/ico/favicon.ico">
-
+        
         <script src="../js/jquery-3.4.1.js"></script>
-        <script type='text/javascript' src='../js/handlebars-v4.4.3.js'></script>
         <!-- sets nav active element by checkling page url -->
         <script src="../js/nav-active-page.js"></script>
-
+      
     </head>
     <body>
 
@@ -32,23 +31,16 @@
                 <span class='msg'>{{data.msg}}</span>
             {{/if}}
 
-
-            {{#if query}}
-                <p>{{query}}</p>
-                {{#if items}}
-                    <h2>{{items.length}} results for "{{query}}"</h2>
-                {{/if}}
-            {{/if}}
-
-            {{#each items}}
-                <li><a href="/details/{{this.id}}">{{this.title}}</a></li>
-            {{/each}}
+            <h1>{{item.title}}</h1>
+            <h3>{{item.category}}</h3>
+            <p>{{item.description}}</p>
             
+
         </main>
 
         <footer>
             {{> footer}}
         </footer>
-
-    </body>  
+        <!-- scripts -->
+    </body>
 </html>
