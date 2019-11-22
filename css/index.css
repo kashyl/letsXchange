@@ -106,7 +106,7 @@
 }
 
 .thumbnail-area {
-    background: rgb(223, 223, 223);
+    background: white;
     border-radius: 4px 4px 0px 0px;
     height: 66.6%;
 }
@@ -189,5 +189,6 @@
     line-height: 18px;
     overflow: hidden;
     margin: 0 0 13px;
+    word-break:break-word; /* for if there are no spaces */
 }
 

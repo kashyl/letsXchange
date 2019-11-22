@@ -33,6 +33,9 @@ html, body {
     margin: 0 auto;
     /*background: #100e17;*/
     background-color: rgb(249, 250, 251);
+
+    word-break:break-word; /* for if there are no spaces */
+
 }
 body {
     box-sizing: border-box;

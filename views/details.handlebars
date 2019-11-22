@@ -31,10 +31,71 @@
                 <span class='msg'>{{data.msg}}</span>
             {{/if}}
 
-            <h1>{{item.title}}</h1>
-            <h3>{{item.category}}</h3>
-            <p>{{item.description}}</p>
-            
+            <div class="back-wrapper">
+                <button class="back" onclick="goBack()"><img src="../assets/image/back_arrow_1.png"> Back to listings</button>
+            </div>
+
+            <div class="details-grid">
+
+                <div class="column1">
+                    <div class="gallery">
+                        <div class="slideshow-container">
+                            <div id="test">
+                            <div class="mySlides fade">
+                            <div class="numbertext">1 / 5</div>
+                            <img src="../assets/public/items/{{item.id}}/0.png">
+                            </div>
+
+                            <div class="mySlides fade">
+                            <div class="numbertext">2 / 5</div>
+                            <img src="../assets/public/items/{{item.id}}/1.png">
+                            </div>
+
+                            <div class="mySlides fade">
+                            <div class="numbertext">3 / 5</div>
+                            <img src="../assets/public/items/{{item.id}}/2.png">
+                            </div>
+
+                            <div class="mySlides fade">
+                            <div class="numbertext">4 / 5</div>
+                            <img src="../assets/public/items/{{item.id}}/3.png">
+                            </div>
+
+                            <div class="mySlides fade">
+                            <div class="numbertext">5 / 5</div>
+                            <img src="../assets/public/items/{{item.id}}/4.png">
+                            </div>
+                        </div>
+                            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+                        </div>
+                        <br>
+
+                        <div style="text-align:center">
+                        <span class="dot" onclick="currentSlide(1)"></span> 
+                        <span class="dot" onclick="currentSlide(2)"></span> 
+                        <span class="dot" onclick="currentSlide(3)"></span> 
+                        <span class="dot" onclick="currentSlide(4)"></span> 
+                        <span class="dot" onclick="currentSlide(5)"></span> 
+                        </div>
+                    </div>
+
+                    <span class="separator"></span>
+
+                    <div class="details">
+                        <h2>Description</h2>
+                        <p>{{item.description}}</p>
+                    </div>
+
+                </div>
+
+                <div class="column2">
+                    <h1>{{item.title}}</h1>    
+                    <h3>{{item.category}}</h3>
+                </div>
+
+            </div>
 
         </main>
 
@@ -42,5 +103,42 @@
             {{> footer}}
         </footer>
         <!-- scripts -->
+
+        <!-- back button -->
+        <script>
+            function goBack() {
+            window.history.back();
+            }
+        </script>
+
+        <!-- image gallery -->
+        <script>
+            var slideIndex = 1;
+            showSlides(slideIndex);
+
+            function plusSlides(n) {
+            showSlides(slideIndex += n);
+            }
+
+            function currentSlide(n) {
+            showSlides(slideIndex = n);
+            }
+
+            function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {slideIndex = 1}    
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";  
+            dots[slideIndex-1].className += " active";
+            }
+        </script>
     </body>
 </html>

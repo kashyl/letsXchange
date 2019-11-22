@@ -46,6 +46,9 @@ module.exports.runSQL = runSQL;
 
 async function fetchListings(query) {
     try {
+        
+        // Todo: sanitize input string
+
         if (query == '') {
             let sql = 'SELECT id, title, category, description, location FROM items ORDER BY id DESC'
             let records = await runSQL(sql)
@@ -123,14 +126,18 @@ async function saveItemImages(images, itemid) {
                 }
 
                 const image = await Jimp.read(path);
+                // THUMBNAILS
                 // image.cover( w, h[, alignBits || mode, mode] ); 
                 // scale the image to the given width and height, some parts of the image may be clipped
                 // for images, .resize will make the image lose aspect ratio when height and width are not the same
                 // thus, using .cover is much better as it takes the part in the middle while keeping aspect ratio, using the ALIGN_CENTER Jimp methods
                 image.cover(1024, 1024, Jimp.HORIZONTAL_ALIGN_CENTER | Jimp.VERTICAL_ALIGN_CENTER)
                     .quality(100)
+                    .write(`assets/public/items/${itemid}/thumbs/0.png`);
+                // FULL PICTURES
+                image
+                    .quality(100)
                     .write(`assets/public/items/${itemid}/0.png`);
-
             } 
             // --- MULTIPLE IMAGES ---
             else {
@@ -156,13 +163,20 @@ async function saveItemImages(images, itemid) {
                     //console.log(`fileExtension: ${fileExtension}`)
         
                     const image = await Jimp.read(path);
+                    // FULL PICTURES
+                    image.contain(1920, 1080)
+                        .quality(100)
+                        .write(`assets/public/items/${itemid}/${i}.png`);
+                    // THUMBNAILS
                     // image.cover( w, h[, alignBits || mode, mode] ); 
                     // scale the image to the given width and height, some parts of the image may be clipped
                     // for images, .resize will make the image lose aspect ratio when height and width are not the same
                     // thus, using .cover is much better as it takes the part in the middle while keeping aspect ratio, using the ALIGN_CENTER Jimp methods
                     image.cover(1024, 1024, Jimp.HORIZONTAL_ALIGN_CENTER | Jimp.VERTICAL_ALIGN_CENTER)
                         .quality(100)
-                        .write(`assets/public/items/${itemid}/${i}.png`);
+                        .write(`assets/public/items/${itemid}/thumbs/${i}.png`);
+
+                    
                 }  
                 return true
             }
@@ -214,8 +228,9 @@ async function lastTableId(tablename) {
         await findTable(tablename)
 
         let query = `SELECT seq FROM sqlite_sequence WHERE name='${tablename}';`
-        let records = await runSQL(query)    
-        console.log(records)
+        let records = await runSQL(query) 
+           
+        // console.log(records)
 
         return records
     } catch(err) {

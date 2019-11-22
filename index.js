@@ -68,7 +68,7 @@ router.get('/', async ctx => {
         let querystring = ''
 
         if(ctx.query!== undefined && ctx.query.q !== undefined) {
-        querystring = ctx.query.q
+            querystring = ctx.query.q
         }
         
         // gets listing data from database and puts it into data
@@ -274,6 +274,8 @@ router.post('/add-item', koaBody, async ctx => {
         await accounts.saveItemImages(images, itemid)
 
         await accounts.addItem(user.id, body)
+
+        console.log(`New listing with id ${itemid} created.`)
 
         return ctx.redirect(`/?msg=new offer listed`)
     } catch(err) {
