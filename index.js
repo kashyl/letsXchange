@@ -43,6 +43,15 @@ handlebars.registerPartial(
     fs.readFileSync(__dirname + "\\views\\partials\\footer.handlebars", 'utf8')
 )
 
+/* ------------------- HBS HELPERS ------------------- */
+
+// to display newline characters on html page
+handlebars.registerHelper('breaklines', function(text) {
+    text = handlebars.Utils.escapeExpression(text);
+    text = text.replace(/(\r\n|\n|\r)/gm, '<br>');
+    return new handlebars.SafeString(text);
+});
+
 /* MIDDLEWARE CONFIGURATION */
 app.keys = [env.parsed.APP_KEYS]
 app.use(staticDir('.'))

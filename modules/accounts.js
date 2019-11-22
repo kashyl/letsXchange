@@ -89,9 +89,6 @@ async function fetchItem(itemid) {
 
         let records = await runSQL(sql)
 
-        // sanitizes the text
-        records.description = records.description.replace(/(?:\r\r|\r|\n)/g, '<br>');
-
         return records;
     } catch(err) {
         throw err
@@ -209,6 +206,7 @@ async function addItem(userid, item) {
         const db = await sqlite.open('./database/database.db')
         await db.run(sql)
         await db.close()
+
         return true
     } catch(err) {
         throw err
@@ -229,7 +227,7 @@ async function lastTableId(tablename) {
 
         let query = `SELECT seq FROM sqlite_sequence WHERE name='${tablename}';`
         let records = await runSQL(query) 
-           
+
         // console.log(records)
 
         return records
