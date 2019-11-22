@@ -262,11 +262,7 @@ router.post('/add-item', koaBody, async ctx => {
 
         user.id = ctx.session.userid
 
-        console.log(user.name)
-        console.log(user.id)
         const images = ctx.request.files.images
-        console.log(images)
-        console.log(body)
 
         // gets the amount of records in the table items
         // as the id's are incremental, the value of this is number of total + 1

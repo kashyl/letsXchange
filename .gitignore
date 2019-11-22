@@ -7,5 +7,11 @@
 #NPM PACKAGES DIRECTORY
 node_modules
 
+#database content
+#database/database.db
+
+#user and item images
+assets/public/*
+
 css/framework/*
 **/framework
