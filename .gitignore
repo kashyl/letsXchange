@@ -8,7 +8,7 @@
 node_modules
 
 #database content
-#database/database.db
+database/*
 
 #user and item images
 assets/public/*
