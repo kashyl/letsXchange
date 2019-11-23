@@ -68,6 +68,22 @@ async function dateAndTime() {
 module.exports.dateAndTime = dateAndTime;
 
 /**
+ * Function to show year of date string
+ * @returns {String} - the date and time
+ */
+async function getYear(date) {
+    try {
+        const month = date.split(' ')[1]
+        const year = date.split(' ')[3]
+
+        return month + ' ' + year
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.getYear = getYear;
+
+/**
  * Function to fetch all records of items from the database
  * based on query or without
  * After, closes the database connection and returns the data
@@ -144,7 +160,7 @@ async function fetchItemImageInfo(itemid) {
         return list
 
     } catch(err) {
-        console.log(err)
+        // console.log(err)
         // throw err
     }
 }
@@ -457,9 +473,11 @@ async function addUser(body, saltRounds) {
     try {
         await checkNoDuplicate('user', body.user)
 
+        const date = new Date()
+
         // ENCRYPT PASSWORD, BUILD SQL
         body.pass = await bcrypt.hash(body.pass, saltRounds)
-        let sql = `INSERT INTO users(user, pass, email, mobile) VALUES("${body.user}", "${body.pass}", "${body.email}", "${body.mobile}")`
+        let sql = `INSERT INTO users(user, pass, email, mobile, registerdate) VALUES("${body.user}", "${body.pass}", "${body.email}", "${body.mobile}", "${date}")`
         // console.log(sql)
 
         // DATABASE COMMANDS
@@ -529,17 +547,36 @@ module.exports.updateField = updateField;
 
 /**
  * Function to fetch data from users table
- * @param {String} username - the name of the user
+ * @param {String} searchval - the name or id, depending on the selected mode
+ * @param {String} mode - by username or id, default username
  * @returns {Object} - returns an object with all the data
+ * @returns {boolean} - false if invalid mode arguments
  * @throws {Error}
  */
-async function fetchUserData(username) {
+async function fetchUserData(searchval, mode='username') {
     try {
-        let records = await runSQL(`SELECT count(id) AS count FROM users WHERE user="${username}";`);
-        if(!records.count) throw new Error(`user not found`)
-        records = await runSQL(`SELECT user, email, mobile, gender, country, forename, surname FROM users WHERE user="${username}";`);
+        let records = []
+        // by username
+        if (mode == 'username')
+        {
+            records = await runSQL(`SELECT count(id) AS count FROM users WHERE user="${searchval}";`);
+            if(!records.count) throw new Error(`user not found`)
+            records = await runSQL(`SELECT user, email, mobile, gender, country, forename, surname, registerdate FROM users WHERE user="${searchval}";`);
+        } // by id
+        else if (mode == 'id') {
+            records = await runSQL(`SELECT count(id) AS count FROM users WHERE id="${searchval}";`);
+            if(!records.count) throw new Error(`user not found`)
+            records = await runSQL(`SELECT user, email, mobile, gender, country, forename, surname, registerdate FROM users WHERE id="${searchval}";`);
+        } // invalid args
+        else {
+            console.log('fetchUserData mode unknown (invalid arguments)')
+            return false
+        }
+
         return records
+
     } catch(err) {
+        console.log(err)
         throw err
     }
 }

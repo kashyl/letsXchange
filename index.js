@@ -72,7 +72,6 @@ const saltRounds = 10
  */
 router.get('/', async ctx => {
     try {
-        // let querystring = ''
         let querystring = ''
 
         if(ctx.query!== undefined && ctx.query.q !== undefined) {
@@ -123,9 +122,14 @@ router.get('/details/:id', async ctx => {
         item.images = []
         item.images = await accounts.fetchItemImageInfo(itemid)
 
-        await ctx.render('./views/details', {data: data, item: item})
+        let userData = await accounts.fetchUserData(item.seller, 'id')
+
+        userData.registerdate = await accounts.getYear(userData.registerdate)
+
+        await ctx.render('./views/details', {data: data, item: item, seller: userData})
     } catch(err) {
-        await ctx.redirect('/?msg=listing not found')
+        console.log(err)
+        await ctx.redirect(`/?msg=${err.message}`)
     }
 })
 

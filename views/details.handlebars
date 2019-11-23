@@ -47,7 +47,6 @@
                             </div>
                             {{else}}
                             <div class="mySlides fade">
-                            <div class="numbertext">0 / {{item.images.length}}</div>
                             <img src="../assets/image/gallery_not_found.png"> 
                             </div>
                             {{/if}}
@@ -81,10 +80,12 @@
                             {{/if}}
 
                             <!-- PREV AND NEXT BUTTONS -->
+                            {{#if item.images}}
                             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                             <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                            {{/if}}
                         </div>
-
+                        {{#if item.images}}
                         <div class="gallery-thumbnails">
 
                             <!-- show first dot anyway (even for no-found default img) -->
@@ -122,6 +123,7 @@
                             </button> 
                             {{/if}}
                         </div>
+                        {{/if}}
                     </div>
 
                     <span class="separator"></span>
@@ -134,8 +136,53 @@
                 </div>
 
                 <div class="column2">
-                    <h1>{{item.title}}</h1>    
-                    <h3>{{item.category}}</h3>
+                    <div class="column2-wrap">  
+                        <div class="title-wrapper">
+                            <h1>{{item.title}}</h1>    
+                        </div>
+
+                        <div class="category-wrapper">
+                            <h3>{{item.category}}</h3>
+                        </div>
+
+                        <div class="location-wrapper">
+                            <span><i class="fas fa-map-marker-alt"></i></span>
+                            <span>{{item.location}}</span>
+                        </div>
+
+                        <div class="buttons">
+                            <div class="make-offer">
+                                <a href="" class="make-offer-link">Make offer</a>
+                            </div>
+                            <div class="buttons-grid">
+                                <div class="buttons-column1">
+                                    <button class="share" type="button"><i class="fas fa-share-square"></i><span>Share</span></button>
+                                </div>
+                                <div class="buttons-column2">
+                                    <button class="watchlist" type="button"><i class="far fa-heart"></i><span>Add to watchlist</span></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <span class="separator"></span>
+
+                        <div class="seller-wrapper">
+                            <div class="seller-avatar">
+                                <a href="">
+                                    <img class="avatar-medium" src="../assets/public/avatars/{{seller.user}}.png" alt="Image not found" 
+                                    onerror="this.onerror=null;this.src='../assets/image/default_avatar.png';" />
+                                </a>
+                            </div>
+                            <div class="seller-details">
+                                <a href="">
+                                    <span>{{seller.user}}</span>
+                                </a>
+                                <span>Member since {{seller.registerdate}}</span>
+                            </div>
+                        </div>
+
+                        <span class="separator"></span>
+                    </div>
                 </div>
             </div>
 
