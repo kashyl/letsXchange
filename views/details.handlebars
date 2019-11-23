@@ -123,6 +123,8 @@
                             </button> 
                             {{/if}}
                         </div>
+                        {{else}}
+                            <span class="space"></span>
                         {{/if}}
                     </div>
 
@@ -137,12 +139,14 @@
 
                 <div class="column2">
                     <div class="column2-wrap">  
-                        <div class="title-wrapper">
-                            <h1>{{item.title}}</h1>    
-                        </div>
+                        <div class="item-header">
+                            <div class="title-wrapper">
+                                <h1>{{item.title}}</h1>    
+                            </div>
 
-                        <div class="category-wrapper">
-                            <h3>{{item.category}}</h3>
+                            <div class="category-wrapper">
+                                <h3>{{item.category}}</h3>
+                            </div>
                         </div>
 
                         <div class="location-wrapper">
@@ -156,10 +160,10 @@
                             </div>
                             <div class="buttons-grid">
                                 <div class="buttons-column1">
-                                    <button class="share" type="button"><i class="fas fa-share-square"></i><span>Share</span></button>
+                                    <button id="share" type="button"><i class="fas fa-share-square"></i><span>Share</span></button>
                                 </div>
                                 <div class="buttons-column2">
-                                    <button class="watchlist" type="button"><i class="far fa-heart"></i><span>Add to watchlist</span></button>
+                                    <button id="watchlist" class="no" type="button"><i class="far fa-heart"></i><span>Add to watchlist</span></button>
                                 </div>
                             </div>
                         </div>
@@ -182,6 +186,40 @@
                         </div>
 
                         <span class="separator"></span>
+
+                        <div class="exchange-wrapper">
+                            <div class="exchange-categories">
+                                <h2>Exchanging for:</h2>
+                                    
+                                    <div class="category-display">
+                                        <h4>{{item.ecategories.[0]}}</h4>
+                                        {{#if item.ecategories.[1]}}
+                                        <h4>, {{item.ecategories.[1]}}</h4>
+                                        {{#if item.ecategories.[2]}}
+                                        <h4 style="color: inherit">and</h4>
+                                        
+                                        <div class="dropdown">
+                                        <button class="dropbtn"><h4>more</h4></button>
+                                        <div class="dropdown-content">
+                                            {{#each item.ecategories}}
+                                                <h4>{{this}}</h4>
+                                                <br>
+                                            {{/each}}
+                                        </div>
+                                        {{/if}}
+                                        {{/if}}
+                                    </div>
+                                    </div>
+                                    
+                                </div>
+
+                            <span class="separator"></span>
+                            <div class="details">
+                        <h2>Desired items description</h2>
+                        <p>{{breaklines item.description}}</p>
+                    </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -199,6 +237,11 @@
         </footer>
         <!-- scripts -->
 
+        <!-- watchlist button -->
+        <script>
+            $.getScript('../js/watchlist.js');
+        </script>
+
         <!-- back button -->
         <script>
             function goBack() {
@@ -209,30 +252,30 @@
         <!-- image gallery -->
         <script>
             var slideIndex = 1;
-            showSlides(slideIndex);
+                showSlides(slideIndex);
 
             function plusSlides(n) {
-            showSlides(slideIndex += n);
+                showSlides(slideIndex += n);
             }
 
             function currentSlide(n) {
-            showSlides(slideIndex = n);
+                showSlides(slideIndex = n);
             }
 
             function showSlides(n) {
-            var i;
-            var slides = document.getElementsByClassName("mySlides");
-            var dots = document.getElementsByClassName("dot");
-            if (n > slides.length) {slideIndex = 1}    
-            if (n < 1) {slideIndex = slides.length}
-            for (i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";  
-            }
-            for (i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
-            }
-            slides[slideIndex-1].style.display = "block";  
-            dots[slideIndex-1].className += " active";
+                var i;
+                var slides = document.getElementsByClassName("mySlides");
+                var dots = document.getElementsByClassName("dot");
+                if (n > slides.length) {slideIndex = 1}    
+                if (n < 1) {slideIndex = slides.length}
+                for (i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";  
+                }
+                for (i = 0; i < dots.length; i++) {
+                    dots[i].className = dots[i].className.replace(" active", "");
+                }
+                slides[slideIndex-1].style.display = "block";  
+                dots[slideIndex-1].className += " active";
             }
         </script>
     </body>

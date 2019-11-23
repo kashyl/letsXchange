@@ -204,6 +204,13 @@ to {opacity: 1}
     border-bottom: 1px solid rgb(226, 232, 235);
 }
 
+.space {
+    width: 100%;
+    display: block;
+    margin-top: 90px;
+    margin-bottom: 90px;
+}
+
 .details > h2 {
     margin-top: 0px;
     overflow-wrap: break-word;
@@ -225,17 +232,31 @@ to {opacity: 1}
     line-height: 36px;
     margin-bottom: 10px;
 }
+.column2 h2 {
+    font-weight: 500;
+    margin: 0;
+}
 .column2 h3 {
     font-size: 18px;
     line-height: 24px;
     color: #d16004;
     margin-bottom: 24px;
 }
+.column2 h4 {
+    color: #d16004;
+}
+
+.item-header {
+    min-height: 106px;
+}
 
 .location-wrapper {
     font-size: 16px;
     line-height: 24px;
     color: #92A1A9;
+    margin-top: 32px;
+    margin-bottom: 26px;
+    max-height: 24px;
 }
 
 /* MAKE OFFER LINK */
@@ -330,8 +351,8 @@ div.buttons {
 .buttons-column2 {
     padding-left: 4px;
 }
-button.share,
-button.watchlist {
+button#share,
+button#watchlist {
     font-family: inherit;
     text-transform: none;
     text-align: center;
@@ -365,25 +386,30 @@ button.watchlist {
     padding: 4px 8px;
     border-color: rgb(226, 232, 235);
 }
-button.share:hover,
-button.watchlist:hover {
+button#share:hover,
+button#watchlist:hover {
     background-color: rgb(207, 215, 219);
     border-color: rgb(207, 215, 219);
 }
-button.share:active,
-button.watchlist:active {
+button#share:active,
+button#watchlist:active {
     background-color: rgb(243, 246, 247);
     border-color: rgb(243, 246, 247);
 }
-button.share:focus,
-button.watchlist:focus {
+button#share:focus,
+button#watchlist:focus {
     box-shadow: rgb(243, 246, 247) 0px 0px 0px 3px;
     outline: none;
 }
-button.share span,
-button.watchlist span {
+button#share span,
+button#watchlist span {
     margin-left: 6px;
 }
+
+button#watchlist.yes i {
+    color: #e6332a;
+}
+
 
 /* SELLER DETAILS */
 .seller-wrapper {
@@ -420,4 +446,52 @@ button.watchlist span {
 .seller-details span {
     display: block;
 }
+
+.exchange-wrapper h2 {
+    display: inline-block;
+}
+.exchange-wrapper h3 {
+    display: inline-block;
+    margin: 0;
+}
+.exchange-wrapper h4 {
+    display: inline-block;
+    margin: 0;
+}
+.exchange-categories {
+    display: block;
+    margin-bottom: 20px;
+}
+
+/* DROPDOWN E.CAT. LIST */
+.dropbtn {
+    all: unset;
+    border: none;
+    cursor: pointer;
+}
+.dropbtn > h4 {
+    text-decoration: underline;
+}
+
+.dropdown {
+position: relative;
+display: inline-block;
+}
+
+.dropdown-content {
+display: none;
+position: absolute;
+background-color: #f1f1f1;
+min-width: 200px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+z-index: 1;
+
+padding: 10px;
+
+word-break: normal;
+}
+
+.dropdown-content h4:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
 

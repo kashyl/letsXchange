@@ -136,6 +136,10 @@ async function fetchItem(itemid) {
 
         let records = await runSQL(sql)
 
+        records.ecategories = records.ecategories.split(',');
+
+        console.log(records)
+
         return records;
     } catch(err) {
         throw err
@@ -561,12 +565,12 @@ async function fetchUserData(searchval, mode='username') {
         {
             records = await runSQL(`SELECT count(id) AS count FROM users WHERE user="${searchval}";`);
             if(!records.count) throw new Error(`user not found`)
-            records = await runSQL(`SELECT user, email, mobile, gender, country, forename, surname, registerdate FROM users WHERE user="${searchval}";`);
+            records = await runSQL(`SELECT user, email, mobile, gender, country, forename, surname, registerdate, watchlist FROM users WHERE user="${searchval}";`);
         } // by id
         else if (mode == 'id') {
             records = await runSQL(`SELECT count(id) AS count FROM users WHERE id="${searchval}";`);
             if(!records.count) throw new Error(`user not found`)
-            records = await runSQL(`SELECT user, email, mobile, gender, country, forename, surname, registerdate FROM users WHERE id="${searchval}";`);
+            records = await runSQL(`SELECT user, email, mobile, gender, country, forename, surname, registerdate, watchlist FROM users WHERE id="${searchval}";`);
         } // invalid args
         else {
             console.log('fetchUserData mode unknown (invalid arguments)')
@@ -601,6 +605,28 @@ async function fetchUserId(username) {
     }
 }
 module.exports.fetchUserId = fetchUserId;
+
+/**
+ * Function to update user's watchlist
+ * @param {String} userid - the id of the user whose watchlist is requested
+ * @param {String} itemid - the id of the item to be added to the watchlist
+ * @returns {String} - returns a string of the watchlist
+ */
+async function updateUserWatchlist(userid, itemid) {
+    try {
+        let watchlist = await runSQL(`SELECT watchlist FROM users WHERE id="${userid}";`);
+
+        console.log(watchlist)
+        return
+
+        let sql = `UPDATE users SET watchlist = "${watchlist}" WHERE id="${userid}";`
+
+        return watchlist
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.updateUserWatchlist = updateUserWatchlist;
 
 /**
  * Function which checks if table exists in the database
