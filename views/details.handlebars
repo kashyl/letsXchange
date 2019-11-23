@@ -40,43 +40,87 @@
                 <div class="column1">
                     <div class="gallery">
                         <div class="slideshow-container">
-                            <div id="test">
+                            {{#if item.images.[0]}}
                             <div class="mySlides fade">
-                            <div class="numbertext">1 / 5</div>
+                            <div class="numbertext">1 / {{item.images.length}}</div>
                             <img src="../assets/public/items/{{item.id}}/0.png">
                             </div>
-
+                            {{else}}
                             <div class="mySlides fade">
-                            <div class="numbertext">2 / 5</div>
+                            <div class="numbertext">0 / {{item.images.length}}</div>
+                            <img src="../assets/image/gallery_not_found.png"> 
+                            </div>
+                            {{/if}}
+
+                            {{#if item.images.[1]}}
+                            <div class="mySlides fade">
+                            <div class="numbertext">2 / {{item.images.length}}</div>
                             <img src="../assets/public/items/{{item.id}}/1.png">
                             </div>
+                            {{/if}}
 
+                            {{#if item.images.[2]}}
                             <div class="mySlides fade">
-                            <div class="numbertext">3 / 5</div>
+                            <div class="numbertext">3 / {{item.images.length}}</div>
                             <img src="../assets/public/items/{{item.id}}/2.png">
                             </div>
+                            {{/if}}
 
+                            {{#if item.images.[3]}}
                             <div class="mySlides fade">
-                            <div class="numbertext">4 / 5</div>
+                            <div class="numbertext">4 / {{item.images.length}}</div>
                             <img src="../assets/public/items/{{item.id}}/3.png">
                             </div>
+                            {{/if}}
 
+                            {{#if item.images.[4]}}
                             <div class="mySlides fade">
-                            <div class="numbertext">5 / 5</div>
+                            <div class="numbertext">5 / {{item.images.length}}</div>
                             <img src="../assets/public/items/{{item.id}}/4.png">
                             </div>
-                        </div>
+                            {{/if}}
+
+                            <!-- PREV AND NEXT BUTTONS -->
                             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                             <a class="next" onclick="plusSlides(1)">&#10095;</a>
                         </div>
-                        <br>
 
-                        <div style="text-align:center">
-                        <span class="dot" onclick="currentSlide(1)"></span> 
-                        <span class="dot" onclick="currentSlide(2)"></span> 
-                        <span class="dot" onclick="currentSlide(3)"></span> 
-                        <span class="dot" onclick="currentSlide(4)"></span> 
-                        <span class="dot" onclick="currentSlide(5)"></span> 
+                        <div class="gallery-thumbnails">
+
+                            <!-- show first dot anyway (even for no-found default img) -->
+                            {{#if item.images.[0]}}
+                            <button class="dot" onclick="currentSlide(1)">
+                                <img src="../assets/public/items/{{item.id}}/thumbs/0.png">
+                            </button>
+                            {{else}}
+                            <button class="dot" onclick="currentSlide(1)">
+                                <img src="../assets/image/gallery_thumb_placeholder_transparent.png">
+                            </button>
+                            {{/if}}
+
+                            {{#if item.images.[1]}}
+                            <button class="dot" onclick="currentSlide(2)">
+                                <img src="../assets/public/items/{{item.id}}/thumbs/1.png">
+                            </button> 
+                            {{/if}}
+
+                            {{#if item.images.[2]}}
+                            <button class="dot" onclick="currentSlide(3)">
+                                <img src="../assets/public/items/{{item.id}}/thumbs/2.png">
+                            </button> 
+                            {{/if}}
+
+                            {{#if item.images.[3]}}
+                            <button class="dot" onclick="currentSlide(4)">
+                                <img src="../assets/public/items/{{item.id}}/thumbs/3.png">
+                            </button> 
+                            {{/if}}
+                            
+                            {{#if item.images.[4]}}
+                            <button class="dot" onclick="currentSlide(5)">
+                                <img src="../assets/public/items/{{item.id}}/thumbs/4.png">
+                            </button> 
+                            {{/if}}
                         </div>
                     </div>
 
@@ -93,7 +137,12 @@
                     <h1>{{item.title}}</h1>    
                     <h3>{{item.category}}</h3>
                 </div>
+            </div>
 
+            <span class="separator"></span>
+
+            <div class="details-footer">
+                <span class="date-listed">Item listed on {{item.date}}</span>
             </div>
 
         </main>

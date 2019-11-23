@@ -70,12 +70,15 @@ div#header-right-wrapper {
     cursor: default;
 }
 #header-left-wrapper #motto-wrapper span {
-    font-family: Simplifica, Arial, Helvetica, sans-serif;
+    font-family: Simplifica, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     
     font-size: 125%;
     letter-spacing: 2px;
-    color: #ff7707;
+    color: #ff7707db;
     cursor: default;
+
+    position: relative;
+    left: 22px;
 }
 #header-right-wrapper #logged-as img.avatar-small {
     vertical-align: middle;

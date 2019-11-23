@@ -1,3 +1,29 @@
+.browse-upper-wrapper {
+    display: block;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    padding-left: 0px;
+    padding-right: 0px;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    border-radius: 0px;
+
+    color: rgb(72, 98, 112);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+    margin-bottom: 40px;
+}
+.browse-header-text {
+    margin-top: 0px;
+    overflow-wrap: break-word;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 48px;
+    margin-bottom: 4px;
+}
+
 .card-grid {
     width: 100%;
 

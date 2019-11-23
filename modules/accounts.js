@@ -14,6 +14,7 @@ const fs = require('fs-extra') // for files. 'fs-extra' adds more methods = no m
 const mime = require('mime-types')
 const Jimp = require('jimp') // for image conversion
 
+
 /**
  * Function to open the database then execute a query
  * After, closes the database connection and returns the data
@@ -35,6 +36,36 @@ async function runSQL(query) {
     }
 }
 module.exports.runSQL = runSQL;
+
+/**
+ * Function to show date and time in mm/dd/yyyy at h:m:s format
+ * @returns {String} - the date and time
+ */
+async function dateAndTime() {
+    try {
+        function addZero(i) {
+            if (i < 10) {
+              i = "0" + i;
+            }
+            return i;
+        }
+
+        let today = new Date();
+        const dd = String(today.getDate()).padStart(2, '0');
+        const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        const yyyy = today.getFullYear();
+        const h = addZero(today.getHours());
+        const m = addZero(today.getMinutes());
+        const s = addZero(today.getSeconds());
+        today = mm + '/' + dd + '/' + yyyy;
+        today = today + ' at ' + h + ":" + m + ":" + s;
+        
+        return today
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.dateAndTime = dateAndTime;
 
 /**
  * Function to fetch all records of items from the database
@@ -96,6 +127,28 @@ async function fetchItem(itemid) {
 }
 module.exports.fetchItem = fetchItem;
 
+/**
+ * Function to return the item's image files names
+ * @param {String} itemid - The id of item whose image data will be returned
+ * @returns {Object} - data returned by the query
+ */
+
+async function fetchItemImageInfo(itemid) {
+    try {
+        const path = `${__dirname}/../assets/public/items/${itemid}/`
+
+        let list = fs.readdirSync(path) // gets file names. !!! SYNC !!!
+
+        list.splice( list.indexOf('thumbs'), 1 ); // removes thumbs folder from the list
+
+        return list
+
+    } catch(err) {
+        console.log(err)
+        // throw err
+    }
+}
+module.exports.fetchItemImageInfo = fetchItemImageInfo;
 
 /**
  * This function takes data from an uploaded image and saves it to the `avatars` directory.
@@ -123,6 +176,11 @@ async function saveItemImages(images, itemid) {
                 }
 
                 const image = await Jimp.read(path);
+                // FULL PICTURES
+                image.contain(1920, 1080)
+                .quality(100)
+                .write(`assets/public/items/${itemid}/0.png`);
+
                 // THUMBNAILS
                 // image.cover( w, h[, alignBits || mode, mode] ); 
                 // scale the image to the given width and height, some parts of the image may be clipped
@@ -131,10 +189,6 @@ async function saveItemImages(images, itemid) {
                 image.cover(1024, 1024, Jimp.HORIZONTAL_ALIGN_CENTER | Jimp.VERTICAL_ALIGN_CENTER)
                     .quality(100)
                     .write(`assets/public/items/${itemid}/thumbs/0.png`);
-                // FULL PICTURES
-                image
-                    .quality(100)
-                    .write(`assets/public/items/${itemid}/0.png`);
             } 
             // --- MULTIPLE IMAGES ---
             else {
@@ -195,12 +249,12 @@ async function addItem(userid, item) {
     try {
 
         // fetches date and time
-        var date = new Date()
+        const today = await dateAndTime()
 
         // Build SQL command with data
         let sql = `INSERT INTO items(seller, title, description, category, location, ecategories, edescription, date)` +
                     `VALUES("${userid}", "${item.title}", "${item.description}", "${item.category}", "${item.location}"` +
-                    `, "${item.exchangeCategories}", "${item.exchangeDescription}", "${date}")`
+                    `, "${item.exchangeCategories}", "${item.exchangeDescription}", "${today}")`
 
         // DATABASE COMMANDS
         const db = await sqlite.open('./database/database.db')
@@ -575,4 +629,3 @@ async function deleteRecord(table, id) {
     }
 }
 module.exports.deleteRecord = deleteRecord;
-

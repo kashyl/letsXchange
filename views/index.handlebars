@@ -32,15 +32,18 @@
                 <span class='msg'>{{data.msg}}</span>
             {{/if}}
 
-
-            {{#if query}}
-                <h1>Listings for ”{{query}}”</h1>
-                {{#if items}}
-                    <h3>{{items.length}} results</h3>
+            <div class="browse-upper-wrapper">
+                {{#if query}}
+                    <h1>Listings for ”{{query}}”</h1>
+                    {{#if items}}
+                        <h3>{{items.length}} results</h3>
+                    {{else}}
+                        <h3>No results found, please refine your search</h3>
+                    {{/if}}
                 {{else}}
-                    <h3>No results found, please refine your search</h3>
+                    <h1 class="browse-header-text">Browse listings</h1>
                 {{/if}}
-            {{/if}}
+            </div>
 
             <div class="card-grid">
                 {{#each items}}
@@ -49,7 +52,7 @@
                         <div class="card-container">
                             <div class="card-content">
                                 <div class="thumbnail-area">
-                                    <img src="../assets/public/items/{{this.id}}/thumbs/0.png" alt="Image not found" 
+                                    <img src="../assets/public/items/{{this.id}}/thumbs/0.png" alt="Listing thumbnail"
                                         onerror="this.onerror=null;this.src='../assets/image/no_image.png';" >
                                 </div>
                                 <div class="content-area">

@@ -1,3 +1,8 @@
+body, html {
+    background-color: white;
+    color: rgb(72, 98, 112);
+}
+
 button.back {
     border: none;
     border-radius: 6px;
@@ -17,24 +22,6 @@ button.back:focus {
     outline: none;
 }
 
-.details-container {
-    max-width: 1240px;
-    padding-left: 16px;
-    padding-right: 16px;
-    width: 100%;
-    box-sizing: border-box;
-    margin-right: auto;
-    margin-left: auto;
-    display: block;
-    font-size: 16px;
-    line-height: 24px;
-    text-size-adjust: 100%;
-
-    color: rgb(72, 98, 112);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    text-size-adjust: 100%;
-}
-
 .details-grid {
     display: flex;
     justify-content: left;
@@ -44,7 +31,6 @@ button.back:focus {
     min-height: 400px;
 
     margin: 20px 0;
-
 }
 
 .column1 {
@@ -62,20 +48,31 @@ button.back:focus {
     flex-shrink: 1;
     box-sizing: border-box;
 }
+.details-footer {
+    width: 100%;
+    display: inline-block;
+    color: rgb(146, 161, 169);
+    font-size: 14px;
+    line-height: 21px;
+    text-align: center;
+}
 
 /* ---------- IMAGE GALLERY ---------- */
 .gallery {
-    background-color: rgb(243, 246, 247);
+    background-color: inherit;                    
 }
 .slideshow-container {
+    background-color: rgb(243, 246, 247);
     max-width: 1000px;
     position: relative;
     margin: auto;
     text-align: center;
+    border-radius: 4px;
 }
 .slideshow-container img {
     width: 100%;
     height: 100%;
+    border-radius: 4px;
 }
 .prev, .next {
     cursor: pointer;
@@ -88,7 +85,6 @@ button.back:focus {
     font-weight: bold;
     font-size: 18px;
     transition: 0.6s ease;
-    border-radius: 0 3px 3px 0;
     user-select: none;
 
     background-color: rgba(0, 0, 0, 0.6);
@@ -96,12 +92,12 @@ button.back:focus {
 /* Position the "prev button" to the left */
 .prev {
     left: 0;
-    border-radius: 0 3px 3px 0;
+    border-radius: 0 4px 4px 0;
 }
 /* Position the "next button" to the right */
 .next {
     right: 0;
-    border-radius: 3px 0 0 3px;
+    border-radius: 4px 0 0 4px;
 }
 /* On hover, add a black background color with a little bit see-through */
 .prev:hover, .next:hover {
@@ -115,22 +111,63 @@ button.back:focus {
     position: absolute;
     top: 0;
     background-color: rgba(0, 0, 0, 0.6);
-    border-radius: 0 0 6px 0;
+    border-radius: 4px 0 6px 0;
 }
-/* The dots/bullets/indicators */
+/* The dots/bullets/thumbnail indicators */
+.gallery-thumbnails {
+    grid-template-columns: repeat(5, 64px);
+    grid-template-rows: repeat(1, 64px);
+    grid-column-gap: 16px;
+    grid-row-gap: 8px;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+
+
+    width: 100%;
+    
+    flex-wrap: wrap;
+    display: grid;
+
+    margin-top: 10px;
+}
 .dot {
-    cursor: pointer;
-    height: 15px;
-    width: 15px;
-    margin: 0 2px;
-    background-color: #bbb;
-    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+
     display: inline-block;
-    transition: background-color 0.6s ease;
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+    opacity: 0.6;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    padding: 0px;
+    margin: 0px;
+    background: none;
+    overflow: hidden;
 }
-.active, .dot:hover {
-    background-color: #717171;
-  }
+.dot.active {
+    opacity: 1;
+    border: 1.5px solid #ff7707;
+    border-radius: 6px;
+}
+.dot:focus {
+    outline: none;
+}
+.dot > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    overflow: hidden;
+    border-radius: 4px;
+    border-width: 2px;
+
+}
   
 /* Fading animation */
 .fade {
@@ -183,7 +220,6 @@ to {opacity: 1}
     font-size: 28px;
     line-height: 36px;
     margin-bottom: 16px;
-    color: rgb(72, 98, 112);
 }
 .column2 h3 {
     font-size: 16px;

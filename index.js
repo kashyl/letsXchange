@@ -72,7 +72,6 @@ const saltRounds = 10
  */
 router.get('/', async ctx => {
     try {
-
         // let querystring = ''
         let querystring = ''
 
@@ -121,6 +120,8 @@ router.get('/details/:id', async ctx => {
 
         let item = await accounts.fetchItem(itemid)
         // console.log(item)
+        item.images = []
+        item.images = await accounts.fetchItemImageInfo(itemid)
 
         await ctx.render('./views/details', {data: data, item: item})
     } catch(err) {
