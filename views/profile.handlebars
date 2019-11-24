@@ -165,7 +165,39 @@
 
                 </div>
 
-            </div>
+                <!-- MY LISTINGS -->
+                <div class="my-listings">
+                    <h1 class="title">My Listings</h1>
+                    <span class="separator"></span>
+                    <div class="listings-container">
+                        {{#each items}}
+                        <div class="listing-row">
+                            <a class="anchor" href="/details/{{this.id}}">
+                                <div class="card-container">
+                                    <div class="card-content">
+                                        <div class="thumbnail-area">
+                                            <img src="../assets/public/items/{{this.id}}/thumbs/0.png" alt="Listing thumbnail"
+                                                onerror="this.onerror=null;this.src='../assets/image/no_image.png';" >
+                                        </div>
+                                        <div class="content-area">
+                                            <p class="listing-title">{{this.title}}</p>
+                                            <p class="category">{{this.category}}</p>
+                                            <span class="space"></span>
+                                            <p class="description">{{this.description}}</p>
+
+                                            <div class="details-footer">
+                                                <span class="date-listed">Listed on {{this.date}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <span class="separator"></span>
+                        {{/each}}
+                        </div>
+                    </div>
+                </div>
 
         </main>
 

@@ -90,7 +90,6 @@ module.exports.getYear = getYear;
  * @param {String} query - The searched records. The query will be searched in the record's title, category and description
  * @returns {Object} - data returned by the query
  */
-
 async function fetchListings(query) {
     try {
         
@@ -122,6 +121,24 @@ async function fetchListings(query) {
     }
 }
 module.exports.fetchListings = fetchListings;
+
+/**
+ * Function to fetch records matching seller id and user id
+ * After, closes the database connection and returns the data
+ * @param {String} userid - the id of the user whose listings to return
+ * @returns {Object} - data returned by the query
+ */
+async function fetchUserListings(userid) {
+    try {
+            let sql = `SELECT * FROM items WHERE seller = "${userid}" ORDER BY id DESC;`
+            let records = await runSQL(sql)
+            return records;
+
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.fetchUserListings = fetchUserListings;
 
 /**
  * Function to open the database an fetch an item based on id

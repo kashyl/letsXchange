@@ -242,8 +242,11 @@ router.get('/profile', async ctx => {
         // USER DATA
         if (ctx.session.user != null) { data.userData = ctx.session.userData }
         else {console.log("Couldn't fetch user data! (index.js, router.get('/profile', ...)")}
+
+        // USER LISTINGS DATA
+        let items = await accounts.fetchUserListings(data.userData.id)
         
-        await ctx.render('./views/profile', {data: data})
+        await ctx.render('./views/profile', {data: data, items: items})
     } catch(err) {
         await ctx.render('./views/error', {error: err})
     }
