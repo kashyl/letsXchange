@@ -13,6 +13,9 @@
         <script src="../js/jquery-3.4.1.js"></script>
         <!-- sets nav active element by checkling page url -->
         <script src="../js/nav-active-page.js"></script>
+
+        <script src="/node_modules/clipboard/dist/clipboard.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/clipboard.js/1.5.3/clipboard.min.js"></script>
       
     </head>
     <body>
@@ -32,7 +35,7 @@
             {{/if}}
 
             <div class="back-wrapper">
-                <button class="back" onclick="goBack()"><img src="../assets/image/back_arrow_1.png"> Back to listings</button>
+                <button class="back" onclick="goBack()"><img src="../assets/image/back_arrow_1.png"> Back to previous page</button>
             </div>
 
             <div class="details-grid">
@@ -47,7 +50,6 @@
                             </div>
                             {{else}}
                             <div class="mySlides fade">
-                            <div class="numbertext">0 / {{item.images.length}}</div>
                             <img src="../assets/image/gallery_not_found.png"> 
                             </div>
                             {{/if}}
@@ -81,10 +83,12 @@
                             {{/if}}
 
                             <!-- PREV AND NEXT BUTTONS -->
+                            {{#if item.images}}
                             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                             <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                            {{/if}}
                         </div>
-
+                        {{#if item.images}}
                         <div class="gallery-thumbnails">
 
                             <!-- show first dot anyway (even for no-found default img) -->
@@ -122,6 +126,9 @@
                             </button> 
                             {{/if}}
                         </div>
+                        {{else}}
+                            <span class="space"></span>
+                        {{/if}}
                     </div>
 
                     <span class="separator"></span>
@@ -134,8 +141,108 @@
                 </div>
 
                 <div class="column2">
-                    <h1>{{item.title}}</h1>    
-                    <h3>{{item.category}}</h3>
+                    <div class="column2-wrap">  
+                        <div class="item-header">
+                            <div class="title-wrapper">
+                                <h1>{{item.title}}</h1>    
+                            </div>
+
+                            <div class="category-wrapper">
+                                <h3>{{item.category}}</h3>
+                            </div>
+                        </div>
+
+                        <div class="location-wrapper">
+                            <span><i class="fas fa-map-marker-alt"></i></span>
+                            <span>{{item.location}}</span>
+                        </div>
+
+                        <div class="buttons">
+                            <div class="make-offer">
+                                <a href='/details/{{item.id}}/offer' class="make-offer-btn">
+                                    Make offer
+                                <a/>
+
+                            </div>
+                            <div class="buttons-grid">
+                                <div class="buttons-column1">
+                                    <input type="hidden" id="input-url" value="Copied!">
+                                    <button id="share" class="btn-copy" type="button"><i class="fas fa-share-square"></i><span>Share</span></button>
+                                </div>
+                                <div class="buttons-column2">
+                                    <!-- checks if the item is already watchlisted by the viewing user -->
+                                    {{#if data.watchlist}}
+                                    <form action="/details/{{item.id}}/watchlist-remove" method="POST">
+                                        <button id="watchlist" class="yes"><i class="fas fa-heart"></i><span>Remove from watchlist</span></button>
+                                    </form>
+                                    {{else}}
+                                    <form action="/details/{{item.id}}/watchlist-add" method="POST">
+                                        <button id="watchlist" class="no"><i class="far fa-heart"></i><span>Add to watchlist</span></button>
+                                    </form>
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <span class="separator"></span>
+
+                        <div class="seller-wrapper">
+                            <div class="seller-avatar">
+                                <a href="">
+                                    <img class="avatar-medium" src="../assets/public/avatars/{{seller.user}}.png" alt="Image not found" 
+                                    onerror="this.onerror=null;this.src='../assets/image/default_avatar.png';" />
+                                </a>
+                            </div>
+                            <div class="seller-details">
+                                <a href="">
+                                    <span>{{seller.user}}</span>
+                                </a>
+                                <span>Member since {{seller.registerdate}}</span>
+                            </div>
+                        </div>
+
+                        <span class="separator"></span>
+
+                        <div class="exchange-wrapper">
+                            <div class="exchange-categories">
+                                <h2>Exchanging for:</h2>
+                                    
+                                    <div class="category-display">
+                                        <h4>{{item.ecategories.[0]}}</h4>
+                                        {{#if item.ecategories.[1]}}
+                                        <h4>, {{item.ecategories.[1]}}</h4>
+                                        {{#if item.ecategories.[2]}}
+                                        <h4 style="color: inherit">and</h4>
+                                        
+                                        <div class="dropdown">
+                                        <button class="dropbtn"><h4>more</h4></button>
+                                        <div class="dropdown-content">
+                                            {{#each item.ecategories}}
+                                                {{#if @second}}
+                                                {{else}}
+                                                {{#if @second}}
+                                                {{else}}
+                                                <h4>{{this}}</h4>
+                                                <br>
+                                                {{/if}}
+                                                {{/if}}
+                                            {{/each}}
+                                        </div>
+                                        {{/if}}
+                                        {{/if}}
+                                    </div>
+                                    </div>
+                                    
+                                </div>
+
+                            <span class="separator"></span>
+                            <div class="details">
+                        <h2>Desired items description</h2>
+                        <p>{{breaklines item.description}}</p>
+                    </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
 
@@ -162,31 +269,57 @@
         <!-- image gallery -->
         <script>
             var slideIndex = 1;
-            showSlides(slideIndex);
+                showSlides(slideIndex);
 
             function plusSlides(n) {
-            showSlides(slideIndex += n);
+                showSlides(slideIndex += n);
             }
 
             function currentSlide(n) {
-            showSlides(slideIndex = n);
+                showSlides(slideIndex = n);
             }
 
             function showSlides(n) {
-            var i;
-            var slides = document.getElementsByClassName("mySlides");
-            var dots = document.getElementsByClassName("dot");
-            if (n > slides.length) {slideIndex = 1}    
-            if (n < 1) {slideIndex = slides.length}
-            for (i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";  
-            }
-            for (i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
-            }
-            slides[slideIndex-1].style.display = "block";  
-            dots[slideIndex-1].className += " active";
+                var i;
+                var slides = document.getElementsByClassName("mySlides");
+                var dots = document.getElementsByClassName("dot");
+                if (n > slides.length) {slideIndex = 1}    
+                if (n < 1) {slideIndex = slides.length}
+                for (i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";  
+                }
+                for (i = 0; i < dots.length; i++) {
+                    dots[i].className = dots[i].className.replace(" active", "");
+                }
+                slides[slideIndex-1].style.display = "block";  
+                dots[slideIndex-1].className += " active";
             }
         </script>
+
+        <!-- clipboard.js -->
+        <script>
+            var clipboard = new Clipboard('.btn-copy', {
+                text: function() {
+                    return document.querySelector('input[type=hidden]').value;
+                }
+            });
+            
+            clipboard.on('success', function(e) {
+            $('.btn-copy').html('<i class="far fa-copy"></i><span>Link copied!</span>')
+            $('.btn-copy').attr('style', 'color: #00b300; font-weight: 700;')
+            
+            e.clearSelection();
+            });
+
+            $("#input-url").val(location.href);
+            // safari
+            if (navigator.vendor.indexOf("Apple")==0 && /\sSafari\//.test(navigator.userAgent)) {
+            $('.btn-copy').on('click', function() {
+            var msg = window.prompt("Copy this link", location.href);
+
+            });
+            }
+        </script>
+
     </body>
 </html>

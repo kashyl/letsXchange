@@ -68,13 +68,28 @@ async function dateAndTime() {
 module.exports.dateAndTime = dateAndTime;
 
 /**
+ * Function to show year of date string
+ * @returns {String} - the date and time
+ */
+async function getYear(date) {
+    try {
+        const month = date.split(' ')[1]
+        const year = date.split(' ')[3]
+
+        return month + ' ' + year
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.getYear = getYear;
+
+/**
  * Function to fetch all records of items from the database
  * based on query or without
  * After, closes the database connection and returns the data
  * @param {String} query - The searched records. The query will be searched in the record's title, category and description
  * @returns {Object} - data returned by the query
  */
-
 async function fetchListings(query) {
     try {
         
@@ -108,6 +123,65 @@ async function fetchListings(query) {
 module.exports.fetchListings = fetchListings;
 
 /**
+ * Function to fetch records matching seller id and user id
+ * After, closes the database connection and returns the data
+ * @param {String} userid - the id of the user whose listings to return
+ * @returns {Object} - data returned by the query
+ */
+async function fetchUserListings(userid) {
+    try {
+            let sql = `SELECT * FROM items WHERE seller = "${userid}" ORDER BY id DESC;`
+            let records = await runSQL(sql)
+
+            // if there is only one record, add it as an array element
+            if (!records.length) {
+                records = [records]
+            }
+
+            return records;
+
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.fetchUserListings = fetchUserListings;
+
+/**
+ * Function to fetch records on the user's watchlist
+ * After, closes the database connection and returns the data
+ * @param {String} userid - the id of the user whose watchlist records to return
+ * @returns {Object} - data returned by the query
+ */
+async function fetchUserWatchListings(userid) {
+    try {
+        const record = await runSQL(`SELECT watchlist FROM users WHERE id="${userid}";`);
+        // if no items are watchlisted, return
+        if (!record.watchlist) return
+
+        // splits the string into array while removing the last element
+        let watchlist = record.watchlist.split(',')
+
+        // converts string into comma separated list readable by sql
+        // ['1', '2', '3', '4'] ===> (1, 2, 3, 4)
+        watchlist = '(' + watchlist.join(",") + ')';
+
+        let sql = `SELECT * FROM items WHERE id IN ${watchlist} ORDER BY id DESC;`
+        let records = await runSQL(sql)
+
+        // if there is only one record, add it as an array element
+        if (!records.length) {
+            records = [records]
+        }
+
+        return records;
+
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.fetchUserWatchListings = fetchUserWatchListings;
+
+/**
  * Function to open the database an fetch an item based on id
  * After, closes the database connection and returns the data
  * @param {String} itemid - The id of item whose data will be returned
@@ -119,6 +193,8 @@ async function fetchItem(itemid) {
         let sql = `SELECT * FROM items WHERE id = ${itemid};`
 
         let records = await runSQL(sql)
+
+        records.ecategories = records.ecategories.split(',');
 
         return records;
     } catch(err) {
@@ -144,7 +220,7 @@ async function fetchItemImageInfo(itemid) {
         return list
 
     } catch(err) {
-        console.log(err)
+        // console.log(err)
         // throw err
     }
 }
@@ -457,9 +533,11 @@ async function addUser(body, saltRounds) {
     try {
         await checkNoDuplicate('user', body.user)
 
+        const date = new Date()
+
         // ENCRYPT PASSWORD, BUILD SQL
         body.pass = await bcrypt.hash(body.pass, saltRounds)
-        let sql = `INSERT INTO users(user, pass, email, mobile) VALUES("${body.user}", "${body.pass}", "${body.email}", "${body.mobile}")`
+        let sql = `INSERT INTO users(user, pass, email, mobile, registerdate) VALUES("${body.user}", "${body.pass}", "${body.email}", "${body.mobile}", "${date}")`
         // console.log(sql)
 
         // DATABASE COMMANDS
@@ -529,17 +607,36 @@ module.exports.updateField = updateField;
 
 /**
  * Function to fetch data from users table
- * @param {String} username - the name of the user
+ * @param {String} searchval - the name or id, depending on the selected mode
+ * @param {String} mode - by username or id, default username
  * @returns {Object} - returns an object with all the data
+ * @returns {boolean} - false if invalid mode arguments
  * @throws {Error}
  */
-async function fetchUserData(username) {
+async function fetchUserData(searchval, mode='username') {
     try {
-        let records = await runSQL(`SELECT count(id) AS count FROM users WHERE user="${username}";`);
-        if(!records.count) throw new Error(`user not found`)
-        records = await runSQL(`SELECT user, email, mobile, gender, country, forename, surname FROM users WHERE user="${username}";`);
+        let records = []
+        // by username
+        if (mode == 'username')
+        {
+            records = await runSQL(`SELECT count(id) AS count FROM users WHERE user="${searchval}";`);
+            if(!records.count) throw new Error(`user not found`)
+            records = await runSQL(`SELECT * FROM users WHERE user="${searchval}";`);
+        } // by id
+        else if (mode == 'id') {
+            records = await runSQL(`SELECT count(id) AS count FROM users WHERE id="${searchval}";`);
+            if(!records.count) throw new Error(`user not found`)
+            records = await runSQL(`SELECT * FROM users WHERE id="${searchval}";`);
+        } // invalid args
+        else {
+            console.log('fetchUserData mode unknown (invalid arguments)')
+            return false
+        }
+
         return records
+
     } catch(err) {
+        console.log(err)
         throw err
     }
 }
@@ -564,6 +661,26 @@ async function fetchUserId(username) {
     }
 }
 module.exports.fetchUserId = fetchUserId;
+
+/**
+ * Function to fetch user name using id
+ * @param {String} userid - the id of user whose name is requested
+ * @returns {Object} - returns an object with the username
+ * @throws {Error} - if ID couldn't be found with given arguments
+ */
+async function fetchUserName(userid) {
+    try {
+        let records = await runSQL(`SELECT count(id) AS count FROM users WHERE id="${userid}";`);
+        if(!records.count) throw new Error(`user not found`)
+
+        records = await runSQL(`SELECT user FROM users WHERE id="${userid}";`);
+
+        return records
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.fetchUserName = fetchUserName;
 
 /**
  * Function which checks if table exists in the database
@@ -629,3 +746,85 @@ async function deleteRecord(table, id) {
     }
 }
 module.exports.deleteRecord = deleteRecord;
+
+/**
+ * Function to check whether item is in the viewing user's watchlist
+ * @param {String} userid - the id of the viewing user
+ * @param {String} itemid - the id of the item
+ * @returns {boolean} - true if it is, false if it isn't
+ */
+async function isWatchlisted(userid, itemid) {
+    try {
+        const record = await runSQL(`SELECT watchlist FROM users WHERE id="${userid}";`);
+        if (!record.watchlist) return
+        // splits the string into array while removing the last element
+        let watchlist = record.watchlist.split(',')
+        
+        return watchlist.includes(itemid)
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.isWatchlisted = isWatchlisted;
+
+/**
+ * Function to update user's watchlist
+ * @param {String} userid - the id of the user whose watchlist is requested
+ * @param {String} itemid - the id of the item to be added to the watchlist
+ * @param {String} mode - 'add' or 'remove'
+ * @returns {boolean} - false if update failed, true if it was successful
+ */
+async function updateUserWatchlist(userid, itemid, mode) {
+    try {
+        const record = await runSQL(`SELECT watchlist FROM users WHERE id="${userid}";`);
+
+        // splits the string data into array
+        let watchlist = []
+        if (record.watchlist) {
+            watchlist = record.watchlist.split(',')
+        }
+
+        if (mode === 'add') {
+            // adds the itemid to the array
+            watchlist.push(itemid)
+            // converts the array back to string (elements separated by commas)
+            watchlist = watchlist.toString();
+            // updates user watchlist in database
+            const sql = `UPDATE users SET watchlist = "${watchlist}" WHERE id="${userid}";`
+            const db = await sqlite.open('./database/database.db')
+            await db.run(sql)
+            await db.close()
+            return true
+        }
+        
+        if (mode === 'remove') {
+            // if item is not in the watchlist, logs error and returns false
+            const valid = await isWatchlisted(userid, itemid)
+            if (!valid) { 
+                console.log(`Could't update watchlist as itemid "${itemid}" wasn't found in user "${userid}" 's watchlist.`); 
+                return false;
+            }
+            // removes the itemid from the watchlist array
+            const index = watchlist.indexOf(itemid);
+            if (index > -1) {
+                watchlist.splice(index, 1);
+            }
+            // converts the array back to string (elements separated by commas)
+            watchlist = watchlist.toString();
+            // updates user watchlist in database
+            const sql = `UPDATE users SET watchlist = "${watchlist}" WHERE id="${userid}";`
+            const db = await sqlite.open('./database/database.db')
+            await db.run(sql)
+            await db.close()
+            return true
+        }
+
+        console.log('Wrong mode argument given for updateUserWatchlist function')
+        return false
+
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.updateUserWatchlist = updateUserWatchlist;
+

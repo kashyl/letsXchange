@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>LetsXchange Profile</title>
+        <link rel="icon" type="image/x-icon" href="/assets/ico/favicon.ico">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+        <link href="/css/styles.css" rel="stylesheet" type="text/css" />
+        
+        <link rel="stylesheet" type="text/css" href="/assets/svg/fontawesome-free-5.11.2-web/css/all.css" />
+        
+        <script src="/js/jquery-3.4.1.js"></script>
+        <!-- sets nav active element by checkling page url -->
+        <script src="/js/nav-active-page.js"></script>
+      
+    </head>
+    <body>
+
+        <header>
+            {{#if data.auth}}
+                {{> headerAuth}}
+            {{else}}
+                {{> header}}     
+            {{/if}}
+        </header>
+
+        <main role="main">
+
+            {{#if data.msg}}
+                <span class='msg'>{{data.msg}}</span>
+            {{/if}}
+
+            <div class="back-wrapper">
+                <button class="back" onclick="goBack()"><img src="/assets/image/back_arrow_1.png"> Back to previous page</button>
+            </div>
+
+        </main>
+
+        <footer>
+            {{> footer}}
+        </footer>
+        <!-- scripts -->
+
+        <!-- back button -->
+        <script>
+            function goBack() {
+            window.history.back();
+            }
+        </script>
+    </body>
+</html>

@@ -70,15 +70,17 @@ div#header-right-wrapper {
     cursor: default;
 }
 #header-left-wrapper #motto-wrapper span {
-    font-family: Simplifica, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    float: left;
+    font-size: 16px;
     
-    font-size: 125%;
-    letter-spacing: 2px;
-    color: #ff7707db;
+    color: #ff7707;
     cursor: default;
 
     position: relative;
     left: 22px;
+    top: 10px;
+    left: 8px;
 }
 #header-right-wrapper #logged-as img.avatar-small {
     vertical-align: middle;

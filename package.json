@@ -12,6 +12,7 @@
   "dependencies": {
     "bcrypt": "^3.0.3",
     "bcrypt-promise": "^2.0.0",
+    "clipboard": "^2.0.4",
     "core-util-is": "^1.0.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

@@ -16,7 +16,7 @@ form.login-large {
     margin: 0 auto;
 }
 
-form.login-large span {
+form.login-large > span {
     width: 250px;
     height: 40px;
     text-align: center;
@@ -78,14 +78,37 @@ form.login-large button:hover {
 form.login-large div#remember-me {
     text-align: left;
 }
+form.login-large div#remember-me label {
+    position: relative;
+    bottom: 2px;
+}
 form.login-large input[type="checkbox"] {
     margin-left: 80px;
+    cursor: pointer;
 }
 
 form.login-large div#forgot-password {
-    margin-top: 25px;
+    margin-top: 20px;
+    margin-right: 10px;
+    float: right;
 }
 form.login-large div#forgot-password a {
     color: white;
     text-decoration: none;
+}
+form.login-large div#forgot-password a:hover {
+    color: #ff7707;
+}
+
+form.login-large div#new-user {
+    margin-top: 20px;
+    margin-left: 10px;
+    float: left;
+}
+form.login-large div#new-user a {
+    color: white;
+    text-decoration: none;
+}
+form.login-large div#new-user a:hover {
+    color: #ff7707;
 }

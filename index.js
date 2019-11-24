@@ -72,7 +72,6 @@ const saltRounds = 10
  */
 router.get('/', async ctx => {
     try {
-        // let querystring = ''
         let querystring = ''
 
         if(ctx.query!== undefined && ctx.query.q !== undefined) {
@@ -101,6 +100,34 @@ router.get('/', async ctx => {
 })
 
 /**
+ * The watchlist page
+ * 
+ * @name Watchlist Page
+ * @route {GET} /watchlist
+ */
+router.get('/watchlist', async ctx => {
+    try {
+        let data = {}
+        // authorisation and user
+        data.auth = false
+        if (ctx.session.authorised === true) { data.auth = true }
+        //if user is not logged in, redirects and prompts him to sign in
+        else { return ctx.redirect(`/login?msg=log in to see your watchlist`) }
+
+        // message
+        if (ctx.query.msg) data.msg = ctx.query.msg
+        
+        let items = await accounts.fetchUserWatchListings(ctx.session.userData.id)
+
+        if (ctx.session.user != null) { data.user = ctx.session.user }
+
+        await ctx.render('./views/watchlist', {data: data, items: items})
+    } catch(err) {
+        await ctx.render('./views/error', {error: err})
+    }
+})
+
+/**
  * The item details page
  * 
  * @name Details Page
@@ -123,10 +150,69 @@ router.get('/details/:id', async ctx => {
         item.images = []
         item.images = await accounts.fetchItemImageInfo(itemid)
 
-        await ctx.render('./views/details', {data: data, item: item})
+        let userData = await accounts.fetchUserData(item.seller, 'id')
+
+        userData.registerdate = await accounts.getYear(userData.registerdate)
+
+        // checks if item is watchlisted
+        data.watchlist = await accounts.isWatchlisted(ctx.session.userData.id, itemid)
+
+        await ctx.render('./views/details', {data: data, item: item, seller: userData})
     } catch(err) {
-        await ctx.redirect('/?msg=listing not found')
+        console.log(err)
+        await ctx.redirect(`/?msg=${err.message}`)
     }
+})
+
+/**
+ * Script for watchlist add
+ * @name WatchlistAdd
+ * @route {POST} /watchlist-add
+ */
+router.post('/details/:id/watchlist-add', async ctx => {
+
+        // get item id from url parameters
+        const url = ctx.request.header.referer
+        let itemid = url.split('/details/')
+        itemid = itemid[1].split('?')
+        itemid = itemid[0]
+        // itemid = ctx.params.id - the other way, but dependent on params
+
+    try {        
+
+        const userid = ctx.session.userData.id
+
+        await accounts.updateUserWatchlist(userid, itemid, 'add')
+
+        return ctx.redirect(`/details/${itemid}`)
+    } catch(err) {
+        return ctx.redirect(`/details/${itemid}?msg=${err.message}`)
+    }
+})
+/**
+ * Script for watchlist remove
+ * @name WatchlistRemove
+ * @route {POST} /watchlist-remove
+ */
+router.post('/details/:id/watchlist-remove', async ctx => {
+
+    // get item id from url parameters
+    const url = ctx.request.header.referer
+    let itemid = url.split('/details/')
+    itemid = itemid[1].split('?')
+    itemid = itemid[0]
+    // itemid = ctx.params.id - the other way, but dependent on params
+
+try {        
+
+    const userid = ctx.session.userData.id
+
+    await accounts.updateUserWatchlist(userid, itemid, 'remove')
+
+    return ctx.redirect(`/details/${itemid}`)
+} catch(err) {
+    return ctx.redirect(`/details/${itemid}?msg=${err.message}`)
+}
 })
 
 
@@ -184,8 +270,11 @@ router.get('/profile', async ctx => {
         // USER DATA
         if (ctx.session.user != null) { data.userData = ctx.session.userData }
         else {console.log("Couldn't fetch user data! (index.js, router.get('/profile', ...)")}
+
+        // USER LISTINGS DATA
+        let items = await accounts.fetchUserListings(data.userData.id)
         
-        await ctx.render('./views/profile', {data: data})
+        await ctx.render('./views/profile', {data: data, items: items})
     } catch(err) {
         await ctx.render('./views/error', {error: err})
     }
@@ -251,8 +340,6 @@ router.get('/additem', async ctx => {
 
         if (ctx.query.msg) data.msg = ctx.query.msg
 
-        data.placesApiKey = [env.parsed.PLACES_API_KEY]
-
         await ctx.render('./views/additem', {data: data})
     } catch(err) {
         await ctx.render('./views/error', {error: err})
@@ -287,7 +374,7 @@ router.post('/add-item', koaBody, async ctx => {
 
         console.log(`New listing with id ${itemid} created.`)
 
-        return ctx.redirect(`/?msg=new offer listed`)
+        return ctx.redirect(`/details/${itemid}?msg=new offer listed`)
     } catch(err) {
         console.log(err)
         return ctx.redirect(`/additem?msg=${err.message}`)
@@ -360,7 +447,66 @@ router.get('/logout', async ctx => {
 }) 
 
 /**
- * For to send a message to website support
+ *  Make offer form page
+ * @name Offer Page
+ * @route {GET} /make-offer
+ */
+router.get('/details/:id/offer', async ctx => {
+    try { 
+        const itemid = ctx.params.id
+        let data = {}
+        data.auth = false
+        if (ctx.session.authorised === true) { data.auth = true }
+        if (ctx.query.msg) data.msg = ctx.query.msg
+        data.user = ctx.session.user
+        data.name = ctx.session.userData.forename
+
+        await ctx.render('./views/offer', {data: data})
+    } catch(err) {
+        await ctx.render('./views/error', {error: err})
+    }
+})
+
+/**
+ * Function to send a make offer messasge
+ * 
+ * @name MakeOffer script
+ * @route {POST} /make-offer
+ */
+router.post('/make-offer', async ctx => {
+
+        // get item id from url parameters
+        const url = ctx.request.header.referer
+        let itemid = url.split('/details/')
+        itemid = itemid[1].split('?')
+        itemid = itemid[0]
+
+    try {
+        
+        const body = ctx.request.body
+        console.log(body)
+
+        let buyer = ctx.session.userData
+        console.log(buyer)
+
+
+
+        // fetch item data using itemid
+        let item = await accounts.fetchItem(itemid)
+
+        // we have sellerid from itemid, fetch seller data
+        let seller = await accounts.fetchUserData(item.seller, 'id')
+        console.log(seller)
+
+        const msg = `Your offer has been emailed to ${seller.user}!`
+        return ctx.redirect(`/details/${itemid}?msg=${msg}`)
+    } catch(err) {
+        return ctx.redirect(`/details/${itemid}?msg=${err.message}`)
+    }
+})
+
+/**
+ * Function to send a message to website support
  * 
  * @name Contact Page
  * @route {POST} /contact-us

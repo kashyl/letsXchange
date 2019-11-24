@@ -3,25 +3,6 @@ body, html {
     color: rgb(72, 98, 112);
 }
 
-button.back {
-    border: none;
-    border-radius: 6px;
-    padding: 6px 8px;
-    color: rgb(72, 98, 112);
-    font-size: 16px;
-    line-height: 24px;
-    font-family: inherit;
-    cursor: pointer;
-    background-color: transparent;
-    font-weight: 500;
-}
-button.back:hover {
-    color: #ff7707;
-}
-button.back:focus {
-    outline: none;
-}
-
 .details-grid {
     display: flex;
     justify-content: left;
@@ -47,6 +28,10 @@ button.back:focus {
     flex-basis: 41.6667%;
     flex-shrink: 1;
     box-sizing: border-box;
+}
+.column2-wrap {
+    padding-left: 0px;
+    padding-right: 0px;
 }
 .details-footer {
     width: 100%;
@@ -200,6 +185,13 @@ to {opacity: 1}
     border-bottom: 1px solid rgb(226, 232, 235);
 }
 
+.space {
+    width: 100%;
+    display: block;
+    margin-top: 90px;
+    margin-bottom: 90px;
+}
+
 .details > h2 {
     margin-top: 0px;
     overflow-wrap: break-word;
@@ -219,10 +211,273 @@ to {opacity: 1}
     margin-top: 0;
     font-size: 28px;
     line-height: 36px;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
+}
+.column2 h2 {
+    font-weight: 500;
+    margin: 0;
 }
 .column2 h3 {
-    font-size: 16px;
+    font-size: 18px;
     line-height: 24px;
     color: #d16004;
+    margin-bottom: 24px;
 }
+.column2 h4 {
+    color: #d16004;
+}
+
+.item-header {
+    min-height: 106px;
+}
+
+.location-wrapper {
+    font-size: 16px;
+    line-height: 24px;
+    color: #92A1A9;
+    margin-top: 32px;
+    margin-bottom: 26px;
+    max-height: 24px;
+}
+
+/* MAKE OFFER LINK */
+div.buttons {
+    width: 100%;
+    box-sizing: border-box;
+    
+}
+.make-offer {
+    margin: 10px 0;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    display: flex;
+    
+    margin-bottom: 8px;
+ 
+}
+.make-offer-btn {
+    all: unset;
+    font-family: inherit;
+    text-transform: none;
+    text-align: center;
+    vertical-align: baseline;
+    white-space: nowrap;
+    user-select: none;
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 24px;
+    min-height: 30px;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 100%;
+    display: flex;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    color: rgb(255, 255, 255);
+    font-weight: 600;
+    -webkit-appearance: none;
+    margin: 0px;
+    overflow: visible;
+    text-decoration: none;
+    background: none #ffa600;
+    padding: 6px 16px;
+    transition: background-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1) 0s, border-color, box-shadow, color;
+    transition-property: background-color, border-color, box-shadow, color;
+    transition-duration: 0.2s;
+    transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition-delay: 0s;
+    border-radius: 4px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+.make-offer-btn:hover {
+    background-color: #ff7707;
+}
+.make-offer-btn:active {
+    background-color: #ffd000;
+    border-color: #ffd000;
+}
+
+.make-offer-btn:focus {
+    box-shadow: #ffd000 0px 0px 0px 3px;
+    outline: none;
+}
+
+/* SHARE AND WATCHLIST BUTTONS */
+
+.buttons-grid {
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    
+}
+.buttons-column1,
+.buttons-column2 {
+    flex-shrink: 1;
+    box-sizing: border-box;
+    -webkit-box-flex: 0;
+    flex-grow: 0;
+    display: block;
+    max-width: 50%;
+    flex-basis: 50%;
+}
+.buttons-column1 {
+    padding-right: 4px;
+}
+.buttons-column2 {
+    padding-left: 4px;
+}
+button#share,
+button#watchlist {
+    font-family: inherit;
+    text-transform: none;
+    text-align: center;
+    vertical-align: baseline;
+    white-space: nowrap;
+    user-select: none;
+    cursor: pointer;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 100%;
+    display: flex;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    -webkit-appearance: button;
+    font-size: 14px;
+    line-height: 21px;
+    min-height: 29px;
+    color: rgb(108, 130, 140);
+    font-weight: 600;
+    margin: 0px 0px 16px;
+    overflow: visible;
+    text-decoration: none;
+    border-width: initial;
+    border-style: none;
+    border-image: initial;
+    background: none rgb(226, 232, 235);
+    transition: background-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1) 0s, border-color, box-shadow, color;
+    border-radius: 4px;
+    padding: 4px 8px;
+    border-color: rgb(226, 232, 235);
+}
+button#share:hover,
+button#watchlist:hover {
+    background-color: rgb(207, 215, 219);
+    border-color: rgb(207, 215, 219);
+}
+button#share:active,
+button#watchlist:active {
+    background-color: rgb(243, 246, 247);
+    border-color: rgb(243, 246, 247);
+}
+button#share:focus,
+button#watchlist:focus {
+    box-shadow: rgb(243, 246, 247) 0px 0px 0px 3px;
+    outline: none;
+}
+button#share span,
+button#watchlist span {
+    margin-left: 6px;
+}
+
+/* share button copied styles in the script */
+
+button#watchlist.yes i {
+    color: #e6332a;
+}
+
+
+/* SELLER DETAILS */
+.seller-wrapper {
+    display: flex;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+}
+.seller-wrapper a {
+    display: inline-block;
+}
+.seller-wrapper img {
+    display: block;
+    object-fit: cover;
+}
+.seller-details {
+    display: inline-block;
+    margin-left: 20px;
+    width: 100%;
+    overflow: hidden;
+}
+.seller-details > a {
+    text-decoration: none;
+    color: inherit;
+}
+.seller-details > a:hover {
+    text-decoration: underline;
+}
+.seller-details > a > span {
+    display: inline-block;
+    font-weight: 600;
+}
+.seller-details span {
+    display: block;
+}
+
+.exchange-wrapper h2 {
+    display: inline-block;
+}
+.exchange-wrapper h3 {
+    display: inline-block;
+    margin: 0;
+}
+.exchange-wrapper h4 {
+    display: inline-block;
+    margin: 0;
+}
+.exchange-categories {
+    display: block;
+    margin-bottom: 20px;
+}
+
+/* DROPDOWN E.CAT. LIST */
+.dropbtn {
+    all: unset;
+    border: none;
+    cursor: pointer;
+}
+.dropbtn > h4 {
+    text-decoration: underline;
+}
+
+.dropdown {
+position: relative;
+display: inline-block;
+}
+
+.dropdown-content {
+display: none;
+position: absolute;
+background-color: #f1f1f1;
+min-width: 200px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+z-index: 1;
+
+padding: 10px;
+
+word-break: normal;
+
+cursor: default;
+}
+
+.dropdown-content h4:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+

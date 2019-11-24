@@ -63,23 +63,33 @@ main {
 div#upper-header {
     height: 70px;
 }
-img.autoresize {
+.autoresize {
     height: auto;
     width: auto;
 }
-img.logo {
+.logo {
     height: 60px;
     width: 250px;
 }
-img.avatar {
+.avatar {
     width: 150px;
     height: 150px;
     margin: 0 auto;
     border-radius: 50%;
 }
-img.avatar-small {
+.avatar-small {
     width: 25px;
     height: 25px;
+    border-radius: 50%;
+}
+.avatar-medium {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+.avatar-large {
+    width: 75px;
+    height: 75px;
     border-radius: 50%;
 }
 
@@ -111,6 +121,25 @@ img.avatar-small {
     text-transform: uppercase;
 
     display: block;
+}
+
+button.back {
+    border: none;
+    border-radius: 6px;
+    padding: 6px 8px;
+    color: rgb(72, 98, 112);
+    font-size: 16px;
+    line-height: 24px;
+    font-family: inherit;
+    cursor: pointer;
+    background-color: transparent;
+    font-weight: 500;
+}
+button.back:hover {
+    color: #ff7707;
+}
+button.back:focus {
+    outline: none;
 }
 
 /* Hide side arrows for input[type=number] */
