@@ -9,7 +9,7 @@ if (hourNow >= 18) {
 } else if (hourNow >= 5) {
     greeting = 'Good morning'
 } else if (hourNow >= 0) {
-    greeting = 'Helo there'
+    greeting = 'Hello there'
 }
 
 document.getElementById('time-greet').innerHTML = greeting
