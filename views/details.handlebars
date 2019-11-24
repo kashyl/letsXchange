@@ -13,6 +13,9 @@
         <script src="../js/jquery-3.4.1.js"></script>
         <!-- sets nav active element by checkling page url -->
         <script src="../js/nav-active-page.js"></script>
+
+        <script src="/node_modules/clipboard/dist/clipboard.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/clipboard.js/1.5.3/clipboard.min.js"></script>
       
     </head>
     <body>
@@ -163,7 +166,8 @@
                             </div>
                             <div class="buttons-grid">
                                 <div class="buttons-column1">
-                                    <button id="share" type="button"><i class="fas fa-share-square"></i><span>Share</span></button>
+                                    <input type="hidden" id="input-url" value="Copied!">
+                                    <button id="share" class="btn-copy" type="button"><i class="fas fa-share-square"></i><span>Share</span></button>
                                 </div>
                                 <div class="buttons-column2">
                                     <!-- checks if the item is already watchlisted by the viewing user -->
@@ -214,8 +218,14 @@
                                         <button class="dropbtn"><h4>more</h4></button>
                                         <div class="dropdown-content">
                                             {{#each item.ecategories}}
+                                                {{#if @second}}
+                                                {{else}}
+                                                {{#if @second}}
+                                                {{else}}
                                                 <h4>{{this}}</h4>
                                                 <br>
+                                                {{/if}}
+                                                {{/if}}
                                             {{/each}}
                                         </div>
                                         {{/if}}
@@ -285,5 +295,31 @@
                 dots[slideIndex-1].className += " active";
             }
         </script>
+
+        <!-- clipboard.js -->
+        <script>
+            var clipboard = new Clipboard('.btn-copy', {
+                text: function() {
+                    return document.querySelector('input[type=hidden]').value;
+                }
+            });
+            
+            clipboard.on('success', function(e) {
+            $('.btn-copy').html('<i class="far fa-copy"></i><span>Link copied!</span>')
+            $('.btn-copy').attr('style', 'color: #00b300; font-weight: 700;')
+            
+            e.clearSelection();
+            });
+
+            $("#input-url").val(location.href);
+            // safari
+            if (navigator.vendor.indexOf("Apple")==0 && /\sSafari\//.test(navigator.userAgent)) {
+            $('.btn-copy').on('click', function() {
+            var msg = window.prompt("Copy this link", location.href);
+
+            });
+            }
+        </script>
+
     </body>
 </html>

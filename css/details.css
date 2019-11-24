@@ -388,6 +388,8 @@ button#watchlist span {
     margin-left: 6px;
 }
 
+/* share button copied styles in the script */
+
 button#watchlist.yes i {
     color: #e6332a;
 }

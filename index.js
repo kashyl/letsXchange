@@ -374,7 +374,7 @@ router.post('/add-item', koaBody, async ctx => {
 
         console.log(`New listing with id ${itemid} created.`)
 
-        return ctx.redirect(`/?msg=new offer listed`)
+        return ctx.redirect(`/details/${itemid}?msg=new offer listed`)
     } catch(err) {
         console.log(err)
         return ctx.redirect(`/additem?msg=${err.message}`)

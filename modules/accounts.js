@@ -132,6 +132,12 @@ async function fetchUserListings(userid) {
     try {
             let sql = `SELECT * FROM items WHERE seller = "${userid}" ORDER BY id DESC;`
             let records = await runSQL(sql)
+
+            // if there is only one record, add it as an array element
+            if (!records.length) {
+                records = [records]
+            }
+
             return records;
 
     } catch(err) {
@@ -166,7 +172,7 @@ async function fetchUserWatchListings(userid) {
         if (!records.length) {
             records = [records]
         }
-        console.log(records)
+
         return records;
 
     } catch(err) {

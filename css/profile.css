@@ -374,7 +374,7 @@ div.edit-profile form#advanced-form div#check {
     overflow: hidden;
     color: rgb(72, 98, 112);
 }
-.category {
+p.category {
     width: 100%;
     font-weight: 400;
     text-overflow: ellipsis;
@@ -409,7 +409,7 @@ div.edit-profile form#advanced-form div#check {
     font-size: 13px;
     line-height: 18px;
     overflow: hidden;
-    margin: 0 0 13px;
+    margin: 0 0 5px;
     word-break:break-word; /* for if there are no spaces */
 }
 .details-footer {
