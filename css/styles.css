@@ -162,6 +162,9 @@ input[type=number] {
     -moz-appearance:textfield; /* Firefox */
 }
 
-span.orange {
+.orange {
     color: #ff7707;
+}
+.defaultcolor {
+    color: rgb(72, 98, 112);
 }
