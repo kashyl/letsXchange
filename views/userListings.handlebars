@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="../css/styles.css" rel="stylesheet" type="text/css" />
+        <link href="../css/index.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="../assets/svg/fontawesome-free-5.11.2-web/css/all.css" />
+
+        <title> LetsXchange Watchlist </title>
+        <meta name="description" content="Search and Post anything for trade!" />
+        <meta name="keywords" content="exchange, trade, search, find, post" />
+        <link rel="icon" href="/assets/ico/favicon.ico">
+
+        <script src="../js/jquery-3.4.1.js"></script>
+        <script type='text/javascript' src='../js/handlebars-v4.4.3.js'></script>
+        <!-- sets nav active element by checkling page url -->
+        <script src="../js/nav-active-page.js"></script>
+
+    </head>
+    <body>
+
+        <header>
+            {{#if data.auth}}
+                {{> headerAuth}}
+            {{else}}
+                {{> header}}     
+            {{/if}}
+        </header>
+
+        <main role="main">
+
+            {{#if data.msg}}
+                <span class='msg'>{{data.msg}}</span>
+            {{/if}}
+
+            <div class="browse-upper-wrapper">
+                <img class="avatar-medium" src="../assets/public/avatars/{{data.seller}}.png" alt="Image not found" 
+                                    onerror="this.onerror=null;this.src='../assets/image/default_avatar.png';" />
+                <h1 class="browse-header-text">{{data.seller}}'s listings</h1>
+                {{#if items}}
+                <h3>{{items.length}} listing(s)</h3>
+                {{/if}}
+            </div>
+
+            {{#if items}}
+            <div class="card-grid">
+                {{#each items}}
+                <div class="card">
+                    <a class="anchor" href="/details/{{this.id}}">
+                        <div class="card-container">
+                            <div class="card-content">
+                                <div class="thumbnail-area">
+                                    <img src="../assets/public/items/{{this.id}}/thumbs/0.png" alt="Listing thumbnail"
+                                        onerror="this.onerror=null;this.src='../assets/image/no_image.png';" >
+                                </div>
+                                <div class="content-area">
+                                    <p class="title">{{this.title}}</p>
+                                    <p class="category">{{this.category}}</p>
+                                    <span class="space"></span>
+                                    <p class="description">{{this.description}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {{/each}}
+            </div>
+            {{else}}
+            <div class="browse-upper-wrapper">
+                <h3>{{data.seller}} doesn't currently have any posted listings</h3>
+            </div>
+            {{/if}}
+
+        </main>
+
+        <footer>
+            {{> footer}}
+        </footer>
+
+    </body>  
+</html>

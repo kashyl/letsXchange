@@ -125,22 +125,35 @@ module.exports.fetchListings = fetchListings;
 /**
  * Function to fetch records matching seller id and user id
  * After, closes the database connection and returns the data
- * @param {String} userid - the id of the user whose listings to return
+ * @param {String} user - the id (or name) of the user whose listings to return
+ * @param {String} mode - by id (default) or user ('id' vs 'username')
  * @returns {Object} - data returned by the query
+ * @returns {boolean} - false if no listings found
  */
-async function fetchUserListings(userid) {
+async function fetchUserListings(user, mode = 'id') {
     try {
-            let sql = `SELECT * FROM items WHERE seller = "${userid}" ORDER BY id DESC;`
-            let records = await runSQL(sql)
+        // if username is given, use it to fetch user id
+        if (mode === 'username') {
+            let useridObj = await fetchUserId(user)
+            user = useridObj.id
+        }
 
-            // if there is only one record, add it as an array element
-            if (!records.length) {
-                records = [records]
-            }
+        // if user has no listings, return
+        const records = await runSQL(`SELECT count(id) AS count FROM items WHERE seller="${user}";`);
+        if(!records.count) return
 
-            return records;
+        let sql = `SELECT * FROM items WHERE seller = "${user}" ORDER BY id DESC;`
+        let listings = await runSQL(sql)
+
+        // if there is only one record, add it as an array element
+        if (!listings.length) {
+            listings = [listings]
+        }
+
+        return listings;
 
     } catch(err) {
+        console.log(err)
         throw err
     }
 }
