@@ -141,6 +141,35 @@ async function fetchUserListings(userid) {
 module.exports.fetchUserListings = fetchUserListings;
 
 /**
+ * Function to fetch records on the user's watchlist
+ * After, closes the database connection and returns the data
+ * @param {String} userid - the id of the user whose watchlist records to return
+ * @returns {Object} - data returned by the query
+ */
+async function fetchUserWatchListings(userid) {
+    try {
+        const record = await runSQL(`SELECT watchlist FROM users WHERE id="${userid}";`);
+    
+        // splits the string into array while removing the last element
+        let watchlist = record.watchlist.split(',')
+
+        // converts string into comma separated list readable by sql
+        // ['1', '2', '3', '4'] ===> (1, 2, 3, 4)
+        watchlist = '(' + watchlist.join(",") + ')';
+        console.log(watchlist)
+
+        let sql = `SELECT * FROM items WHERE id IN ${watchlist} ORDER BY id DESC;`
+        let records = await runSQL(sql)
+        console.log(records)
+        return records;
+
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.fetchUserWatchListings = fetchUserWatchListings;
+
+/**
  * Function to open the database an fetch an item based on id
  * After, closes the database connection and returns the data
  * @param {String} itemid - The id of item whose data will be returned

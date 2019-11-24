@@ -100,6 +100,34 @@ router.get('/', async ctx => {
 })
 
 /**
+ * The watchlist page
+ * 
+ * @name Watchlist Page
+ * @route {GET} /watchlist
+ */
+router.get('/watchlist', async ctx => {
+    try {
+        let data = {}
+        // authorisation and user
+        data.auth = false
+        if (ctx.session.authorised === true) { data.auth = true }
+        //if user is not logged in, redirects and prompts him to sign in
+        else { return ctx.redirect(`/login?msg=log in to see your watchlist`) }
+
+        // message
+        if (ctx.query.msg) data.msg = ctx.query.msg
+        
+        let items = await accounts.fetchUserWatchListings(ctx.session.userData.id)
+
+        if (ctx.session.user != null) { data.user = ctx.session.user }
+
+        await ctx.render('./views/watchlist', {data: data, items: items})
+    } catch(err) {
+        await ctx.render('./views/error', {error: err})
+    }
+})
+
+/**
  * The item details page
  * 
  * @name Details Page
