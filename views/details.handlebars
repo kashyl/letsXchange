@@ -32,7 +32,7 @@
             {{/if}}
 
             <div class="back-wrapper">
-                <button class="back" onclick="goBack()"><img src="../assets/image/back_arrow_1.png"> Back to listings</button>
+                <button class="back" onclick="goBack()"><img src="../assets/image/back_arrow_1.png"> Back to previous page</button>
             </div>
 
             <div class="details-grid">
@@ -156,14 +156,26 @@
 
                         <div class="buttons">
                             <div class="make-offer">
-                                <a href="" class="make-offer-link">Make offer</a>
+                                <a href='/details/{{item.id}}/offer' class="make-offer-btn">
+                                    Make offer
+                                <a/>
+
                             </div>
                             <div class="buttons-grid">
                                 <div class="buttons-column1">
                                     <button id="share" type="button"><i class="fas fa-share-square"></i><span>Share</span></button>
                                 </div>
                                 <div class="buttons-column2">
-                                    <button id="watchlist" class="no" type="button"><i class="far fa-heart"></i><span>Add to watchlist</span></button>
+                                    <!-- checks if the item is already watchlisted by the viewing user -->
+                                    {{#if data.watchlist}}
+                                    <form action="/details/{{item.id}}/watchlist-remove" method="POST">
+                                        <button id="watchlist" class="yes"><i class="fas fa-heart"></i><span>Remove from watchlist</span></button>
+                                    </form>
+                                    {{else}}
+                                    <form action="/details/{{item.id}}/watchlist-add" method="POST">
+                                        <button id="watchlist" class="no"><i class="far fa-heart"></i><span>Add to watchlist</span></button>
+                                    </form>
+                                    {{/if}}
                                 </div>
                             </div>
                         </div>
@@ -236,11 +248,6 @@
             {{> footer}}
         </footer>
         <!-- scripts -->
-
-        <!-- watchlist button -->
-        <script>
-            $.getScript('../js/watchlist.js');
-        </script>
 
         <!-- back button -->
         <script>

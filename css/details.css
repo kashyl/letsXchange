@@ -3,25 +3,6 @@ body, html {
     color: rgb(72, 98, 112);
 }
 
-button.back {
-    border: none;
-    border-radius: 6px;
-    padding: 6px 8px;
-    color: rgb(72, 98, 112);
-    font-size: 16px;
-    line-height: 24px;
-    font-family: inherit;
-    cursor: pointer;
-    background-color: transparent;
-    font-weight: 500;
-}
-button.back:hover {
-    color: #ff7707;
-}
-button.back:focus {
-    outline: none;
-}
-
 .details-grid {
     display: flex;
     justify-content: left;
@@ -274,7 +255,8 @@ div.buttons {
     margin-bottom: 8px;
  
 }
-.make-offer-link {
+.make-offer-btn {
+    all: unset;
     font-family: inherit;
     text-transform: none;
     text-align: center;
@@ -312,15 +294,15 @@ div.buttons {
     border-bottom-right-radius: 4px;
     border-bottom-left-radius: 4px;
 }
-.make-offer-link:hover {
+.make-offer-btn:hover {
     background-color: #ff7707;
 }
-.make-offer-link:active {
+.make-offer-btn:active {
     background-color: #ffd000;
     border-color: #ffd000;
 }
 
-.make-offer-link:focus {
+.make-offer-btn:focus {
     box-shadow: #ffd000 0px 0px 0px 3px;
     outline: none;
 }
@@ -489,6 +471,8 @@ z-index: 1;
 padding: 10px;
 
 word-break: normal;
+
+cursor: default;
 }
 
 .dropdown-content h4:hover {background-color: #ddd;}

@@ -138,8 +138,6 @@ async function fetchItem(itemid) {
 
         records.ecategories = records.ecategories.split(',');
 
-        console.log(records)
-
         return records;
     } catch(err) {
         throw err
@@ -565,12 +563,12 @@ async function fetchUserData(searchval, mode='username') {
         {
             records = await runSQL(`SELECT count(id) AS count FROM users WHERE user="${searchval}";`);
             if(!records.count) throw new Error(`user not found`)
-            records = await runSQL(`SELECT user, email, mobile, gender, country, forename, surname, registerdate, watchlist FROM users WHERE user="${searchval}";`);
+            records = await runSQL(`SELECT * FROM users WHERE user="${searchval}";`);
         } // by id
         else if (mode == 'id') {
             records = await runSQL(`SELECT count(id) AS count FROM users WHERE id="${searchval}";`);
             if(!records.count) throw new Error(`user not found`)
-            records = await runSQL(`SELECT user, email, mobile, gender, country, forename, surname, registerdate, watchlist FROM users WHERE id="${searchval}";`);
+            records = await runSQL(`SELECT * FROM users WHERE id="${searchval}";`);
         } // invalid args
         else {
             console.log('fetchUserData mode unknown (invalid arguments)')
@@ -607,26 +605,24 @@ async function fetchUserId(username) {
 module.exports.fetchUserId = fetchUserId;
 
 /**
- * Function to update user's watchlist
- * @param {String} userid - the id of the user whose watchlist is requested
- * @param {String} itemid - the id of the item to be added to the watchlist
- * @returns {String} - returns a string of the watchlist
+ * Function to fetch user name using id
+ * @param {String} userid - the id of user whose name is requested
+ * @returns {Object} - returns an object with the username
+ * @throws {Error} - if ID couldn't be found with given arguments
  */
-async function updateUserWatchlist(userid, itemid) {
+async function fetchUserName(userid) {
     try {
-        let watchlist = await runSQL(`SELECT watchlist FROM users WHERE id="${userid}";`);
+        let records = await runSQL(`SELECT count(id) AS count FROM users WHERE id="${userid}";`);
+        if(!records.count) throw new Error(`user not found`)
 
-        console.log(watchlist)
-        return
+        records = await runSQL(`SELECT user FROM users WHERE id="${userid}";`);
 
-        let sql = `UPDATE users SET watchlist = "${watchlist}" WHERE id="${userid}";`
-
-        return watchlist
+        return records
     } catch(err) {
         throw err
     }
 }
-module.exports.updateUserWatchlist = updateUserWatchlist;
+module.exports.fetchUserName = fetchUserName;
 
 /**
  * Function which checks if table exists in the database
@@ -692,3 +688,82 @@ async function deleteRecord(table, id) {
     }
 }
 module.exports.deleteRecord = deleteRecord;
+
+/**
+ * Function to check whether item is in the viewing user's watchlist
+ * @param {String} userid - the id of the viewing user
+ * @param {String} itemid - the id of the item
+ * @returns {boolean} - true if it is, false if it isn't
+ */
+async function isWatchlisted(userid, itemid) {
+    try {
+        const record = await runSQL(`SELECT watchlist FROM users WHERE id="${userid}";`);
+
+        // splits the string into array while removing the last element
+        let watchlist = record.watchlist.split(',')
+        
+        return watchlist.includes(itemid)
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.isWatchlisted = isWatchlisted;
+
+/**
+ * Function to update user's watchlist
+ * @param {String} userid - the id of the user whose watchlist is requested
+ * @param {String} itemid - the id of the item to be added to the watchlist
+ * @param {String} mode - 'add' or 'remove'
+ * @returns {boolean} - false if update failed, true if it was successful
+ */
+async function updateUserWatchlist(userid, itemid, mode) {
+    try {
+        const record = await runSQL(`SELECT watchlist FROM users WHERE id="${userid}";`);
+
+        // splits the string data into array
+        let watchlist = record.watchlist.split(',')
+
+        if (mode === 'add') {
+            // adds the itemid to the array
+            watchlist.push(itemid)
+            // converts the array back to string (elements separated by commas)
+            watchlist = watchlist.toString();
+            // updates user watchlist in database
+            const sql = `UPDATE users SET watchlist = "${watchlist}" WHERE id="${userid}";`
+            const db = await sqlite.open('./database/database.db')
+            await db.run(sql)
+            await db.close()
+            return true
+        }
+        
+        if (mode === 'remove') {
+            // if item is not in the watchlist, logs error and returns false
+            const valid = await isWatchlisted(userid, itemid)
+            if (!valid) { 
+                console.log(`Could't update watchlist as itemid "${itemid}" wasn't found in user "${userid}" 's watchlist.`); 
+                return false;
+            }
+            // removes the itemid from the watchlist array
+            const index = watchlist.indexOf(itemid);
+            if (index > -1) {
+                watchlist.splice(index, 1);
+            }
+            // converts the array back to string (elements separated by commas)
+            watchlist = watchlist.toString();
+            // updates user watchlist in database
+            const sql = `UPDATE users SET watchlist = "${watchlist}" WHERE id="${userid}";`
+            const db = await sqlite.open('./database/database.db')
+            await db.run(sql)
+            await db.close()
+            return true
+        }
+
+        console.log('Wrong mode argument given for updateUserWatchlist function')
+        return false
+
+    } catch(err) {
+        throw err
+    }
+}
+module.exports.updateUserWatchlist = updateUserWatchlist;
+
