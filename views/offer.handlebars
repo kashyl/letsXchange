@@ -6,6 +6,7 @@
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
         <link href="/css/styles.css" rel="stylesheet" type="text/css" />
+        <link href="/css/offer.css" rel="stylesheet" type="text/css" />
         
         <link rel="stylesheet" type="text/css" href="/assets/svg/fontawesome-free-5.11.2-web/css/all.css" />
         
@@ -34,6 +35,174 @@
                 <button class="back" onclick="goBack()"><img src="/assets/image/back_arrow_1.png"> Back to previous page</button>
             </div>
 
+            <div class="offer-grid">
+
+                <!-- COLUMN 1, ITEM INFO -->
+                <div class="column1">
+                    <div class="card-container">
+                        <div class="card-content">
+                            <div class="thumbnail-area">
+                                <div class="gallery">
+                                    <div class="slideshow-container">
+                                        {{#if item.thumbs.[0]}}
+                                        <div class="mySlides fade">
+                                        <div class="numbertext">1 / {{item.thumbs.length}}</div>
+                                        <img src="/assets/public/items/{{item.id}}/thumbs/0.png">
+                                        </div>
+                                        {{else}}
+                                        <div class="mySlides fade">
+                                        <img src="/assets/image/gallery_not_found.png"> 
+                                        </div>
+                                        {{/if}}
+
+                                        {{#if item.thumbs.[1]}}
+                                        <div class="mySlides fade">
+                                        <div class="numbertext">2 / {{item.thumbs.length}}</div>
+                                        <img src="/assets/public/items/{{item.id}}/thumbs/1.png">
+                                        </div>
+                                        {{/if}}
+
+                                        {{#if item.thumbs.[2]}}
+                                        <div class="mySlides fade">
+                                        <div class="numbertext">3 / {{item.thumbs.length}}</div>
+                                        <img src="/assets/public/items/{{item.id}}/thumbs/2.png">
+                                        </div>
+                                        {{/if}}
+
+                                        {{#if item.thumbs.[3]}}
+                                        <div class="mySlides fade">
+                                        <div class="numbertext">4 / {{item.thumbs.length}}</div>
+                                        <img src="/assets/public/items/{{item.id}}/thumbs/3.png">
+                                        </div>
+                                        {{/if}}
+
+                                        {{#if item.thumbs.[4]}}
+                                        <div class="mySlides fade">
+                                        <div class="numbertext">5 / {{item.thumbs.length}}</div>
+                                        <img src="/assets/public/items/{{item.id}}/thumbs/4.png">
+                                        </div>
+                                        {{/if}}
+
+                                        <!-- PREV AND NEXT BUTTONS -->
+                                        {{#if item.thumbs}}
+                                            {{#if item.thumbs.[1]}}
+                                            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                                            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                                            {{/if}}
+                                        {{/if}}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="content-area">
+                                <h1 class="title">{{item.title}}</h1>
+                                <p class="category">{{item.category}}</p>
+                                <span class="space"></span>
+                                <p class="description">{{item.description}}</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COLUMN 2, OFFER FORM -->
+                <div class="column2">
+                    <div class="offer-header">
+                        <div class="offer-header-contents">
+                            <div class="seller-avatar">
+                                <a href="/listings/{{seller.user}}">
+                                    <img class="avatar-medium" src="/assets/public/avatars/{{seller.user}}.png" alt="Image not found" 
+                                    onerror="this.onerror=null;this.src='/assets/image/default_avatar.png';" />
+                                </a>
+                            </div>
+                            <div class="seller-container">
+                                <div class="seller-contents">
+                                    <a href="/listings/{{seller.user}}">
+                                        <span>{{seller.user}}</span>
+                                    </a>
+                                    <p>{{item.title}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <span class="small-space"></span>
+
+                    <div class="offer-main">
+                        <div class="form-header">
+                            <p><span class="orange">{{seller.user}} </span> listed <span class="orange">{{item.title}}</span> in exchange for:</p>
+                                                        <div class="exchange-categories">
+                                                       <div class="exchange-wrapper">
+                            <div class="exchange-categories">
+                                    <div class="category-display">
+                                        <h4>{{item.ecategories.[0]}}</h4>
+                                        {{#if item.ecategories.[1]}}
+                                        <h4>, {{item.ecategories.[1]}}</h4>
+                                        {{#if item.ecategories.[2]}}
+                                        <h4 style="color: inherit">and</h4>
+                                        
+                                        <div class="dropdown">
+                                            <button class="dropbtn"><h4>more</h4></button>
+                                            <div class="dropdown-content">
+                                                {{#each item.ecategories}}
+                                                    <h4>{{this}}</h4>
+                                                    <br>
+                                                {{/each}}
+                                            </div>
+                                        </div>
+                                        {{/if}}
+                                        {{/if}}
+                                    </div> 
+                            </div>
+                            <div class="exchange-description">
+                                {{item.edescription}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="offer-form">
+                    <form action="send-offer" method="POST">
+                        <div class="offer-form-content">
+
+                            <div class="viewer-avatar">
+                                <img class="avatar-medsmall" src="/assets/public/avatars/{{data.user}}.png" alt="Image not found" 
+                                onerror="this.onerror=null;this.src='/assets/image/default_avatar.png';" />
+                            </div>
+
+                            <div class="form-fields">
+
+                                <div class="item-select-container">
+                                    <select name="selecteditem" class="itemselect">
+                                        <option selected value class="default-option"> Optional: Select one of your listed items </option>  
+                                        {{#each userListings}}
+                                        <option value="{{this.id}}">{{this.title}}</option>
+                                        {{/each}}
+                                    </select>    
+                                </div>
+
+                                <span class="medium-space"></span>
+
+                                <div class="message-container">
+                                    <div class="expanding-textarea">
+                                        <textarea id="message" class="jTextarea" name="message" maxlength="500" required data-gramm_editor="false"
+                                        placeholder="Private message"></textarea>
+                                        <span class="character-count" id="message">0 / 500</span>
+                                    </div>
+                                </div>
+
+                                <div class="submit-container">
+                                    <button type="submit">Make offer</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+
         </main>
 
         <footer>
@@ -41,10 +210,41 @@
         </footer>
         <!-- scripts -->
 
+        <!-- textarea script modules -->
+        <script>
+            $.getScript('/js/textarea-auto-expand.js');
+            $.getScript('/js/textarea-character-count.js');
+        </script>
+
         <!-- back button -->
         <script>
             function goBack() {
             window.history.back();
+            }
+        </script>
+
+        <!-- image gallery -->
+        <script>
+            var slideIndex = 1;
+                showSlides(slideIndex);
+
+            function plusSlides(n) {
+                showSlides(slideIndex += n);
+            }
+
+            function currentSlide(n) {
+                showSlides(slideIndex = n);
+            }
+
+            function showSlides(n) {
+                var i;
+                var slides = document.getElementsByClassName("mySlides");
+                if (n > slides.length) {slideIndex = 1}    
+                if (n < 1) {slideIndex = slides.length}
+                for (i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";  
+                }
+                slides[slideIndex-1].style.display = "block";  
             }
         </script>
     </body>

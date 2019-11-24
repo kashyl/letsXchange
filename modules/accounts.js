@@ -238,6 +238,26 @@ async function fetchItemImageInfo(itemid) {
     }
 }
 module.exports.fetchItemImageInfo = fetchItemImageInfo;
+/**
+ * Function to return the item's thumbnails files names
+ * @param {String} itemid - The id of item whose thumbnail data will be returned
+ * @returns {Object} - data returned by the query
+ */
+
+async function fetchItemThumbInfo(itemid) {
+    try {
+        const path = `${__dirname}/../assets/public/items/${itemid}/thumbs`
+
+        let list = fs.readdirSync(path) // gets file names. !!! SYNC !!!
+        
+        return list
+
+    } catch(err) {
+        // console.log(err)
+        // throw err
+    }
+}
+module.exports.fetchItemThumbInfo = fetchItemThumbInfo;
 
 /**
  * This function takes data from an uploaded image and saves it to the `avatars` directory.
