@@ -1,5 +1,7 @@
+/* eslint-disable eol-last */
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-unused-vars */
-const greeting = require('/js/time-greeting.js');
+const greeting = require('./time-greeting.js');
 
 test('Checks the current time and displays a relavent greeting to the user'), () => {
     expect(hourNow(0).toBe('Hello There'));
