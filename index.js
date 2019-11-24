@@ -128,6 +128,36 @@ router.get('/watchlist', async ctx => {
 })
 
 /**
+ * The user's listings page
+ * 
+ * @name UserListings Page
+ * @route {GET} /user-listings
+ */
+router.get('/listings/:user', async ctx => {
+    try {
+        let user = ctx.params.user
+
+        let data = {}
+        // authorisation and user
+        data.auth = false
+        if (ctx.session.authorised === true) { data.auth = true }
+
+        // message
+        if (ctx.query.msg) data.msg = ctx.query.msg
+        
+        let items = await accounts.fetchUserListings(user, 'username')
+
+        if (ctx.session.user != null) { data.user = ctx.session.user }
+        
+        data.seller = user
+
+        await ctx.render('./views/userListings', {data: data, items: items})
+    } catch(err) {
+        await ctx.redirect('/')
+    }
+})
+
+/**
  * The item details page
  * 
  * @name Details Page

@@ -278,6 +278,7 @@ div.edit-profile form#advanced-form div#check {
 
 .my-listings > .title {
     margin-top: 0;
+    cursor: default;
 }
 
 .listings-container {
