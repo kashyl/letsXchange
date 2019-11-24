@@ -149,17 +149,23 @@ module.exports.fetchUserListings = fetchUserListings;
 async function fetchUserWatchListings(userid) {
     try {
         const record = await runSQL(`SELECT watchlist FROM users WHERE id="${userid}";`);
-    
+        // if no items are watchlisted, return
+        if (!record.watchlist) return
+
         // splits the string into array while removing the last element
         let watchlist = record.watchlist.split(',')
 
         // converts string into comma separated list readable by sql
         // ['1', '2', '3', '4'] ===> (1, 2, 3, 4)
         watchlist = '(' + watchlist.join(",") + ')';
-        console.log(watchlist)
 
         let sql = `SELECT * FROM items WHERE id IN ${watchlist} ORDER BY id DESC;`
         let records = await runSQL(sql)
+
+        // if there is only one record, add it as an array element
+        if (!records.length) {
+            records = [records]
+        }
         console.log(records)
         return records;
 
@@ -744,7 +750,7 @@ module.exports.deleteRecord = deleteRecord;
 async function isWatchlisted(userid, itemid) {
     try {
         const record = await runSQL(`SELECT watchlist FROM users WHERE id="${userid}";`);
-
+        if (!record.watchlist) return
         // splits the string into array while removing the last element
         let watchlist = record.watchlist.split(',')
         
@@ -767,7 +773,10 @@ async function updateUserWatchlist(userid, itemid, mode) {
         const record = await runSQL(`SELECT watchlist FROM users WHERE id="${userid}";`);
 
         // splits the string data into array
-        let watchlist = record.watchlist.split(',')
+        let watchlist = []
+        if (record.watchlist) {
+            watchlist = record.watchlist.split(',')
+        }
 
         if (mode === 'add') {
             // adds the itemid to the array

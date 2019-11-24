@@ -36,6 +36,7 @@
                 <h1 class="browse-header-text">Watchlisted items</h1>
             </div>
 
+            {{#if items}}
             <div class="card-grid">
                 {{#each items}}
                 <div class="card">
@@ -58,6 +59,11 @@
                 </div>
                 {{/each}}
             </div>
+            {{else}}
+            <div class="browse-upper-wrapper">
+                <h3>Your watchlist seems to be empty for now, add some items then come again!</h3>
+            </div>
+            {{/if}}
 
         </main>
 
