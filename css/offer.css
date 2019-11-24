@@ -1,0 +1,676 @@
+
+.offer-grid {
+    display: flex;
+    margin-top: 20px;
+    color: rgb(72, 98, 112);
+}
+
+.column1 {
+    box-sizing: border-box;
+    -webkit-box-flex: 0;
+    flex-grow: 0;
+    display: inline-block;
+    max-width: 33.3333%;
+    flex-basis: 33.3333%;
+    padding: 0 16px 0 0;
+}
+.column2 {
+    box-sizing: border-box;
+    -webkit-box-flex: 0;
+    flex-grow: 0;
+    display: inline-block;
+    max-width: 66.6667%;
+    flex-basis: 66.6667%;
+    padding: 0 0  0 16px;
+}
+
+.small-space {
+    box-sizing: border-box;
+    display: block;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    flex: 1 1 100%;
+    overflow: hidden;
+}
+.medium-space {
+    box-sizing: border-box;
+    display: block;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    flex: 1 1 100%;
+    overflow: hidden;
+}
+
+.card-container {
+    padding: 16px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(226, 232, 235);
+    border-image: initial;
+    border-radius: 4px;
+    display: block;
+    box-sizing: border-box;
+    background-color: rgb(255, 255, 255);
+    flex-wrap: wrap;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    
+}
+
+.card-content {
+    /* position: absolute; */
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.thumbnail-area {
+    background: white;
+    border-radius: 4px 4px 0px 0px;
+    height: 66.6%;
+}
+
+.thumbnail-area > img {
+    width: 100%;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    padding: 8px;
+    overflow: hidden;
+    border-radius: 4px 4px 0px 0px;
+    padding: 0;
+    height: 100%;
+}
+
+.content-area {
+    width: auto;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    background: rgb(255, 255, 255);
+    padding: 8px;
+    overflow: hidden;
+    border-radius: 0px 0px 4px 4px;
+
+    height: 33.3%;
+}
+
+h1.title {
+    width: 100%;
+    overflow-wrap: break-word;
+    color: rgb(72, 98, 112);
+    margin-top: 0px;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 42px;
+    margin-bottom: 0px;
+}
+
+.category {
+    width: 100%;
+    font-weight: 500;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    font-size: 16px;
+    line-height: 24px;
+    max-height: none;
+    color: #d16004;
+    white-space: nowrap;
+    overflow-wrap: normal;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+
+    font-size: 24px;
+    line-height: 48px;
+    
+}
+
+.space {
+    box-sizing: border-box;
+    display: block;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    flex: 1 1 100%;
+    overflow: hidden;
+}
+
+.description {
+    margin-top: 0px;
+    width: 100%;
+    overflow-wrap: break-word;
+    margin-bottom: 16px;
+    font-size: 16px;
+    line-height: 24px;
+    text-size-adjust: 100%;
+    color: rgb(72, 98, 112);
+}
+
+/* ---------- IMAGE GALLERY ---------- */
+.gallery {
+    background-color: inherit;                    
+}
+.slideshow-container {
+    background-color: rgb(243, 246, 247);
+    max-width: 1000px;
+    position: relative;
+    margin: auto;
+    text-align: center;
+    border-radius: 4px;
+}
+.slideshow-container img {
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+}
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    user-select: none;
+
+    background-color: rgba(0, 0, 0, 0.6);
+}
+/* Position the "prev button" to the left */
+.prev {
+    left: 0;
+    border-radius: 0 4px 4px 0;
+}
+/* Position the "next button" to the right */
+.next {
+    right: 0;
+    border-radius: 4px 0 0 4px;
+}
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+    background-color: rgb(0, 0, 0);
+}
+/* Number text (1/5 etc) */
+.numbertext {
+    color: #f2f2f2;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 4px 0 6px 0;
+}
+  
+/* Fading animation */
+.fade {
+-webkit-animation-name: fade;
+-webkit-animation-duration: 1.5s;
+animation-name: fade;
+animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+from {opacity: .4} 
+to {opacity: 1}
+}
+
+@keyframes fade {
+from {opacity: .4} 
+to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+.prev, .next,.text {font-size: 11px}
+}
+
+/* ================ OFFER FORM ================ */
+
+.offer-header {
+    display: block;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    border-radius: 0px;
+
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(226, 232, 235);
+    border-image: initial;
+
+    border-radius: 4px;
+
+    width: 100%;
+    box-sizing: border-box;
+    background-color: rgb(255, 255, 255);
+}
+.offer-header-contents {
+    display: flex;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+}
+
+.seller-container {
+    width: 100%;
+    overflow: visible;
+    margin-left: 16px;
+    box-sizing: border-box;
+
+    
+}
+.seller-contents > a {
+    font-family: inherit;
+    text-transform: none;
+    vertical-align: baseline;
+    user-select: none;
+    cursor: pointer;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    width: auto;
+    display: inline-flex;
+    -webkit-box-flex: 0;
+    flex-grow: 0;
+    color: rgb(72, 98, 112);
+    min-height: auto;
+    white-space: normal;
+    text-align: inherit;
+    font-size: 20px;
+    line-height: inherit;
+    font-weight: inherit;
+    -webkit-appearance: none;
+    margin: 0px;
+    overflow: visible;
+    text-decoration: none;
+    background: none transparent;
+    transition: background-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1) 0s, border-color, box-shadow, color;
+    border-radius: 4px;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    padding: 0px;
+}
+.seller-contents > a:hover {
+    text-decoration: underline;
+}
+
+.seller-contents > p {
+    margin-top: 0px;
+    width: 100%;
+    overflow-wrap: break-word;
+    margin-bottom: 0px;
+    color: rgb(146, 161, 169);
+    font-size: 16px;
+    line-height: 21px;
+}
+
+/* ---- OFFER MAIN FORM ---- */
+.offer-main {
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(226, 232, 235);
+    border-image: initial;
+
+    border-radius: 4px;
+
+    width: 100%;
+    box-sizing: border-box;
+    background-color: rgb(255, 255, 255);
+}
+
+.form-header {
+    display: block;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    border-radius: 0px;
+
+    border-bottom: 1px solid rgb(226, 232, 235);
+}
+.form-header > p {
+    margin-top: 0px;
+    width: 100%;
+    overflow-wrap: break-word;
+    margin-bottom: 0px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.exchange-description {
+    box-sizing: border-box;
+    padding: 10px 50px;
+    margin-top: 0px;
+    width: 100%;
+    overflow-wrap: break-word;
+    margin-bottom: 0px;
+
+    font-size: 16px;
+    line-height: 24px;
+    text-size-adjust: 100%;
+    color: rgb(72, 98, 112);
+}
+
+.exchange-wrapper {
+    box-sizing: border-box;
+    margin-top: 10px;
+    border-radius: 4px;
+    border: 1px solid rgb(243, 246, 247);
+}
+
+.category-display {
+    text-align: center;
+}
+
+.exchange-wrapper h2 {
+    display: inline-block;
+    font-weight: 500;
+    margin: 0;
+}
+.exchange-wrapper h3 {
+    font-size: 18px;
+    line-height: 24px;
+    color: #d16004;
+    display: inline-block;
+    margin: 0;
+}
+.exchange-wrapper h4 {
+    color: #d16004;
+    display: inline-block;
+    margin: 0;
+}
+.exchange-categories {
+    display: block;
+    margin-bottom: 0px;
+}
+
+/* DROPDOWN E.CAT. LIST */
+.dropbtn {
+    all: unset;
+    border: none;
+    cursor: pointer;
+}
+.dropbtn > h4 {
+    text-decoration: underline;
+}
+
+.dropdown {
+position: relative;
+display: inline-block;
+}
+
+.dropdown-content {
+display: none;
+position: absolute;
+background-color: #f1f1f1;
+min-width: 200px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+z-index: 1;
+
+padding: 10px;
+
+word-break: normal;
+
+cursor: default;
+}
+
+.dropdown-content h4:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+
+
+/* ------- OFFER FORM INNER ------- */
+
+.offer-form {
+    display: block;
+    box-sizing: border-box;
+    background-color: rgb(249, 250, 251);
+    flex-wrap: wrap;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    border-radius: 0px;
+}
+
+.offer-form-content {
+    display: flex;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+}
+
+.viewer-avatar {
+    font-size: 36px;
+    width: 1em;
+    height: 1em;
+    line-height: 1;
+    border-radius: 1em;
+    overflow: hidden;
+}
+
+/* form fields */
+
+.form-fields {
+    width: 100%;
+    overflow: hidden;
+    margin-left: 16px;
+    box-sizing: border-box;
+    font-weight: 400;
+}
+
+.item-select-container {
+    display: flex;
+    position: relative;
+    background-color: rgb(255, 255, 255);
+    color: rgb(72, 98, 112);
+    border-radius: 4px;
+    overflow: hidden;
+    border-width: 1px;
+    border-style: solid;
+    border-image: initial;
+    border-color: rgb(207, 215, 219);
+    transition: background-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1) 0s, border-color, box-shadow, color;
+}
+
+.itemselect {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    width: 1%;
+    color: rgb(72, 98, 112);
+    margin: 0px;
+    overflow: visible;
+    background: none rgb(255, 255, 255);
+    transition: background-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1) 0s, border-color, box-shadow, color;
+    padding: 8px;
+    border-width: initial;
+    border-style: none;
+    border-image: initial;
+    flex: 1 1 auto;
+    border-radius: 4px;
+    border-color: rgb(207, 215, 219);
+}
+.itemselect:focus {
+    outline: none;
+}
+option.default-option {
+    color: rgb(146, 161, 169);
+}
+
+/* ----------- DYNAMIC TEXTAREA + CHAR COUNT ----------- */
+
+.message-container textarea {
+    font-family: inherit;
+
+    width: 1%;
+    color: rgb(72, 98, 112);
+    margin: 0px;
+    overflow: visible;
+    background: none rgb(255, 255, 255);
+    transition: background-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1) 0s, border-color, box-shadow, color;
+    padding: 8px;
+    border-width: initial;
+    border-style: none;
+    border-image: initial;
+    flex: 1 1 auto;
+    border-radius: 4px;
+    border-color: rgb(207, 215, 219);
+
+    writing-mode: horizontal-tb !important;
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    -webkit-appearance: textfield;
+    -webkit-rtl-ordering: logical;
+    font: 400 13.3333px Arial;
+
+    text-size-adjust: 100%;
+
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+
+    width: 100%; /* Full width */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+
+    resize: none;
+    overflow: auto;
+    border: none;
+    margin: 0;
+
+}
+.message-container textarea:focus {
+    outline: none;
+}
+
+.message-container div.expanding-textarea {
+    height: auto;
+
+    width: 100%; /* Full width */ 
+    border: 1px solid #ccc; /* Gray border */
+    border-radius: 4px; /* Rounded borders */
+    box-sizing: border-box; /* Make sure that padding and width stays in place */
+    margin-top: 6px; /* Add a top margin */
+    margin-bottom: 16px; /* Bottom margin */
+
+    overflow: hidden;
+
+    background-color: white;
+
+}
+div.expanding-textarea span.character-count {
+    padding: 0 8px;
+    float: right;
+}
+
+.message-container input:focus, 
+.message-container textarea:focus {
+    outline: none;
+} 
+
+textarea#message::placeholder {
+    color: rgb(146, 161, 169);
+}
+
+.submit-container {
+    display: flex;
+    box-sizing: border-box;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    border-radius: 0px;
+}
+.submit-container button[type="submit"] {
+    font-family: inherit;
+    text-transform: none;
+    text-align: center;
+    vertical-align: baseline;
+    white-space: nowrap;
+    user-select: none;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 24px;
+    min-height: 40px;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    width: auto;
+    display: inline-flex;
+    -webkit-box-flex: 0;
+    flex-grow: 0;
+    -webkit-appearance: button;
+    color: rgb(255, 255, 255);
+    font-weight: 600;
+    margin: 0px;
+    overflow: visible;
+    text-decoration: none;
+    border-width: initial;
+    border-style: none;
+    border-image: initial;
+    background: none #ffa600;
+    padding: 8px 16px;
+    transition: background-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1) 0s, border-color, box-shadow, color;
+    border-radius: 4px;
+    border-color: rgb(60, 206, 105);
+}
+.submit-container button[type="submit"]:hover {
+    background-color: #ff7707;
+    border-color: #ff7707;
+}
+.submit-container button[type="submit"]:active {
+    background-color: #ffd000;
+    border-color: #ffd000;
+}
+.submit-container button[type="submit"]:focus {
+    outline: none;
+}

@@ -148,7 +148,7 @@ router.get('/listings/:user', async ctx => {
         let items = await accounts.fetchUserListings(user, 'username')
 
         if (ctx.session.user != null) { data.user = ctx.session.user }
-        
+
         data.seller = user
 
         await ctx.render('./views/userListings', {data: data, items: items})
@@ -491,7 +491,21 @@ router.get('/details/:id/offer', async ctx => {
         data.user = ctx.session.user
         data.name = ctx.session.userData.forename
 
-        await ctx.render('./views/offer', {data: data})
+        // fetch item data using itemid
+        let item = await accounts.fetchItem(itemid)
+
+        // fetch item thumbnails info
+        item.thumbs = []
+        item.thumbs = await accounts.fetchItemThumbInfo(itemid)
+
+        // we have sellerid from itemid, fetch seller data
+        let seller = await accounts.fetchUserData(item.seller, 'id')
+
+        // fetch viewing user listings data for form select
+        const userid = ctx.session.userData.id
+        let userListings = await accounts.fetchUserListings(userid)
+
+        await ctx.render('./views/offer', {data: data, item: item, seller: seller, userListings: userListings})
     } catch(err) {
         await ctx.render('./views/error', {error: err})
     }

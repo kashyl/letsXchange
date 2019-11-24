@@ -84,9 +84,12 @@
 
                             <!-- PREV AND NEXT BUTTONS -->
                             {{#if item.images}}
-                            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                                {{#if item.images.[1]}}
+                                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                                {{/if}}
                             {{/if}}
+
                         </div>
                         {{#if item.images}}
                         <div class="gallery-thumbnails">
@@ -215,25 +218,18 @@
                                         <h4 style="color: inherit">and</h4>
                                         
                                         <div class="dropdown">
-                                        <button class="dropbtn"><h4>more</h4></button>
-                                        <div class="dropdown-content">
-                                            {{#each item.ecategories}}
-                                                {{#if @second}}
-                                                {{else}}
-                                                {{#if @second}}
-                                                {{else}}
-                                                <h4>{{this}}</h4>
-                                                <br>
-                                                {{/if}}
-                                                {{/if}}
-                                            {{/each}}
+                                            <button class="dropbtn"><h4>more</h4></button>
+                                            <div class="dropdown-content">
+                                                {{#each item.ecategories}}
+                                                    <h4>{{this}}</h4>
+                                                    <br>
+                                                {{/each}}
+                                            </div>
                                         </div>
                                         {{/if}}
                                         {{/if}}
-                                    </div>
-                                    </div>
-                                    
-                                </div>
+                                    </div> 
+                            </div>
 
                             <span class="separator"></span>
                             <div class="details">

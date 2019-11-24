@@ -28,9 +28,14 @@
 
         <main role="main">
 
+            
             {{#if data.msg}}
                 <span class='msg'>{{data.msg}}</span>
             {{/if}}
+
+            <div class="back-wrapper" style="margin-bottom: 20px;">
+                <button class="back" onclick="goBack()"><img src="../assets/image/back_arrow_1.png"> Back to previous page</button>
+            </div>
 
             <div class="browse-upper-wrapper">
                 <img class="avatar-medium" src="../assets/public/avatars/{{data.seller}}.png" alt="Image not found" 
@@ -75,6 +80,15 @@
         <footer>
             {{> footer}}
         </footer>
+
+        <!-- scripts -->
+
+        <!-- back button -->
+        <script>
+            function goBack() {
+            window.history.back();
+            }
+        </script>
 
     </body>  
 </html>

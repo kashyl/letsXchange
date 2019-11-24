@@ -427,6 +427,9 @@ button#watchlist.yes i {
     display: inline-block;
     font-weight: 600;
 }
+.seller-details > a > span:hover{
+    text-decoration: underline;
+}
 .seller-details span {
     display: block;
 }
