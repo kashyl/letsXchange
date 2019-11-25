@@ -51,14 +51,17 @@ module.exports.contactUs = async (name, email, message) => {
  * @param {String} buyer - object data of the user sending the offer
  * @param {String} sellerEmail - the email address of the item owner
  * @param {String} item - object data of the item offer is made on
+ * @param {String} itemid - object id of the image that needs to be included in the email
  */
-module.exports.sendOffer = async (body, buyer, sellerEmail, item) => {
+module.exports.sendOffer = async (body, buyer, sellerEmail, item, itemid) => {
     const message = `${body.message}`
+
+    let serverURL = 'http://letsxchangeimages.ddns.net/Websites/letsxchangewebsite/listings/'+ itemid +'/0.png'
 
     let text =
     `
     <html>
-    <img src="https://drive.google.com/file/d/1ClOkUAgsNuAy16cJ1HaxBXWzg3xeaZ1f/view?usp=sharing">
+    <img src=${serverURL}>
     <h3>User ${buyer.user} has sent you an exchange offer for your listing (${item.title})</h3>
     <h4>Message:</h4> <p>${message}</p>
     </html>
@@ -68,7 +71,7 @@ module.exports.sendOffer = async (body, buyer, sellerEmail, item) => {
         text =
         `
         <html>
-        <img src="https://drive.google.com/file/d/1ClOkUAgsNuAy16cJ1HaxBXWzg3xeaZ1f/view?usp=sharing">
+        <img src="${serverURL}">
         <h3>User ${buyer.user} has sent you an exchange offer for your listing (${item.title})</h3> 
         <h3>Message:/h3> <p>${message}</p> 
         <h3>Exchange Item</h3> 

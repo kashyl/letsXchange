@@ -523,7 +523,7 @@ router.post('/make-offer/:id', async ctx => {
             body.offerItem = await accounts.fetchItem(body.offerItem)
         }
 
-        await email.sendOffer(body, buyer, seller.email, item)
+        await email.sendOffer(body, buyer, seller.email, item, itemid)
 
         const msg = `Your offer has been sent to ${seller.user}!`
         return ctx.redirect(`/details/${itemid}?msg=${msg}`)
