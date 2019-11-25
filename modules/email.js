@@ -58,6 +58,7 @@ module.exports.sendOffer = async (body, buyer, sellerEmail, item) => {
     let text =
     `
     <html>
+    <img src="https://drive.google.com/file/d/1ClOkUAgsNuAy16cJ1HaxBXWzg3xeaZ1f/view?usp=sharing">
     <h3>User ${buyer.user} has sent you an exchange offer for your listing (${item.title})</h3>
     <h4>Message:</h4> <p>${message}</p>
     </html>
@@ -67,6 +68,7 @@ module.exports.sendOffer = async (body, buyer, sellerEmail, item) => {
         text =
         `
         <html>
+        <img src="https://drive.google.com/file/d/1ClOkUAgsNuAy16cJ1HaxBXWzg3xeaZ1f/view?usp=sharing">
         <h3>User ${buyer.user} has sent you an exchange offer for your listing (${item.title})</h3> 
         <h3>Message:/h3> <p>${message}</p> 
         <h3>Exchange Item</h3> 
