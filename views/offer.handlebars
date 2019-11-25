@@ -168,7 +168,7 @@
                         </div>
 
                         <div class="offer-form">
-                            <form action="send-offer" method="POST">
+                            <form action="/make-offer/{{item.id}}" method="POST">
                                 <div class="offer-form-content">
 
                                     <div class="viewer-avatar">
@@ -178,15 +178,20 @@
 
                                     <div class="form-fields">
 
-                                        <div class="test">
-                                            <select id="listingsDropdown" class="submit-container">
-                                                <option selected value> Optional: Select one of your listed items </option>
-                                                {{#each userListings}}
-                                                <option value="{{this.id}}" data-imagesrc="/assets/public/items/{{this.id}}/thumbs/0.png"
-                                                    data-description="<span class='orange'>{{this.category}}</span> <br> <span class='defaultcolor'>Listed on {{this.date}}</span> <br> {{this.description}}">{{this.title}}</option>
-                                                {{/each}}
-                                            </select>
-                                        </div>
+                                        <!-- CUSTOM DROPDOWN WITH THUMBNAILS USING DDSLICK -->
+                                        <select id="listingsDropdown" class="submit-container">
+                                            <option selected value=''> Optional: Select one of your listed items </option>
+                                            {{#each userListings}}
+                                            <option value="{{this.id}}" data-imagesrc="/assets/public/items/{{this.id}}/thumbs/0.png"
+                                                data-description="<span class='orange'>{{this.category}}</span>
+                                                <br> <span class='defaultcolor'>Listed on {{this.date}}</span>
+                                                <br> {{this.description}}">{{this.title}}
+                                            </option>
+                                            {{/each}}
+                                        </select>
+
+                                        <!-- HIDDEN INPUT TO SAVE THE VALUE FROM DROPDOWN ABOVE -->
+                                        <input type="text" name="sentListing" id="listingHidden" style="display: none;">
 
                                         <span class="medium-space"></span>
 
@@ -225,7 +230,11 @@
                 imagePosition:"right",
                 width: '100%',
                 height: 400,
-                selectText: 'Optional: Select one of your listed items'
+                selectText: 'Optional: Select one of your listed items',
+                onSelected: function (data) {
+                    let element = document.getElementById('listingHidden')
+                    element.setAttribute('value', data.selectedData.value) 
+                }
             });
         </script>
 

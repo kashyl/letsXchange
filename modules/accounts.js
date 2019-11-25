@@ -206,7 +206,6 @@ async function fetchItem(itemid) {
         let sql = `SELECT * FROM items WHERE id = ${itemid};`
 
         let records = await runSQL(sql)
-
         records.ecategories = records.ecategories.split(',');
 
         return records;

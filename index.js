@@ -201,13 +201,7 @@ router.get('/details/:id', async ctx => {
  */
 router.post('/details/:id/watchlist-add', async ctx => {
 
-        // get item id from url parameters
-        const url = ctx.request.header.referer
-        let itemid = url.split('/details/')
-        itemid = itemid[1].split('?')
-        itemid = itemid[0]
-        // itemid = ctx.params.id - the other way, but dependent on params
-
+    let itemid = ctx.params.id
     try {        
 
         const userid = ctx.session.userData.id
@@ -517,30 +511,20 @@ router.get('/details/:id/offer', async ctx => {
  * @name MakeOffer script
  * @route {POST} /make-offer
  */
-router.post('/make-offer', async ctx => {
-
-        // get item id from url parameters
-        const url = ctx.request.header.referer
-        let itemid = url.split('/details/')
-        itemid = itemid[1].split('?')
-        itemid = itemid[0]
-
+router.post('/make-offer/:id', async ctx => {
+    let itemid = ctx.params.id
     try {
         
         const body = ctx.request.body
         console.log(body)
 
         let buyer = ctx.session.userData
-        console.log(buyer)
-
-
 
         // fetch item data using itemid
         let item = await accounts.fetchItem(itemid)
 
         // we have sellerid from itemid, fetch seller data
         let seller = await accounts.fetchUserData(item.seller, 'id')
-        console.log(seller)
 
         const msg = `Your offer has been emailed to ${seller.user}!`
         return ctx.redirect(`/details/${itemid}?msg=${msg}`)
