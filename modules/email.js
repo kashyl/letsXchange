@@ -334,16 +334,17 @@ nav .navbar-search-wrapper button.search:hover {
 	</style>
 	
 	
-	<head style="color;grey">
+	<head style="background-color:grey;">
 		<div id="upper-header">
     <div id="header-left-wrapper">
-        <div id="motto-wrapper">
-            <span>Exchanging made Fast & Easy</span>
-        </div>
+        
     </div>
     <div id="header-middle-wrapper">
         <a href="/" id="nav-top"> <img class="logo" src="http://server.alastairserver.co.uk/Websites/letsxchangewebsite/LogoBlack.png" style="display:block;margin-left:auto;margin-right:auto;width: 40%;" alt="letsXchange"> </a>
     </div>
+    <div id="motto-wrapper">
+            <span>Exchanging made Fast & Easy</span>
+        </div>
     <div id="header-right-wrapper">
         <div id="logged-as">
             <span class='default-cursor'></span>
