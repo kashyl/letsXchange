@@ -7,8 +7,8 @@
 
 'use strict'
 
-var sqlite = require('sqlite-async');
-let bcrypt = require('bcrypt-promise');
+var sqlite = require('sqlite-async')
+const bcrypt = require('bcrypt-promise')
 const fs = require('fs-extra') // for files. 'fs-extra' adds more methods = no more need for 'fs'
 const mime = require('mime-types')
 const Jimp = require('jimp') // for image conversion
