@@ -515,8 +515,8 @@ router.post('/make-offer/:id', async ctx => {
     let itemid = ctx.params.id
     try {
         
+        // body: message, offerItem (default '')
         const body = ctx.request.body
-        console.log(body)
 
         let buyer = ctx.session.userData
 
@@ -526,7 +526,14 @@ router.post('/make-offer/:id', async ctx => {
         // we have sellerid from itemid, fetch seller data
         let seller = await accounts.fetchUserData(item.seller, 'id')
 
-        const msg = `Your offer has been emailed to ${seller.user}!`
+        // if a listing has been provided for exchange, fetch item details in body
+        if (body.offerItem != '' && body.offerItem != undefined) {
+            body.offerItem = await accounts.fetchItem(body.offerItem)
+        }
+        
+        await email.sendOffer(body, buyer, seller.email, item)
+
+        const msg = `Your offer has been sent to ${seller.user}!`
         return ctx.redirect(`/details/${itemid}?msg=${msg}`)
     } catch(err) {
         return ctx.redirect(`/details/${itemid}?msg=${err.message}`)
