@@ -36,6 +36,11 @@
 
             <div class="back-wrapper">
                 <button class="back" onclick="goBack()"><img src="../assets/image/back_arrow_1.png"> Back to previous page</button>
+                {{#if ownListing}}
+                <form action='/details/{{item.id}}/remove' method="POST" onsubmit="return confirm('This will delete your listing. Are you sure?');">
+                    <button type="submit" class="remove-item"><i class="far fa-trash-alt"></i> Delete listing</button>
+                </form>
+                {{/if}}
             </div>
 
             <div class="details-grid">

@@ -178,6 +178,7 @@ async function fetchItem (itemid) {
     const sql = `SELECT * FROM items WHERE id = ${itemid};`
 
     const records = await runSQL(sql)
+    console.log(records)
     records.ecategories = records.ecategories.split(',')
 
     return records
@@ -325,6 +326,25 @@ async function addItem (userid, item) {
     return true
 }
 module.exports.addItem = addItem
+
+/**
+ * Removes item from the database
+ * @param {String} userid - id of the user who removes the item
+ * @param {String} itemid - the id of the item
+ * @returns {boolean} - returns true if successfully removed
+ * @throws {Error} - if something went wrong and item wasn't removed, e.g. user doesn't have permission
+ */
+async function removeItem (userid, itemid) {
+    const item = await fetchItem(itemid)
+    if (userid !== parseInt(item.seller, 10)) throw new Error('Permission denied')
+
+    await deleteRecord('items', item.id)
+
+    console.log(`User ${userid} removed listing with id "${itemid}".`)
+
+    return true
+}
+module.exports.removeItem = removeItem
 
 /**
  * Function to fetch last id

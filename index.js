@@ -186,7 +186,10 @@ router.get('/details/:id', async ctx => {
         // checks if item is watchlisted
         data.watchlist = await accounts.isWatchlisted(ctx.session.userData.id, itemid)
 
-        await ctx.render('./views/details', { data: data, item: item, seller: userData })
+        // checks if the listing is the viewing user's
+        const ownListing = parseInt(item.seller, 10) === ctx.session.userData.id
+
+        await ctx.render('./views/details', { data: data, item: item, seller: userData, ownListing: ownListing })
     } catch (err) {
         console.log(err)
         await ctx.redirect(`/?msg=${err.message}`)
@@ -216,13 +219,7 @@ router.post('/details/:id/watchlist-add', async ctx => {
  * @route {POST} /watchlist-remove
  */
 router.post('/details/:id/watchlist-remove', async ctx => {
-    // get item id from url parameters
-    const url = ctx.request.header.referer
-    let itemid = url.split('/details/')
-    itemid = itemid[1].split('?')
-    itemid = itemid[0]
-    // itemid = ctx.params.id - the other way, but dependent on params
-
+    const itemid = ctx.params.id
     try {
         const userid = ctx.session.userData.id
 
@@ -399,6 +396,24 @@ router.post('/add-item', koaBody, async ctx => {
 })
 
 /**
+ * Script to remove listing
+ *
+ * @name Remove page
+ * @route {POST} /details/:id/remove
+ */
+router.post('/details/:id/remove', async ctx => {
+    const itemid = ctx.params.id
+    try {
+        const userid = ctx.session.userData.id
+        await accounts.removeItem(userid, itemid)
+
+        return ctx.redirect('/?msg=listing removed')
+    } catch (err) {
+        await ctx.redirect(`/details/${itemid}?msg=${err.message}`)
+    }
+})
+
+/**
  * The user login form page
  *
  * @name Login Page
@@ -480,6 +495,12 @@ router.get('/details/:id/offer', async ctx => {
 
         // fetch item data using itemid
         const item = await accounts.fetchItem(itemid)
+
+        // if the item's seller id and logged in user id are the same, redirect to details page
+        // -> user can't make offer for own listing
+        if (parseInt(item.seller, 10) === ctx.session.userData.id) {
+            await ctx.redirect(`/details/${itemid}?msg=can't make offer for own listing`)
+        }
 
         // fetch item thumbnails info
         item.thumbs = []
