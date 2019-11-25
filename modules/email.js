@@ -57,19 +57,23 @@ module.exports.sendOffer = async (body, buyer, sellerEmail, item) => {
 
     let text =
     `
+    <html>
     <h3>User ${buyer.user} has sent you an exchange offer for your listing (${item.title})</h3>
-    <h4>Message:/h4> <p>${message}</p>
+    <h4>Message:</h4> <p>${message}</p>
+    </html>
     `
 
     if (body.offerItem !== '' && body.offerItem !== undefined) {
         text =
         `
+        <html>
         <h3>User ${buyer.user} has sent you an exchange offer for your listing (${item.title})</h3> 
         <h3>Message:/h3> <p>${message}</p> 
         <h3>Exchange Item</h3> 
         <h4 style="display: inline-block;">Title:</h4> ${body.offerItem.title}
         <h4 style="display: inline-block;">Category:</h4> ${body.offerItem.category}
         <h4>Description:</h4> <p>${body.offerItem.description}</p>
+        </html>
         `
     }
 
@@ -77,7 +81,7 @@ module.exports.sendOffer = async (body, buyer, sellerEmail, item) => {
         from: siteEmail.address,
         to: sellerEmail,
         subject: `${buyer.user} has sent you an exchange offer!`,
-        text: text
+        html: text
     }
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
