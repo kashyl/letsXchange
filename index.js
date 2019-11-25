@@ -407,6 +407,10 @@ router.post('/details/:id/remove', async ctx => {
         const userid = ctx.session.userData.id
         await accounts.removeItem(userid, itemid)
 
+        // deletes item files
+        const path = `assets/public/items/${itemid}`
+        await accounts.deleteDirectory(path)
+
         return ctx.redirect('/?msg=listing removed')
     } catch (err) {
         await ctx.redirect(`/details/${itemid}?msg=${err.message}`)

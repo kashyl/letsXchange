@@ -470,6 +470,24 @@ async function deleteFile (path) {
 module.exports.deleteFile = deleteFile
 
 /**
+ * This function deletes the directory with the given path
+ * @param {String} path - the path of the file
+ * @return {boolean} - returns true if directory was deleted, false if path was invalid
+ * @throws {Error}
+ */
+async function deleteDirectory (path) {
+    if (path === '' || path === '/') return false
+    fs.remove(path, (err) => {
+        if (err) {
+            throw err
+        }
+    })
+    console.log(`Directory deleted. Path: (${path})`)
+    return true
+}
+module.exports.deleteDirectory = deleteDirectory
+
+/**
  * This function takes two strings, finds a file named after the first one and renames it to the second string
  * @param {String} currentName - searches for file whose name equals this value
  * @param {String} newName - renames file to this value
