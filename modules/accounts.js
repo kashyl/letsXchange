@@ -7,11 +7,12 @@
 
 'use strict'
 
-var sqlite = require('sqlite-async')
 const bcrypt = require('bcrypt-promise')
 const fs = require('fs-extra') // for files. 'fs-extra' adds more methods = no more need for 'fs'
 const mime = require('mime-types')
 const Jimp = require('jimp') // for image conversion
+
+var sqlite = require('sqlite-async')
 
 /**
  * Function to open the database then execute a query
@@ -83,12 +84,16 @@ async function fetchListings (query) {
         return records
     } else {
         const sql = `SELECT id, title, category, description FROM items 
-                    WHERE upper(title) LIKE "%${query}%" 
-                    OR upper(category) LIKE upper("%${query}%")
-                    OR upper(description) LIKE upper("%${query}%")
-                    OR upper(location) LIKE upper("%${query}%")
+                    WHERE upper(title) LIKE $query 
+                    OR upper(category) LIKE upper($query)
+                    OR upper(description) LIKE upper($query)
+                    OR upper(location) LIKE upper($query)
                     ORDER BY id DESC;`
-        let records = await runSQL(sql)
+
+        const DBName = './database/database.db'
+        const db = await sqlite.open(DBName)
+        let records = await db.all(sql, { $query: '%' + query + '%' })
+        await db.close()
 
         // if only one item is returned, create an array for it
         if (records != null && records.length === undefined) {
@@ -574,10 +579,10 @@ async function updateField (username, field, newValue, unique = 'no') {
         await checkNoDuplicate(field, newValue)
     }
 
-    const sql = `UPDATE users SET ${field} = "${newValue}" WHERE user="${username}";`
+    const sql = `UPDATE users SET ${field} = $newValue WHERE user = $username ;`
 
     const db = await sqlite.open('./database/database.db')
-    await db.run(sql)
+    await db.run(sql, { $newValue: newValue, $username: username })
     await db.close()
     return true
 }
