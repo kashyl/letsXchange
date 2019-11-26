@@ -11,8 +11,10 @@ const bcrypt = require('bcrypt-promise')
 const fs = require('fs-extra') // for files. 'fs-extra' adds more methods = no more need for 'fs'
 const mime = require('mime-types')
 const Jimp = require('jimp') // for image conversion
+const path = require('path')
 
 var sqlite = require('sqlite-async')
+const DBName = './database/database.db'
 
 /**
  * Function to open the database then execute a query
@@ -22,7 +24,6 @@ var sqlite = require('sqlite-async')
  */
 
 async function runSQL (query) {
-    const DBName = './database/database.db'
     const db = await sqlite.open(DBName)
     const data = await db.all(query)
     await db.close()
@@ -30,6 +31,21 @@ async function runSQL (query) {
     return data
 }
 module.exports.runSQL = runSQL
+
+/**
+ * Function to check if fetched data is a single or multiple records
+ *
+ * @param {Object} data - the given data (record/records)
+ * @returns {Array} - if record is single, puts it into array and returns it
+ */
+async function checkSingle (data) {
+    // if only one item is returned, create an array for it
+    if (data != null && data.length === undefined) {
+        data = [data]
+    }
+    return data
+}
+module.exports.checkSingle = checkSingle
 
 /**
  * Function to show date and time in mm/dd/yyyy at h:m:s format
@@ -89,17 +105,9 @@ async function fetchListings (query) {
                     OR upper(description) LIKE upper($query)
                     OR upper(location) LIKE upper($query)
                     ORDER BY id DESC;`
-
-        const DBName = './database/database.db'
         const db = await sqlite.open(DBName)
-        let records = await db.all(sql, { $query: '%' + query + '%' })
+        const records = await db.all(sql, { $query: '%' + query + '%' })
         await db.close()
-
-        // if only one item is returned, create an array for it
-        if (records != null && records.length === undefined) {
-            records = [records]
-        }
-        // console.log(records)
 
         return records
     }
@@ -115,6 +123,7 @@ module.exports.fetchListings = fetchListings
  * @returns {boolean} - false if no listings found
  */
 async function fetchUserListings (user, mode = 'id') {
+    const db = await sqlite.open(DBName)
     try {
         // if username is given, use it to fetch user id
         if (mode === 'username') {
@@ -123,19 +132,17 @@ async function fetchUserListings (user, mode = 'id') {
         }
 
         // if user has no listings, return
-        const records = await runSQL(`SELECT count(id) AS count FROM items WHERE seller="${user}";`)
-        if (!records.count) return
+        const records = await db.all('SELECT count(id) AS count FROM items WHERE seller = $user;', { $user: user })
 
-        const sql = `SELECT * FROM items WHERE seller = "${user}" ORDER BY id DESC;`
-        let listings = await runSQL(sql)
+        if (!records[0].count) return
 
-        // if there is only one record, add it as an array element
-        if (!listings.length) {
-            listings = [listings]
-        }
+        const sql = 'SELECT * FROM items WHERE seller = $user ORDER BY id DESC;'
+        const listings = await db.all(sql, { $user: user })
 
+        await db.close()
         return listings
     } catch (err) {
+        await db.close()
         console.log(err)
         throw err
     }
@@ -149,26 +156,29 @@ module.exports.fetchUserListings = fetchUserListings
  * @returns {Object} - data returned by the query
  */
 async function fetchUserWatchListings (userid) {
-    const record = await runSQL(`SELECT watchlist FROM users WHERE id="${userid}";`)
-    // if no items are watchlisted, return
-    if (!record.watchlist) return
+    const db = await sqlite.open(DBName)
+    try {
+        const record = await db.all('SELECT watchlist FROM users WHERE id = $userid;', { $userid: userid })
+        // if no items are watchlisted, return
+        if (!record[0].watchlist) return
 
-    // splits the string into array while removing the last element
-    let watchlist = record.watchlist.split(',')
+        // splits the string into array while removing the last element
+        let watchlist = record[0].watchlist.split(',')
 
-    // converts string into comma separated list readable by sql
-    // ['1', '2', '3', '4'] ===> (1, 2, 3, 4)
-    watchlist = '(' + watchlist.join(',') + ')'
+        // converts string into comma separated list readable by sql
+        // ['1', '2', '3', '4'] ===> (1, 2, 3, 4)
+        watchlist = '(' + watchlist.join(',') + ')'
 
-    const sql = `SELECT * FROM items WHERE id IN ${watchlist} ORDER BY id DESC;`
-    let records = await runSQL(sql)
+        const sql = `SELECT * FROM items WHERE id IN ${watchlist} ORDER BY id DESC;` // not parameterized
+        const records = await db.all(sql)
 
-    // if there is only one record, add it as an array element
-    if (!records.length) {
-        records = [records]
+        await db.close()
+        return records
+    } catch (err) {
+        await db.close()
+        console.log(err)
+        throw err
     }
-
-    return records
 }
 module.exports.fetchUserWatchListings = fetchUserWatchListings
 
@@ -180,13 +190,23 @@ module.exports.fetchUserWatchListings = fetchUserWatchListings
  */
 
 async function fetchItem (itemid) {
-    const sql = `SELECT * FROM items WHERE id = ${itemid};`
+    const db = await sqlite.open(DBName)
+    try {
+        const sql = 'SELECT * FROM items WHERE id = $itemid;'
 
-    const records = await runSQL(sql)
-    console.log(records)
-    records.ecategories = records.ecategories.split(',')
+        let records = await db.all(sql, { $itemid: itemid })
 
-    return records
+        if (records.length === 1) records = records[0]
+
+        records.ecategories = records.ecategories.split(',')
+
+        await db.close()
+        return records
+    } catch (err) {
+        await db.close()
+        console.log(err)
+        throw err
+    }
 }
 module.exports.fetchItem = fetchItem
 
@@ -198,9 +218,9 @@ module.exports.fetchItem = fetchItem
 
 async function fetchItemImageInfo (itemid) {
     try {
-        const path = `${__dirname}/../assets/public/items/${itemid}/`
+        const filePath = path.join(__dirname, '..', 'assets', 'public', 'items', itemid)
 
-        const list = fs.readdirSync(path) // gets file names. !!! SYNC !!!
+        const list = fs.readdirSync(filePath) // gets file names. !!! SYNC !!!
 
         list.splice(list.indexOf('thumbs'), 1) // removes thumbs folder from the list
 
@@ -219,9 +239,9 @@ module.exports.fetchItemImageInfo = fetchItemImageInfo
 
 async function fetchItemThumbInfo (itemid) {
     try {
-        const path = `${__dirname}/../assets/public/items/${itemid}/thumbs`
+        const filePath = path.join(__dirname, '..', 'assets', 'public', 'items', itemid, 'thumbs')
 
-        const list = fs.readdirSync(path) // gets file names. !!! SYNC !!!
+        const list = fs.readdirSync(filePath) // gets file names. !!! SYNC !!!
 
         return list
     } catch (err) {
@@ -316,19 +336,34 @@ module.exports.saveItemImages = saveItemImages
  * @throws {Error} - if something went wrong and item wasn't added
  */
 async function addItem (userid, item) {
-    const today = await dateAndTime()
+    const db = await sqlite.open(DBName)
+    try {
+        const today = await dateAndTime()
 
-    // Build SQL command with data
-    const sql = 'INSERT INTO items(seller, title, description, category, location, ecategories, edescription, date)' +
-                `VALUES("${userid}", "${item.title}", "${item.description}", "${item.category}", "${item.location}"` +
-                `, "${item.exchangeCategories}", "${item.exchangeDescription}", "${today}")`
+        // Build SQL command with data
+        const sql = 'INSERT INTO items(seller, title, description, category, location, ecategories, edescription, date)' +
+                    'VALUES($userid, $itemTitle, $itemDescription, $itemCategory, $itemLocation' +
+                    ', $itemExchangeCategories, $itemExchangeDescription, $today)'
 
-    // DATABASE COMMANDS
-    const db = await sqlite.open('./database/database.db')
-    await db.run(sql)
-    await db.close()
+        // DATABASE COMMANDS
+        await db.run(sql, {
+            $userid: userid,
+            $itemTitle: item.title,
+            $itemDescription: item.description,
+            $itemCategory: item.category,
+            $itemLocation: item.location,
+            $itemExchangeCategories: item.exchangeCategories,
+            $itemExchangeDescription: item.exchangeDescription,
+            $today: today
+        })
 
-    return true
+        await db.close()
+        return true
+    } catch (err) {
+        await db.close()
+        console.log(err)
+        throw err
+    }
 }
 module.exports.addItem = addItem
 
@@ -358,14 +393,21 @@ module.exports.removeItem = removeItem
  * @throws {Error} - if ID couldn't be found with given arguments
  */
 async function lastTableId (tablename) {
-    await findTable(tablename)
+    const db = await sqlite.open(DBName)
+    try {
+        await findTable(tablename)
 
-    const query = `SELECT seq FROM sqlite_sequence WHERE name='${tablename}';`
-    const records = await runSQL(query)
+        const sql = 'SELECT seq FROM sqlite_sequence WHERE name = $tablename;'
+        let records = await db.all(sql, { $tablename: tablename })
+        if (records.length === 1) records = records[0]
 
-    // console.log(records)
-
-    return records
+        await db.close()
+        return records
+    } catch (err) {
+        await db.close()
+        console.log(err)
+        throw err
+    }
 }
 module.exports.lastTableId = lastTableId
 
@@ -377,12 +419,25 @@ module.exports.lastTableId = lastTableId
  * @throws {Error} - if user does not exist or password doesn't match
  */
 async function checkCredentials (username, password) {
-    var records = await runSQL(`SELECT count(id) AS count FROM users WHERE user="${username}";`)
-    if (!records.count) throw new Error('invalid username or password')
-    const record = await runSQL(`SELECT pass FROM users WHERE user = "${username}";`)
-    const valid = await bcrypt.compare(password, record.pass)
-    if (valid === false) throw new Error('invalid username or password')
-    return true
+    const db = await sqlite.open(DBName)
+    try {
+        let records = await db.all('SELECT count(id) AS count FROM users WHERE user = $username;', { $username: username })
+        if (records.length === 1) records = records[0]
+        if (!records.count) throw new Error('invalid username or password')
+
+        let record = await db.all('SELECT pass FROM users WHERE user = $username;', { $username: username })
+        if (record.length === 1) record = record[0]
+
+        const valid = await bcrypt.compare(password, record.pass)
+        if (valid === false) throw new Error('invalid username or password')
+
+        await db.close()
+        return true
+    } catch (err) {
+        await db.close()
+        console.log(err.message)
+        throw err
+    }
 }
 module.exports.checkCredentials = checkCredentials
 
@@ -394,10 +449,21 @@ module.exports.checkCredentials = checkCredentials
  * @throws {Error} - if user does not exist or password doesn't match
  */
 async function checkPassword (username, password) {
-    const record = await runSQL(`SELECT pass FROM users WHERE user = "${username}";`)
-    const valid = await bcrypt.compare(password, record.pass)
-    if (valid === false) throw new Error('invalid username or password')
-    return true
+    const db = await sqlite.open(DBName)
+    try {
+        let record = await db.all('SELECT pass FROM users WHERE user = $username;', { $username: username })
+        if (record.length === 1) record = record[0]
+
+        const valid = await bcrypt.compare(password, record.pass)
+        if (valid === false) throw new Error('invalid username or password')
+
+        await db.close()
+        return true
+    } catch (err) {
+        await db.close()
+        console.log(err)
+        throw err
+    }
 }
 module.exports.checkPassword = checkPassword
 
@@ -410,9 +476,20 @@ module.exports.checkPassword = checkPassword
  * @throws {Error}
  */
 async function checkNoDuplicate (fieldName, searchValue) {
-    var records = await runSQL(`SELECT count(id) AS count FROM users WHERE ${fieldName}="${searchValue}";`)
-    if (records.count) throw new Error(`${fieldName} already exists`)
-    return true
+    const db = await sqlite.open(DBName)
+    try {
+        let records = await db.all(`SELECT count(id) AS count FROM users WHERE ${fieldName} = $searchValue;`, { $searchValue: searchValue })
+        if (records.length === 1) records = records[0]
+
+        if (records.count) throw new Error(`${fieldName} already exists`)
+
+        await db.close()
+        return true
+    } catch (err) {
+        await db.close()
+        console.log(err)
+        throw err
+    }
 }
 module.exports.checkNoDuplicate = checkNoDuplicate
 
@@ -429,9 +506,9 @@ async function saveAvatar (username, imageInfo, isAvatar = true) {
     if (imageInfo != null) {
         const { path, type } = imageInfo
         const fileExtension = mime.extension(type)
-        console.log(`path: ${path}`)
-        console.log(`type: ${type}`)
-        console.log(`fileExtension: ${fileExtension}`)
+        // console.log(`path: ${path}`)
+        // console.log(`type: ${type}`)
+        // console.log(`fileExtension: ${fileExtension}`)
 
         if (fileExtension !== 'png' && fileExtension !== 'jpg' && fileExtension !== 'jpeg') {
             throw new Error('supported file types: png, jpg and jpeg only')
@@ -532,12 +609,17 @@ async function addUser (body, saltRounds) {
 
     // ENCRYPT PASSWORD, BUILD SQL
     body.pass = await bcrypt.hash(body.pass, saltRounds)
-    const sql = `INSERT INTO users(user, pass, email, mobile, registerdate) VALUES("${body.user}", "${body.pass}", "${body.email}", "${body.mobile}", "${date}")`
-    // console.log(sql)
+    const sql = 'INSERT INTO users(user, pass, email, mobile, registerdate) VALUES($bodyUser, $bodyPass, $bodyEmail, $bodyMobile, $date)'
 
     // DATABASE COMMANDS
-    const db = await sqlite.open('./database/database.db')
-    await db.run(sql)
+    const db = await sqlite.open(DBName)
+    await db.run(sql, {
+        $bodyUser: body.user,
+        $bodyPass: body.pass,
+        $bodyEmail: body.email,
+        $bodyMobile: body.mobile,
+        $date: date
+    })
     await db.close()
     console.log(`New user "${body.user}" registered!`)
     return true
@@ -555,10 +637,10 @@ async function changeUsername (username, newUsername) {
     // Check if desired username is already taken
     await checkNoDuplicate('user', newUsername)
 
-    const sql = `UPDATE users SET user = "${newUsername}" WHERE user="${username}";`
+    const sql = 'UPDATE users SET user = $newUsername WHERE user = $username;'
 
-    const db = await sqlite.open('./database/database.db')
-    await db.run(sql)
+    const db = await sqlite.open(DBName)
+    await db.run(sql, { $newUsername: newUsername, $username: username })
     await db.close()
     return true
 }
@@ -597,24 +679,36 @@ module.exports.updateField = updateField
  * @throws {Error}
  */
 async function fetchUserData (searchval, mode = 'username') {
+    const db = await sqlite.open(DBName)
     try {
         let records = []
 
         if (mode === 'username') {
-            records = await runSQL(`SELECT count(id) AS count FROM users WHERE user="${searchval}";`)
+            records = await db.all('SELECT count(id) AS count FROM users WHERE user = $searchval;', { $searchval: searchval })
+            if (records.length === 1) records = records[0]
+
             if (!records.count) throw new Error('user not found')
-            records = await runSQL(`SELECT * FROM users WHERE user="${searchval}";`)
+
+            records = await db.all('SELECT * FROM users WHERE user = $searchval;', { $searchval: searchval })
+            if (records.length === 1) records = records[0]
         } else if (mode === 'id') {
-            records = await runSQL(`SELECT count(id) AS count FROM users WHERE id="${searchval}";`)
+            records = await db.all('SELECT count(id) AS count FROM users WHERE id = $searchval;', { $searchval: searchval })
+            if (records.length === 1) records = records[0]
+
             if (!records.count) throw new Error('user not found')
-            records = await runSQL(`SELECT * FROM users WHERE id="${searchval}";`)
+
+            records = await db.all('SELECT * FROM users WHERE id = $searchval;', { $searchval: searchval })
+            if (records.length === 1) records = records[0]
         } else {
             console.log('fetchUserData mode unknown (invalid arguments)')
+            await db.close()
             return false
         }
 
+        await db.close()
         return records
     } catch (err) {
+        await db.close()
         console.log(err)
         throw err
     }
@@ -628,12 +722,22 @@ module.exports.fetchUserData = fetchUserData
  * @throws {Error} - if ID couldn't be found with given arguments
  */
 async function fetchUserId (username) {
-    let records = await runSQL(`SELECT count(id) AS count FROM users WHERE user="${username}";`)
-    if (!records.count) throw new Error('user not found')
+    const db = await sqlite.open(DBName)
+    try {
+        let record = await db.all('SELECT count(id) AS count FROM users WHERE user = $username;', { $username: username })
+        if (record.length === 1) record = record[0]
+        if (!record.count) throw new Error('user not found')
 
-    records = await runSQL(`SELECT id FROM users WHERE user="${username}";`)
+        record = await db.all('SELECT id FROM users WHERE user = $username;', { $username: username })
 
-    return records
+        if (record.length === 1) record = record[0]
+
+        await db.close()
+        return record
+    } catch (err) {
+        await db.close()
+        console.log(err)
+    }
 }
 module.exports.fetchUserId = fetchUserId
 
@@ -644,12 +748,22 @@ module.exports.fetchUserId = fetchUserId
  * @throws {Error} - if ID couldn't be found with given arguments
  */
 async function fetchUserName (userid) {
-    let records = await runSQL(`SELECT count(id) AS count FROM users WHERE id="${userid}";`)
-    if (!records.count) throw new Error('user not found')
+    const db = await sqlite.open(DBName)
+    try {
+        let records = await db.all('SELECT count(id) AS count FROM users WHERE id = $userid;', { $userid: userid })
+        if (records.length === 1) records = records[0]
 
-    records = await runSQL(`SELECT user FROM users WHERE id="${userid}";`)
+        if (!records.count) throw new Error('user not found')
 
-    return records
+        records = await db.all('SELECT user FROM users WHERE id = $userid;', { $userid: userid })
+
+        await db.close()
+        return records
+    } catch (err) {
+        await db.close()
+        console.log(err)
+        throw err
+    }
 }
 module.exports.fetchUserName = fetchUserName
 
@@ -660,10 +774,19 @@ module.exports.fetchUserName = fetchUserName
  * @throws {Error} - if table is not found
  */
 async function findTable (table) {
-    var query = `SELECT name FROM sqlite_sequence WHERE name='${table}';`
-    var records = await runSQL(query)
-    if (records === '') throw new Error('table not found')
-    return true
+    const db = await sqlite.open(DBName)
+    try {
+        const sql = 'SELECT name FROM sqlite_sequence WHERE name = $table;'
+        let records = await db.all(sql, { $table: table })
+        if (records.length === 1) records = records[0]
+        if (records === '') throw new Error('table not found')
+
+        await db.close()
+        return true
+    } catch (err) {
+        await db.close()
+        console.log(err)
+    }
 }
 module.exports.findTable = findTable
 
@@ -676,9 +799,17 @@ module.exports.findTable = findTable
  * @throws {Error} - throws error if value is NOT found
  */
 async function checkValue (table, field, value) {
-    var records = await runSQL(`SELECT count(id) AS count FROM ${table} WHERE ${field}="${value}";`)
-    if (!records.count) throw new Error(`checkValue: value "${value}" was not found in table "${table}" as "${field}"`)
-    return true
+    const db = await sqlite.open(DBName)
+    try {
+        let records = await db.all(`SELECT count(id) AS count FROM ${table} WHERE ${field}="${value}";`)
+        if (records.length === 1) records = records[0]
+        if (!records.count) throw new Error(`checkValue: value "${value}" was not found in table "${table}" as "${field}"`)
+        await db.close()
+        return true
+    } catch (err) {
+        await db.close()
+        console.log(err)
+    }
 }
 module.exports.checkValue = checkValue
 
@@ -696,9 +827,9 @@ async function deleteRecord (table, id) {
     await checkValue(table, 'id', id)
 
     // delete record from database
-    const sql = (`DELETE FROM ${table} WHERE id=${id}`)
+    const sql = (`DELETE FROM ${table} WHERE id = $id`)
     const db = await sqlite.open('./database/database.db')
-    await db.run(sql)
+    await db.run(sql, { $id: id })
     await db.close()
 
     console.log(`deleteRecord(accounts.js): Deleted record with id "${id}" from table "${table}"`)
@@ -713,12 +844,23 @@ module.exports.deleteRecord = deleteRecord
  * @returns {boolean} - true if it is, false if it isn't
  */
 async function isWatchlisted (userid, itemid) {
-    const record = await runSQL(`SELECT watchlist FROM users WHERE id="${userid}";`)
-    if (!record.watchlist) return
-    // splits the string into array while removing the last element
-    const watchlist = record.watchlist.split(',')
+    const db = await sqlite.open(DBName)
+    try {
+        let record = await db.all('SELECT watchlist FROM users WHERE id = $userid;', { $userid: userid })
+        if (record.length === 1) record = record[0]
 
-    return watchlist.includes(itemid)
+        if (!record.watchlist) return
+
+        // splits the string into array while removing the last element
+        const watchlist = record.watchlist.split(',')
+
+        await db.close()
+        return watchlist.includes(itemid)
+    } catch (err) {
+        await db.close()
+        console.log(err)
+        throw err
+    }
 }
 module.exports.isWatchlisted = isWatchlisted
 
@@ -730,50 +872,59 @@ module.exports.isWatchlisted = isWatchlisted
  * @returns {boolean} - false if update failed, true if it was successful
  */
 async function updateUserWatchlist (userid, itemid, mode) {
-    const record = await runSQL(`SELECT watchlist FROM users WHERE id="${userid}";`)
+    const db = await sqlite.open(DBName)
+    try {
+        let record = await db.all('SELECT watchlist FROM users WHERE id = $userid;', { $userid: userid })
+        if (record.length === 1) record = record[0]
 
-    // splits the string data into array
-    let watchlist = []
-    if (record.watchlist) {
-        watchlist = record.watchlist.split(',')
-    }
-
-    if (mode === 'add') {
-        // adds the itemid to the array
-        watchlist.push(itemid)
-        // converts the array back to string (elements separated by commas)
-        watchlist = watchlist.toString()
-        // updates user watchlist in database
-        const sql = `UPDATE users SET watchlist = "${watchlist}" WHERE id="${userid}";`
-        const db = await sqlite.open('./database/database.db')
-        await db.run(sql)
-        await db.close()
-        return true
-    }
-
-    if (mode === 'remove') {
-        // if item is not in the watchlist, logs error and returns false
-        const valid = await isWatchlisted(userid, itemid)
-        if (!valid) {
-            console.log(`Could't update watchlist as itemid "${itemid}" wasn't found in user "${userid}" 's watchlist.`)
-            return false
+        // splits the string data into array
+        let watchlist = []
+        if (record.watchlist) {
+            watchlist = record.watchlist.split(',')
         }
-        // removes the itemid from the watchlist array
-        const index = watchlist.indexOf(itemid)
-        if (index > -1) {
-            watchlist.splice(index, 1)
-        }
-        // converts the array back to string (elements separated by commas)
-        watchlist = watchlist.toString()
-        // updates user watchlist in database
-        const sql = `UPDATE users SET watchlist = "${watchlist}" WHERE id="${userid}";`
-        const db = await sqlite.open('./database/database.db')
-        await db.run(sql)
-        await db.close()
-        return true
-    }
 
-    console.log('Wrong mode argument given for updateUserWatchlist function')
-    return false
+        if (mode === 'add') {
+            // adds the itemid to the array
+            watchlist.push(itemid)
+            // converts the array back to string (elements separated by commas)
+            watchlist = watchlist.toString()
+            // updates user watchlist in database
+            const sql = 'UPDATE users SET watchlist = $watchlist WHERE id = $userid;'
+            const db = await sqlite.open(DBName)
+            await db.run(sql, { $watchlist: watchlist, $userid: userid })
+            await db.close()
+            return true
+        }
+
+        if (mode === 'remove') {
+            // if item is not in the watchlist, logs error and returns false
+            const valid = await isWatchlisted(userid, itemid)
+            if (!valid) {
+                console.log(`Could't update watchlist as itemid "${itemid}" wasn't found in user "${userid}" 's watchlist.`)
+                return false
+            }
+            // removes the itemid from the watchlist array
+            const index = watchlist.indexOf(itemid)
+            if (index > -1) {
+                watchlist.splice(index, 1)
+            }
+            // converts the array back to string (elements separated by commas)
+            watchlist = watchlist.toString()
+            // updates user watchlist in database
+            const sql = 'UPDATE users SET watchlist = $watchlist WHERE id = $userid;'
+            const db = await sqlite.open('./database/database.db')
+            await db.run(sql, { $watchlist: watchlist, $userid: userid })
+            await db.close()
+            return true
+        }
+
+        console.log('Wrong mode argument given for updateUserWatchlist function')
+        await db.close()
+        return false
+    } catch (err) {
+        await db.close()
+        console.log(err)
+        throw err
+    }
 }
 module.exports.updateUserWatchlist = updateUserWatchlist

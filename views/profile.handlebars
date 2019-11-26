@@ -170,6 +170,7 @@
                     <h1 class="title">My Listings</h1>
                     <span class="separator"></span>
                     <div class="listings-container">
+                        {{#if items}}
                         {{#each items}}
                         <div class="listing-row">
                             <a class="anchor" href="/details/{{this.id}}">
@@ -195,6 +196,9 @@
                         </div>
                         <span class="separator"></span>
                         {{/each}}
+                        {{else}}
+                        <p>You don't currently have any active listings</p>
+                        {{/if}}
                         </div>
                     </div>
                 </div>
