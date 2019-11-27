@@ -408,8 +408,8 @@ router.post('/details/:id/remove', async ctx => {
         await accounts.removeItem(userid, itemid)
 
         // deletes item files
-        const path = `assets/public/items/${itemid}`
-        await accounts.deleteDirectory(path)
+        const dirPath = `assets/public/items/${itemid}`
+        await accounts.deleteDirectory(dirPath)
 
         return ctx.redirect('/?msg=listing removed')
     } catch (err) {
@@ -805,16 +805,22 @@ router.post('/delete-user', async ctx => {
 
         // fetches the user id from the database using username
         const records = await accounts.fetchUserId(body.username)
-        const userid = records.id   
+        const userid = records.id
 
+        // deletes user's listing data and files
         const listings = await accounts.fetchUserListings(userid, 'id')
-        console.log(listings)
+        listings.forEach(async item => {
+            await accounts.removeItem(userid, item.id)
+            const itemDirPath = path.join(__dirname, 'assets', 'public', 'items', item.id.toString())
+            await accounts.deleteDirectory(itemDirPath)
+            console.log('Directory for listing with id ' + item.id + ' has been deleted.')
+        })
 
-        return
-
-        // deletes user avatar file
-        const path = `assets/public/avatars/${body.username}.png`
-        await accounts.deleteFile(path)
+        // deletes user avatar file if there is one
+        const filePath = `assets/public/avatars/${body.username}.png`
+        if (fs.existsSync(filePath)) {
+            await accounts.deleteFile(filePath)
+        }
 
         // deletes user record with specified id
         await accounts.deleteRecord('users', userid)

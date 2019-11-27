@@ -376,6 +376,12 @@ async function addItem (userid, item) {
                     'VALUES($userid, $itemTitle, $itemDescription, $itemCategory, $itemLocation' +
                     ', $itemExchangeCategories, $itemExchangeDescription, $today)'
 
+        // one category = string, multiple = object
+        // if multiple, concatenate them into a string with .join
+        if (typeof (item.exchangeCategories) === 'object') {
+            item.exchangeCategories = item.exchangeCategories.join(',')
+        }
+
         // DATABASE COMMANDS
         await db.run(sql, {
             $userid: userid,
@@ -383,7 +389,7 @@ async function addItem (userid, item) {
             $itemDescription: item.description,
             $itemCategory: item.category,
             $itemLocation: item.location,
-            $itemExchangeCategories: item.exchangeCategories.join(','),
+            $itemExchangeCategories: item.exchangeCategories,
             $itemExchangeDescription: item.exchangeDescription,
             $today: today
         })
@@ -584,18 +590,14 @@ module.exports.deleteFile = deleteFile
 
 /**
  * This function deletes the directory with the given path
- * @param {String} path - the path of the file
+ * @param {String} dirPath - the path of the directory
  * @return {boolean} - returns true if directory was deleted, false if path was invalid
  * @throws {Error}
  */
-async function deleteDirectory (path) {
-    if (path === '' || path === '/') return false
-    fs.remove(path, (err) => {
-        if (err) {
-            throw err
-        }
-    })
-    console.log(`Directory deleted. Path: (${path})`)
+async function deleteDirectory (dirPath) {
+    if (dirPath === '' || dirPath === '/') return false
+    fs.removeSync(dirPath)
+    console.log(`Directory deleted. Path: (${dirPath})`)
     return true
 }
 module.exports.deleteDirectory = deleteDirectory
