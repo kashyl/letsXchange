@@ -805,7 +805,12 @@ router.post('/delete-user', async ctx => {
 
         // fetches the user id from the database using username
         const records = await accounts.fetchUserId(body.username)
-        const userid = records.id
+        const userid = records.id   
+
+        const listings = await accounts.fetchUserListings(userid, 'id')
+        console.log(listings)
+
+        return
 
         // deletes user avatar file
         const path = `assets/public/avatars/${body.username}.png`

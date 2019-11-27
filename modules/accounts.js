@@ -225,6 +225,7 @@ async function fetchItem (itemid) {
         const sql = 'SELECT * FROM items WHERE id = $itemid;'
 
         let records = await db.all(sql, { $itemid: itemid })
+        console.log(records)
 
         if (records.length === 1) records = records[0]
 
@@ -382,7 +383,7 @@ async function addItem (userid, item) {
             $itemDescription: item.description,
             $itemCategory: item.category,
             $itemLocation: item.location,
-            $itemExchangeCategories: item.exchangeCategories,
+            $itemExchangeCategories: item.exchangeCategories.join(','),
             $itemExchangeDescription: item.exchangeDescription,
             $today: today
         })
@@ -635,11 +636,14 @@ module.exports.renameAvatar = renameAvatar
 async function addUser (body, saltRounds) {
     await checkNoDuplicate('user', body.user)
 
-    const date = new Date()
+    let date = new Date()
+    console.log(date)
+    date = "'" + date + "'"
+    console.log(date)
 
     // ENCRYPT PASSWORD, BUILD SQL
     body.pass = await bcrypt.hash(body.pass, saltRounds)
-    const sql = 'INSERT INTO users(user, pass, email, mobile, registerdate) VALUES($bodyUser, $bodyPass, $bodyEmail, $bodyMobile, $date)'
+    const sql = `INSERT INTO users(user, pass, email, mobile, registerdate) VALUES($bodyUser, $bodyPass, $bodyEmail, $bodyMobile, ${date})`
 
     // DATABASE COMMANDS
     const db = await sqlite.open(DBName)
@@ -647,8 +651,7 @@ async function addUser (body, saltRounds) {
         $bodyUser: body.user,
         $bodyPass: body.pass,
         $bodyEmail: body.email,
-        $bodyMobile: body.mobile,
-        $date: date
+        $bodyMobile: body.mobile
     })
     await db.close()
     console.log(`New user "${body.user}" registered!`)
