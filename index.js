@@ -485,7 +485,7 @@ router.get('/logout', async ctx => {
 /**
  *  Make offer form page
  * @name Offer Page
- * @route {GET} /make-offer
+ * @route {GET} details/:id/make-offer
  */
 router.get('/details/:id/offer', async ctx => {
     try {
@@ -518,6 +518,35 @@ router.get('/details/:id/offer', async ctx => {
         const userListings = await accounts.fetchUserListings(userid)
 
         await ctx.render('./views/offer', { data: data, item: item, seller: seller, userListings: userListings })
+    } catch (err) {
+        await ctx.render('./views/error', { error: err })
+    }
+})
+
+/**
+ *  Suggested swaps page
+ * @name Suggested Page
+ * @route {GET} /details/:id/suggested
+ */
+router.get('/details/:id/suggested', async ctx => {
+    try {
+        const itemid = ctx.params.id
+        const userid = ctx.session.userid
+        const data = {}
+        data.auth = false
+        if (ctx.session.authorised === true) { data.auth = true }
+        if (ctx.query.msg) data.msg = ctx.query.msg
+        data.user = ctx.session.user
+
+        // fetches current listing information using the ID from parameters
+        const listing = await accounts.fetchItem(itemid)
+
+        const categoryList = listing.ecategories
+
+        // gets suggested listing data from database and puts it into data
+        const items = await accounts.fetchSuggestedListings(userid, categoryList)
+
+        await ctx.render('./views/suggested', { data: data, items: items, listing: listing })
     } catch (err) {
         await ctx.render('./views/error', { error: err })
     }

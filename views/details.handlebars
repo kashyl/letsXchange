@@ -167,10 +167,16 @@
 
                         <div class="buttons">
                             <div class="make-offer">
+                                <!-- if own user's listing, show Suggested Swaps button, otherwise Make offer -->
+                                {{#if ownListing}}
+                                <a href='/details/{{item.id}}/suggested' class="make-offer-btn">
+                                    Suggested swaps
+                                <a/>
+                                {{else}}
                                 <a href='/details/{{item.id}}/offer' class="make-offer-btn">
                                     Make offer
                                 <a/>
-
+                                {{/if}}
                             </div>
                             <div class="buttons-grid">
                                 <div class="buttons-column1">

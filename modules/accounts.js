@@ -115,6 +115,36 @@ async function fetchListings (query) {
 module.exports.fetchListings = fetchListings
 
 /**
+ * Function to fetch all suggested records of items from the database
+ * whose category is found in the given categories parameter, and seller is not the same as the given user
+ * After, closes the database connection and returns the data
+ * @param {String} userid - The user who is requesting suggested listings of other users
+ * @param {Array} categoryList - The list of categories to look for in the search
+ * @returns {Object} - data returned by the query
+ */
+async function fetchSuggestedListings (userid, categoryList) {
+    const db = await sqlite.open(DBName)
+    try {
+        // converts string into comma separated list readable by sql
+        // ['1', '2', '3', '4'] ===> ('1', '2', '3', '4')
+        categoryList = "('" + categoryList.join("','") + "')"
+
+        // Todo: sanitize input string (though IN clause is harder to do)
+        const sql = `SELECT * FROM items WHERE category IN ${categoryList} AND seller != ${userid} ORDER BY id DESC;` // not parameterized
+        const records = await db.all(sql)
+
+        await db.close()
+
+        return records
+    } catch (err) {
+        console.log(err)
+        await db.close()
+        throw err
+    }
+}
+module.exports.fetchSuggestedListings = fetchSuggestedListings
+
+/**
  * Function to fetch records matching seller id and user id
  * After, closes the database connection and returns the data
  * @param {String} user - the id (or name) of the user whose listings to return
