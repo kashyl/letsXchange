@@ -56,13 +56,13 @@ module.exports.contactUs = async (name, email, message) => {
 module.exports.sendOffer = async (body, buyer, sellerEmail, item, itemid) => {
     const message = `${body.message}`
 
-    let serverURL = 'http://server.alastairserver.co.uk/Websites/letsxchangewebsite/listings/'+ itemid +'/0.png'
+    const serverURL = 'http://server.alastairserver.co.uk/Websites/letsxchangewebsite/listings/' + itemid + '/0.png'
 
     let text =
     `
     <html>
-	<style>
-	/* ==== UPPER HEADER ==== */
+<style>
+/* ==== UPPER HEADER ==== */
 div#upper-header {
     height: 64px;  
     min-width: 1100px;
@@ -330,17 +330,17 @@ nav .navbar-search-wrapper button.search:hover {
   }
 
 /* ==============END SEARCH BAR============== */  
-	
-	</style>
-	
-	
-	<head style="background-color:grey;">
-		<div id="upper-header">
+
+</style>
+
+
+<head style="background-color:grey;">
+<div id="upper-header">
     <div id="header-left-wrapper">
         
     </div>
     <div id="header-middle-wrapper">
-        <a href="/" id="nav-top"> <img class="logo" src="http://server.alastairserver.co.uk/Websites/letsxchangewebsite/LogoBlack.png" style="display:block;margin-left:auto;margin-right:auto;width: 40%;" alt="letsXchange"> </a>
+        <a href="/" id="nav-top"> <img class="logo" src="http://server.alastairserver.co.uk/Websites/letsxchangewebsite/LogoWhite.png" style="display:block;margin-left:auto;margin-right:auto;width: 40%;" alt="letsXchange"> </a>
     </div>
     <div id="motto-wrapper">
             <span>Exchanging made Fast & Easy</span>
@@ -351,26 +351,16 @@ nav .navbar-search-wrapper button.search:hover {
         </div>
     </div>
 </div>
-    
+</head>
+<body>
 
 
-	
-	
-	
-	
-	</head>
-	<body>
-	
-	
-	
-	
-	</body>
-</html>
 
     
     <img src=${serverURL} style="width:40%; float:left; margin:20px;" border="2">
     <h3>User <a href="http://localhost:8080/listings/${buyer.user}"> ${buyer.user} </a> has sent you an exchange offer for your listing (${item.title})</h3>
     <h4>Message:</h4> <p>${message}</p>
+    </body>
     </html>
     `
 
