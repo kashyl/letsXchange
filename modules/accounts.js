@@ -97,6 +97,7 @@ async function fetchListings (query) {
     if (query === '') {
         const sql = 'SELECT id, title, category, description, location FROM items ORDER BY id DESC'
         const records = await runSQL(sql)
+
         return records
     } else {
         const sql = `SELECT id, title, category, description FROM items 
@@ -225,7 +226,6 @@ async function fetchItem (itemid) {
         const sql = 'SELECT * FROM items WHERE id = $itemid;'
 
         let records = await db.all(sql, { $itemid: itemid })
-        console.log(records)
 
         if (records.length === 1) records = records[0]
 
@@ -639,9 +639,9 @@ async function addUser (body, saltRounds) {
     await checkNoDuplicate('user', body.user)
 
     let date = new Date()
-    console.log(date)
+    // console.log(date)
     date = "'" + date + "'"
-    console.log(date)
+    // console.log(date)
 
     // ENCRYPT PASSWORD, BUILD SQL
     body.pass = await bcrypt.hash(body.pass, saltRounds)

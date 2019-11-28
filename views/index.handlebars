@@ -45,6 +45,7 @@
                 {{/if}}
             </div>
 
+            {{#if items}}
             <div class="card-grid">
                 {{#each items}}
                 <div class="card">
@@ -67,6 +68,11 @@
                 </div>
                 {{/each}}
             </div>
+            {{else}}
+            <div class="browse-upper-wrapper">
+                <h3>Couldn't find any active listings, please try again later!</h3>
+            </div>
+            {{/if}}
 
         </main>
 

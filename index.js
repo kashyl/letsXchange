@@ -76,8 +76,12 @@ router.get('/', async ctx => {
 
         // gets listing data from database and puts it into data
         // if query is undefined (no search) then get all
-        const items = await accounts.fetchListings(querystring)
+        let items = await accounts.fetchListings(querystring)
         // console.log(items)
+        // if only one item is returned, add it to array
+        // if no items returned,set items undefined
+        if (!items.length && items.length !== 0) items = [items]
+        else if (items.length === 0) items = undefined
 
         const data = {}
 
@@ -379,8 +383,12 @@ router.post('/add-item', koaBody, async ctx => {
         // as the id's are incremental, the value of this is number of total + 1
         // since the function returns an object, we get the integer by adding .seq at the end
         const idobj = await accounts.lastTableId('items')
-        const itemid = idobj.seq + 1
+        let itemid = idobj.seq + 1
+
+        // if no items exist in the database yet, set the ID as 1
+        if (isNaN(parseFloat(itemid))) itemid = 1
         // console.log(itemid)
+
         // we pass this to the saveImages function
         await accounts.saveItemImages(images, itemid)
 
@@ -489,10 +497,10 @@ router.get('/logout', async ctx => {
  */
 router.get('/details/:id/offer', async ctx => {
     try {
+        if (ctx.session.authorised !== true) return ctx.redirect('/login?msg=you need to log in to make an offer')
         const itemid = ctx.params.id
         const data = {}
-        data.auth = false
-        if (ctx.session.authorised === true) { data.auth = true }
+        data.auth = true
         if (ctx.query.msg) data.msg = ctx.query.msg
         data.user = ctx.session.user
         data.name = ctx.session.userData.forename
