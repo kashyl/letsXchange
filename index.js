@@ -187,11 +187,13 @@ router.get('/details/:id', async ctx => {
 
         userData.registerdate = await accounts.getYear(userData.registerdate)
 
-        // checks if item is watchlisted
-        data.watchlist = await accounts.isWatchlisted(ctx.session.userData.id, itemid)
-
-        // checks if the listing is the viewing user's
-        const ownListing = parseInt(item.seller, 10) === ctx.session.userData.id
+        // checks if item is watchlisted if user is logged in
+        let ownListing = []
+        if (ctx.session.userData !== undefined && ctx.session.userData !== null) {
+            data.watchlist = await accounts.isWatchlisted(ctx.session.userData.id, itemid)
+            // checks if the listing is the viewing user's
+            ownListing = parseInt(item.seller, 10) === ctx.session.userData.id
+        }
 
         await ctx.render('./views/details', { data: data, item: item, seller: userData, ownListing: ownListing })
     } catch (err) {
@@ -208,6 +210,9 @@ router.get('/details/:id', async ctx => {
 router.post('/details/:id/watchlist-add', async ctx => {
     const itemid = ctx.params.id
     try {
+        if (ctx.session.userData === undefined || ctx.session.userData === null) {
+            return ctx.redirect('/login?msg=login first to add item to watchlist')
+        }
         const userid = ctx.session.userData.id
 
         await accounts.updateUserWatchlist(userid, itemid, 'add')
@@ -487,6 +492,8 @@ router.post('/login', async ctx => {
 router.get('/logout', async ctx => {
     console.log('User ' + ctx.session.user + ' logged out')
     ctx.session.authorised = null
+    ctx.session.user = null
+    ctx.session.userData = null
     ctx.redirect('/')
 })
 

@@ -516,6 +516,7 @@ async function checkNoDuplicate (fieldName, searchValue) {
     const db = await sqlite.open(DBName)
     try {
         let records = await db.all(`SELECT count(id) AS count FROM users WHERE ${fieldName} = $searchValue;`, { $searchValue: searchValue })
+
         if (records.length === 1) records = records[0]
 
         if (records.count) throw new Error(`${fieldName} already exists`)
