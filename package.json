@@ -30,7 +30,7 @@
     "koa-static": "^5.0.0",
     "koa-views": "^6.2.1",
     "mime-types": "^2.1.22",
-    "nodemailer": "^6.3.1",
+    "nodemailer": "^6.4.16",
     "sqlite": "^3.0.3",
     "sqlite-async": "^1.0.12",
     "sqlite3": "^4.1.0",
